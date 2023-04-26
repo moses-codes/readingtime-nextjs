@@ -6,7 +6,7 @@
   background-color: aliceblue;
 }
 
-@media (prefers-color-scheme: dark) {
+@media () {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;

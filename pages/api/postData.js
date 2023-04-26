@@ -6,18 +6,20 @@ export default async function handler(req, res) {
         // Connect to the database
         await connectMongo();
 
-        const { title, author, page_count, isbn } = req.body;
+        const { title, authors, page_count, isbn } = req.body;
 
         // Insert the document into the collection
         try {
             const book = new Book({
-                title, author, page_count, isbn
+                title, authors, page_count, isbn
             });
 
             //instantiate a new book object thru the imported schema
 
-            const result = await book.save()
+            // const result = await book.save()
             //mongoose will try to save that book into the collection
+
+            console.log(book)
 
             res.status(201).json({ success: true, data: result });
         } catch (error) {
