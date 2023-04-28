@@ -1,22 +1,25 @@
 import { connectMongo } from "@/utils/connectMongo";
-import Book from '../../models/Book'
+const Book = require('../../models/Book');
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         // Connect to the database
         await connectMongo();
 
-        const { title, authors, page_count, isbn } = req.body;
+        const { google_id, title, authors, pageCount, cover } = req.body;
 
         // Insert the document into the collection
         try {
             const book = new Book({
-                title, authors, page_count, isbn
+                title, authors, pageCount, cover, google_id
             });
+
+            // const indexes = await Book.collection.getIndexes();
+            // console.log(indexes)
 
             //instantiate a new book object thru the imported schema
 
-            // const result = await book.save()
+            const result = await book.save()
             //mongoose will try to save that book into the collection
 
             console.log(book)
