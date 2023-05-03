@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ReadingGoalForm from './forms/ReadingGoalForm'
 
 export default function BookShelf() {
     const [shelf, setShelf] = useState([])
@@ -18,6 +19,9 @@ export default function BookShelf() {
             {shelf && shelf.map(b => <li key={b._id} className='my-5'>
                 <p>{b.title} by {b.authors[0]}</p>
                 <p>{b.pageCount} pages</p>
+                <ReadingGoalForm
+                    pageCount={b.pageCount}
+                />
             </li>)}
         </ul>
 

@@ -34,7 +34,13 @@ export default async function handler(req, res) {
                 const user = await clerkClient.users.getUser(userId);
 
                 //check for the books_reading array
-                if (!user.publicMetadata.books_reading) user.publicMetadata.books_reading = [];
+                if (!user.publicMetadata.books_reading || !user.publicMetadata.reading_goals) {
+                    user.publicMetadata.books_reading = user.publicMetadata.reading_goals = [];
+
+                };
+
+                //don't add to the reading list if it's already in there
+                if (user.publicMetadata.books_reading.includes(google_id)) throw new Error('already exists in reading list');
 
                 //take the added ID from the req body
                 //create a new ...array containing the requested ID to be added
@@ -42,7 +48,13 @@ export default async function handler(req, res) {
 
                 const bookshelf = {
                     publicMetadata: {
-                        books_reading: [...user.publicMetadata.books_reading, google_id]
+                        books_reading: [...user.publicMetadata.books_reading, google_id],
+                        reading_goals: [
+                            ...user.publicMetadata.reading_goals, {
+                                google_id: google_id,
+                                reading_goal: 0
+                            }
+                        ]
                     }
                 }
 

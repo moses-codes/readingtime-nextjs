@@ -12,7 +12,7 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li className='mx-2 border-2 border-black rounded-md px-2'>
-                    <Link href="/addData">
+                    <Link href="/booksearch/addBook">
                         Add a book
                     </Link>
                 </li>
