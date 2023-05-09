@@ -4,7 +4,6 @@ import Layout from '../../components/Layout'
 
 import SearchBook from "../../components/SearchBook"
 
-import SetGoal from '../../components/SetGoalForm'
 
 export default function BookSearch() {
     const api_key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY

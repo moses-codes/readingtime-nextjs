@@ -1,6 +1,11 @@
 import { connectMongo } from "@/utils/connectMongo"
 import { getAuth, clerkClient } from "@clerk/nextjs/server";
+import { useUser } from "@clerk/nextjs";
+
 const Book = require('../../models/Book')
+
+//TODO: replace Clerk User metadata object with PROFILE schema;
+// match Clerk userId with MongoDB "Profile" Id
 
 export default async function handler(req, res) {
     const { userId } = getAuth(req)
