@@ -2,7 +2,7 @@ import connectMongo from '@/utils/connectMongo'
 import { Inter } from 'next/font/google'
 import { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
-import BookShelf from '../components/BookShelf'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,7 +37,7 @@ export default function Home({ props }) {
     <Layout>
       <main
         className="p-12">
-        <BookShelf />
+        <h1>Homepage of readingtime</h1>
       </main>
     </Layout>
   )

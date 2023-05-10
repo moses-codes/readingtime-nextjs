@@ -45,7 +45,6 @@ export function PagesForm(props) {
             daysGoal: e.target.value
         })
     }
-    console.log(formData)
     let { handleSubmit } = props
     return (
         <>
