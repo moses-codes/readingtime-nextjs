@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import ReadingGoalForm from './forms/ReadingGoalForm'
 
-export default function BookShelf() {
+export default function BookShelf(props) {
     const [shelf, setShelf] = useState([])
     useEffect(() => {
         fetch('/api/getData')
