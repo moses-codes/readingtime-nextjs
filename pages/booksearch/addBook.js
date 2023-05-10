@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-import Layout from '../components/Layout'
+import Layout from '../../components/Layout'
 
-import SearchBook from "../components/SearchBook"
+import SearchBook from "../../components/SearchBook"
+
 
 export default function BookSearch() {
     const api_key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
@@ -12,6 +13,8 @@ export default function BookSearch() {
     });
 
     const [searchResults, setSearchResults] = useState({})
+
+    const [modal, showModal] = useState(false)
 
     function handleFormChange(e) {
         let { name, value } = e.target
@@ -71,6 +74,7 @@ export default function BookSearch() {
     let { searchInput } = formData
     return (
         <Layout>
+            {/* <SetGoal /> */}
             <div
                 className="">
                 <section className='m-5'>
@@ -105,32 +109,3 @@ export default function BookSearch() {
         </Layout>
     );
 }
-//IMPORTED FROM COMPONENTS FOLDER
-// export function Book(props) {
-//     let { title, authors, cover, handleAdd } = props
-
-//     if (!cover) cover = placeholder;
-
-//     return (
-//         <div className='my-3 w-1/2 flex justify-between border-2 border-black'>
-//             <div className='mr-10 w-1/4'>
-//                 <Image
-//                     src={cover}
-//                     alt="A placeholder image for books"
-//                     width={200}
-//                     height={300}
-//                     blurDataURL={placeholder}
-//                 />
-//             </div>
-//             <div className='w-3/4 my-10'>
-//                 <p>{title}</p>
-//                 <p>{authors}</p>
-//                 <button
-//                     className='border-2 my-4 p-2'
-//                     onClick={() => handleAdd()}
-//                 >
-//                     Add Book
-//                 </button></div>
-//         </div>
-//     )
-// }
