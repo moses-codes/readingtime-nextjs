@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
             ref: 'Book',
         },
     }],
+    //create booksCurrentlyReading
+    //add reading goals to this?
+    //where does diary go?
     createdOn: {
         type: Date,
         default: Date.now,
