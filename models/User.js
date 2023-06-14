@@ -1,24 +1,20 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: true,
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
+    clerkId: {
         type: String,
         required: true,
     },
-    avatar: {
-        type: String,
-        default: 'default.jpg',
-    },
-    booksRead: [{
+    booksReading: [{
+        book: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Book',
+        },
+    }], booksCompleted: [{
         book: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Book',
@@ -26,7 +22,7 @@ const userSchema = new mongoose.Schema({
     }],
     //create booksCurrentlyReading
     //add reading goals to this?
-    //where does diary go?
+
     createdOn: {
         type: Date,
         default: Date.now,

@@ -78,22 +78,24 @@ export default function BookSearch() {
             <div
                 className="">
                 <section className='m-5'>
-                    <form onSubmit={handleSubmit}>
-                        <div >
-                            <label htmlFor="searchInput">Search Input:</label>
+                    <form className='form-control w-full max-w-xs' onSubmit={handleSubmit}>
+                        <div className='flex'>
                             <input
-                                className='pl-2 m-2'
+                                className="input input-bordered w-full max-w-xs"
                                 id="searchInput"
                                 name="searchInput"
                                 type="text"
+                                placeholder="Search by title, author, or ISBN"
                                 value={searchInput}
                                 onChange={handleFormChange}
                             />
-                            <button type="submit" className='border-2 border-black px-2 rounded-md my-3'>Submit</button>
+                            <button type="submit" className='btn btn-primary'>Submit</button>
                         </div>
+                        <label className="label">
+                            <span className="label-text-alt">Search for a book!</span>
+                        </label>
                     </form>
                     <div>
-                        <h3>Search results</h3>
                         {searchResults.items && searchResults.items.map(b => <SearchBook
                             key={b.id}
                             google_id={b.id}
