@@ -1,7 +1,8 @@
 import { connectMongo } from "@/utils/connectMongo";
 import { getAuth, clerkClient } from "@clerk/nextjs/server";
 const Book = require('../../models/Book');
-
+const GoalBook = require('../../models/GoalBook');
+const User = require('../../models/User');
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         // Connect to the database
@@ -29,38 +30,21 @@ export default async function handler(req, res) {
             } catch (error) {
                 console.error(error);
             }
-            //add the google_id to the user's metadata.
+
             try {
-                const user = await clerkClient.users.getUser(userId);
 
-                //check for the books_reading array
-                if (!user.publicMetadata.books_reading || !user.publicMetadata.reading_goals) {
-                    user.publicMetadata.books_reading = user.publicMetadata.reading_goals = [];
+                let mongoUser = await User.findOne({ clerkId: userId })
+                let { username, booksReading } = mongoUser
+                let bookToAdd = await Book.findOne({ google_id: google_id })
 
-                };
+                //Push bookToAdd to the booksReading array in the User object
+                mongoUser.booksReading.push({
+                    bookId: bookToAdd._id,
+                    goal: 0,
+                })
 
-                //don't add to the reading list if it's already in there
-                if (user.publicMetadata.books_reading.includes(google_id)) throw new Error('already exists in reading list');
-
-                //take the added ID from the req body
-                //create a new ...array containing the requested ID to be added
-                //set books reading to that new array
-
-                const bookshelf = {
-                    publicMetadata: {
-                        books_reading: [...user.publicMetadata.books_reading, google_id],
-                        reading_goals: [
-                            ...user.publicMetadata.reading_goals, {
-                                google_id: google_id,
-                                reading_goal: 0
-                            }
-                        ]
-                    }
-                }
-
-                const updatedUser = await clerkClient.users.updateUser(userId, bookshelf)
-                // Load any data your application needs for the API route
-                console.log(updatedUser)
+                const savedUser = await mongoUser.save();
+                console.log(savedUser)
 
             } catch (error) {
                 console.error(error);

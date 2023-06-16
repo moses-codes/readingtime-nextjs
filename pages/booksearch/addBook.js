@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Layout from '../../components/Layout'
 
@@ -12,9 +12,19 @@ export default function BookSearch() {
         searchInput: ''
     });
 
+    const [currUser, setUser] = useState('')
+
     const [searchResults, setSearchResults] = useState({})
 
-    const [modal, showModal] = useState(false)
+    useEffect(() => {
+        if (currUser === '') {
+            fetch("/api/auth/getUser")
+                .then(res => res.json())
+                .then(data => setUser(data))
+        }
+    }, [])
+
+    console.log(currUser)
 
     function handleFormChange(e) {
         let { name, value } = e.target

@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
-import { getAuth, clerkClient, buildClerkProps } from '@clerk/nextjs/server'
-import { connectMongo } from "@/utils/connectMongo"
+// import { getAuth, clerkClient, buildClerkProps } from '@clerk/nextjs/server'
+// import { connectMongo } from "@/utils/connectMongo"
 
 export default function Home(props) {
     const [shelf, setShelf] = useState([])
     useEffect(() => {
         fetch('/api/getData')
             .then(res => res.json())
-            .then(data => setShelf(data.books))
+            .then(data => {
+                console.log(data.bookShelf)
+                setShelf(data.bookShelf)
+            })
     }, [])
 
-    console.log(props)
+    console.log(shelf)
 
     return (
         <Layout>
@@ -26,22 +29,6 @@ export default function Home(props) {
     )
 }
 
-export const getServerSideProps = async ctx => {
-    // const { userId } = getAuth(ctx.req)
-    // if (!userId) {
-    //     return {
-    //         redirect: {
-    //             destination: "/sign-in?redirect_url=" + ctx.resolvedUrl,
-    //             permanent: false,
-    //         },
-    //     };
-    // }
-    // const user = userId ? await clerkClient.users.getUser(userId) : undefined;
-
-    return {
-        props: { message: "hello" }
-    }
-}
 
 // export async function getServerSideProps() {
 //     // Make an API call
