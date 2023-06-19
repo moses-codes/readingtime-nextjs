@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Title
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+ReadingTime -- seat and achieve your reading goals
+
+## Introduction
+
+ReadingTime was created as a tool to set daily reading goals and create a habit of reading to finish books on a set deadline. This is different from Goodreads, where the focus is on quantity of books read, rather than the process of finishing one.
 
 ## Getting Started
 
