@@ -1,28 +1,11 @@
 import { useState } from 'react'
 
 export default function ReadingGoalForm(props) {
-
-    const [formPages, setFormPages] = useState(true)
-
-    function handleSubmit(e) {
-        console.log(e)
-    }
-
-    return (
-        <>
-            <PagesForm
-                handleSubmit={handleSubmit}
-                pageCount={props.pageCount}
-            />
-
-        </>
-    )
-}
-
-export function PagesForm(props) {
+    const { handleSaveChanges, progress, goal } = props
+    const [goalReached, setGoalReached] = useState(false);
     const [formData, setFormData] = useState({
-        daysGoal: 0,
-        bookProgress: 0,
+        daysGoal: goal,
+        bookProgress: progress,
     })
     let dailyGoal = Math.ceil((props.pageCount - formData.bookProgress) / formData.daysGoal)
     let percentProgress = Math.floor((formData.bookProgress / props.pageCount) * 100) <= 100 ? Math.floor((formData.bookProgress / props.pageCount) * 100) : 100
@@ -34,7 +17,7 @@ export function PagesForm(props) {
         })
     }
 
-
+    //this function updates the form if the user has met their day goal
     function handleClick(e) {
         e.preventDefault()
 
@@ -50,13 +33,29 @@ export function PagesForm(props) {
         }
     }
 
+    const goalButton = (
+        <button
+            onClick={handleClick}
+            name="dailyGoal"
 
+            className={`btn btn-xs btn-accent ${formData.daysGoal <= 0 || formData.bookProgress >= props.pageCount ? " btn-disabled" : ""}`}
 
+        >Goal met!</button>
+    )
 
-    let { handleSubmit } = props
+    const daysGoal = (<p className="mr-2 "> Daily goal: {dailyGoal} pages / day</p>)
+
+    console.log(props)
+
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form className='text-center lg:text-left' onSubmit={(e) => {
+                e.preventDefault()
+                handleSaveChanges({
+                    ...formData,
+                    _id: props._id
+                })
+            }}>
 
                 <div className='flex align-center'>
                     <progress className="progress progress-info w-56 my-auto mr-2" value={Math.floor((formData.bookProgress / props.pageCount) * 100)} max="100">
@@ -64,8 +63,8 @@ export function PagesForm(props) {
                     <p>{percentProgress}% {percentProgress === 100 && <span>&#127881;</span>}</p>
                 </div>
 
-                <div className='flex justify-between'>
-                    <label htmlFor="">Current progress:</label>
+                <div className='flex mt-2 justify-between md:text-lg text-xs'>
+                    <label htmlFor="">Pages Read:</label>
                     <input
                         type='number'
                         max={props.pageCount}
@@ -76,7 +75,7 @@ export function PagesForm(props) {
                     />
                 </div>
 
-                <div className='flex justify-between'>
+                <div className='flex mt-2 justify-between md:text-lg text-xs'>
                     <label htmlFor="">Number of days to finish:</label>
                     <input
                         type='number'
@@ -86,12 +85,17 @@ export function PagesForm(props) {
                         className='border-black border-2 rounded-md mx-2 px-2 w-16'
                     />
                 </div>
-            </form>
-            {formData.daysGoal > 0 && <p> Your daily goal is {dailyGoal} pages a day!</p>}
-            {formData.daysGoal > 0 && <button onClick={handleClick} name="dailyGoal" className="btn btn-xs btn-accent">I've reached my goal!</button>}
-            <br />
-            <button className="btn btn-sm btn-primary">save changes</button>
+
+                <div className='flex justify-between mt-2 md:text-lg text-xs px-0'>
+                    <div>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>Your daily goal will go here!</p>}</div>
+                    <div>{goalButton}</div>
+                </div>
+                <button
+                    type='submit'
+                    className="btn btn-sm w-40 mt-3 btn-primary">save changes</button>
+            </form >
         </>
     )
 }
+
 

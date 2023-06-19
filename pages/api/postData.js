@@ -1,7 +1,7 @@
 import { connectMongo } from "@/utils/connectMongo";
 import { getAuth, clerkClient } from "@clerk/nextjs/server";
 const Book = require('../../models/Book');
-const GoalBook = require('../../models/GoalBook');
+// const GoalBook = require('../../models/GoalBook');
 const User = require('../../models/User');
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -40,6 +40,7 @@ export default async function handler(req, res) {
                 //Push bookToAdd to the booksReading array in the User object
                 mongoUser.booksReading.push({
                     bookId: bookToAdd._id,
+                    progress: 0,
                     goal: 0,
                 })
 

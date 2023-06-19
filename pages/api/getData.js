@@ -5,9 +5,6 @@ import { useUser } from "@clerk/nextjs";
 const Book = require('../../models/Book')
 const User = require('../../models/User')
 
-//TODO: replace Clerk User metadata object with PROFILE schema;
-// match Clerk userId with MongoDB "Profile" Id
-
 export default async function handler(req, res) {
     const { userId } = getAuth(req)
 
@@ -20,8 +17,16 @@ export default async function handler(req, res) {
         //create an array of JUSt the book ids
         const ids = booksReading.map(el => el.bookId)
         const bookShelf = await Book.find({ _id: { $in: ids } })
-        console.log(bookShelf)
-        res.status(200).json({ bookShelf });
+        const updatedBooksReading = booksReading.map(el => {
+            const matchingBook = bookShelf.find(book => book._id.equals(el.bookId));
+            return {
+                book: matchingBook,
+                progress: el.progress,
+                goal: el.goal,
+            };
+        });
+
+        res.status(200).json({ updatedBooksReading });
     } catch (error) {
         console.error('books not found');
         res.status(500).json({ error: 'books not found' });

@@ -6,14 +6,66 @@ import BookShelf from '../../components/BookShelf'
 
 export default function Home(props) {
     const [shelf, setShelf] = useState([])
-    useEffect(() => {
+    const [isDataFetched, setIsDataFetched] = useState(false);
+    const [isLoading, setIsLoading] = useState(true); // New state for loading spinner
+
+    async function fetchData() {
         fetch('/api/getData')
             .then(res => res.json())
             .then(data => {
-                console.log(data.bookShelf)
-                setShelf(data.bookShelf)
-            })
+                console.log(data);
+                setShelf(data.updatedBooksReading);
+                setIsDataFetched(true);
+            });
+    }
+    useEffect(() => {
+        fetchData();
+        setIsLoading(false);
     }, [])
+
+    async function handleDelete(target) {
+        // console.log() the _id
+        console.log(target)
+        // TODO: Submit the form data to the server
+        const response = await fetch('/api/book/deleteBook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ target }),
+        });
+
+        console.log(response)
+
+        if (response.ok) {
+            fetchData();
+            console.log('Document removed successfully');
+        } else {
+            console.error('Failed to remove document');
+        }
+    }
+
+    async function handleSaveChanges(formData) {
+        // console.log() the _id
+        console.log(formData)
+        // TODO: Submit the form data to the server
+        const response = await fetch('/api/book/updateBook', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ formData }),
+        });
+
+        console.log(response)
+
+        if (response.ok) {
+            fetchData();
+            console.log('Book updated successfully');
+        } else {
+            console.error('Failed to remove document');
+        }
+    }
 
     console.log(shelf)
 
@@ -21,28 +73,14 @@ export default function Home(props) {
         <Layout>
             <main
                 className="p-12">
+
                 <BookShelf
                     shelf={shelf}
+                    handleDelete={handleDelete}
+                    handleSaveChanges={handleSaveChanges}
                 />
+
             </main>
         </Layout>
     )
 }
-
-
-// export async function getServerSideProps() {
-//     // Make an API call
-//     const data = await fetch('http://localhost:3000/api/getData')
-
-//     console.log(data)
-
-//     const shelf = await data.json()
-
-
-//     // Return the data as props
-//     return {
-//         props: {
-//             shelf
-//         },
-//     };
-// }

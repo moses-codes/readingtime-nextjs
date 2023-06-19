@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Book',
         },
+        progress: {
+            type: Number,
+            default: 0,
+        },
         goal: {
             type: Number,
             default: 0,
