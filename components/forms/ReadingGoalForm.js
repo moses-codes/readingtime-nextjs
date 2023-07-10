@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export default function ReadingGoalForm(props) {
-    const { handleSaveChanges, progress, goal } = props
+    const { handleSaveChanges, progress, goal, pageCount } = props
     const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -12,8 +12,8 @@ export default function ReadingGoalForm(props) {
     let dailyGoal = Math.ceil((props.pageCount - formData.bookProgress) / formData.daysGoal)
     let currPercent = Math.floor((formData.bookProgress / props.pageCount) * 100)
 
-
-
+    if (currPercent > 100) currPercent = 100;
+    if (currPercent < 0) currPercent = 0;
 
     console.log(formData.bookProgress, props.pageCount, currPercent)
 
@@ -65,7 +65,7 @@ export default function ReadingGoalForm(props) {
                 <div className='flex align-center'>
                     <progress className="progress progress-info w-56 my-auto mr-2" value={currPercent} min="0" max="100">
                     </progress>
-                    <p>{currPercent}% {currPercent > 100 && <span>&#127881;</span>}</p>
+                    <p>{currPercent}% {currPercent >= 100 && <span>&#127881;</span>}</p>
                 </div>
 
                 <div className='flex mt-2 justify-start md:text-lg text-xs'>
@@ -78,6 +78,7 @@ export default function ReadingGoalForm(props) {
                         value={formData.bookProgress}
                         className='border-black border-2 rounded-md mx-2 px-2 w-16'
                     />
+                    <span>of {pageCount}</span>
                 </div>
 
                 <div className='flex mt-2 justify-start md:text-lg text-xs'>
