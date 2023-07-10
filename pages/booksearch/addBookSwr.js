@@ -83,43 +83,41 @@ export default function BookSearch() {
 
     let { searchInput } = formData
     return (
-        <>
-            <Layout>
-                {/* <SetGoal /> */}
-                <div
-                    className="">
-                    <section className='m-6'>
-                        <form className='form-control w-full max-w-xs mx-auto' onSubmit={handleSubmit}>
-                            <div className='flex'>
-                                <input
-                                    className="input input-bordered w-full max-w-xs"
-                                    id="searchInput"
-                                    name="searchInput"
-                                    type="text"
-                                    placeholder="Search by title, author, or ISBN"
-                                    value={searchInput}
-                                    onChange={handleFormChange}
-                                />
-                                <button type="submit" className='btn btn-primary'>Submit</button>
-                            </div>
-                            <label className="label">
-                                <span className="label-text-alt">Search for a book!</span>
-                            </label>
-                        </form>
-                        <div className=''>
-                            {searchResults.items && searchResults.items.map(b => <SearchBook
-                                key={b.id}
-                                google_id={b.id}
-                                title={b.volumeInfo.title}
-                                authors={b.volumeInfo.authors}
-                                cover={b.volumeInfo.imageLinks?.thumbnail}
-                                pageCount={b.volumeInfo.pageCount}
-                                handleAdd={handleAdd}
-                            />)}
+        <Layout>
+            {/* <SetGoal /> */}
+            <div
+                className="">
+                <section className='m-5'>
+                    <form className='form-control w-full max-w-xs' onSubmit={handleSubmit}>
+                        <div className='flex'>
+                            <input
+                                className="input input-bordered w-full max-w-xs"
+                                id="searchInput"
+                                name="searchInput"
+                                type="text"
+                                placeholder="Search by title, author, or ISBN"
+                                value={searchInput}
+                                onChange={handleFormChange}
+                            />
+                            <button type="submit" className='btn btn-primary'>Submit</button>
                         </div>
-                    </section>
-                </div>
-            </Layout>
-        </>
+                        <label className="label">
+                            <span className="label-text-alt">Search for a book!</span>
+                        </label>
+                    </form>
+                    <div>
+                        {searchResults.items && searchResults.items.map(b => <SearchBook
+                            key={b.id}
+                            google_id={b.id}
+                            title={b.volumeInfo.title}
+                            authors={b.volumeInfo.authors}
+                            cover={b.volumeInfo.imageLinks?.thumbnail}
+                            pageCount={b.volumeInfo.pageCount}
+                            handleAdd={handleAdd}
+                        />)}
+                    </div>
+                </section>
+            </div>
+        </Layout>
     );
 }

@@ -6,18 +6,18 @@ export default function Book(props) {
     if (!cover) cover = '/bookPlaceholder.png';
 
     return (
-        <div key={google_id} className='my-3 lg:w-1/2 w-full flex border-2 border-black rounded-md'>
+        <div key={google_id} className='mx-auto card card-side bg-base-100 my-3 lg:w-1/2 w-full flex shadow-lg rounded-md'>
             <div className=''>
                 <img
                     src={cover}
                     alt="A placeholder image for books"
-                    className="h-full w-32 max-w-lg"
+                    className="h-full w-32 max-w-lg rounded-lg"
                 />
             </div>
             <div className='my-4 mx-5 flex flex-col justify-between'>
                 <div>
                     <p className='md:text-xl text-lg font-bold'>{title}</p>
-                    <p>{authors}</p>
+                    <p>{authors.length === 1 ? authors[0] : authors.slice(0, 3).join(', ') + " et al."}</p>
                     <p>{pageCount} p.</p>
                 </div>
                 <button
