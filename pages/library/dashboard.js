@@ -6,8 +6,6 @@ import BookShelf from '../../components/BookShelf'
 
 export default function Home(props) {
     const [shelf, setShelf] = useState([])
-    const [isDataFetched, setIsDataFetched] = useState(false);
-    const [isLoading, setIsLoading] = useState(true); // New state for loading spinner
 
     async function fetchData() {
         fetch('/api/getData')
@@ -15,12 +13,10 @@ export default function Home(props) {
             .then(data => {
                 console.log(data);
                 setShelf(data.updatedBooksReading);
-                setIsDataFetched(true);
             });
     }
     useEffect(() => {
         fetchData();
-        setIsLoading(false);
     }, [])
 
     async function handleDelete(target) {
@@ -73,6 +69,8 @@ export default function Home(props) {
         <Layout>
             <main
                 className="p-12">
+
+                <span className="loading loading-ring loading-lg"></span>
 
                 <BookShelf
                     shelf={shelf}
