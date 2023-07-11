@@ -4,6 +4,11 @@ import Layout from '../../components/Layout'
 
 import SearchBook from "../../components/SearchBook"
 
+async function search(query) {
+    const res = await fetch(query)
+    return res.json()
+}
+
 
 export default function BookSearch() {
     const api_key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
@@ -43,19 +48,20 @@ export default function BookSearch() {
 
         //https://www.googleapis.com/books/v1/volumes?q=toni%20morrison&maxResults=10&key=AIzaSyA7pTNMuie-Y3bSwqLji3cOgWahZSU3RvY
 
-        // TODO: Submit the form data to the server
-        try {
-            const response = await fetch(baseUrl)
-            const data = await response.json()
-            setSearchResults(data)
+        // TODO: Submit the form data to the API
+        // try {
+        //     const response = await fetch(baseUrl)
+        //     const data = await response.json()
+        //     setSearchResults(data)
+        //     console.log(searchResults)
+        // } catch (error) {
+        //     console.error(error);
+        //     throw new Error('Failed to fetch data');
+        // }
 
-            console.log(searchResults)
-        } catch (error) {
-            console.error(error);
-            throw new Error('Failed to fetch data');
-        }
-
-
+        const bookSearchData = await search(baseUrl)
+        console.log(bookSearchData)
+        setSearchResults(bookSearchData)
     };
 
     async function handleAdd(bookInfo) {
@@ -84,42 +90,40 @@ export default function BookSearch() {
     let { searchInput } = formData
     return (
         <>
-            <Layout>
-                {/* <SetGoal /> */}
-                <div
-                    className="">
-                    <section className='m-6'>
-                        <form className='form-control w-full max-w-xs mx-auto' onSubmit={handleSubmit}>
-                            <div className='flex'>
-                                <input
-                                    className="input input-bordered w-full max-w-xs"
-                                    id="searchInput"
-                                    name="searchInput"
-                                    type="text"
-                                    placeholder="Search by title, author, or ISBN"
-                                    value={searchInput}
-                                    onChange={handleFormChange}
-                                />
-                                <button type="submit" className='btn btn-primary'>Submit</button>
-                            </div>
-                            <label className="label">
-                                <span className="label-text-alt">Search for a book!</span>
-                            </label>
-                        </form>
-                        <div className=''>
-                            {searchResults.items && searchResults.items.map(b => <SearchBook
-                                key={b.id}
-                                google_id={b.id}
-                                title={b.volumeInfo.title}
-                                authors={b.volumeInfo.authors}
-                                cover={b.volumeInfo.imageLinks?.thumbnail}
-                                pageCount={b.volumeInfo.pageCount}
-                                handleAdd={handleAdd}
-                            />)}
+            {/* <SetGoal /> */}
+            <div
+                className="">
+                <section className='m-6'>
+                    <form className='form-control w-full max-w-xs mx-auto' onSubmit={handleSubmit}>
+                        <div className='flex'>
+                            <input
+                                className="input input-bordered w-full max-w-xs"
+                                id="searchInput"
+                                name="searchInput"
+                                type="text"
+                                placeholder="Search by title, author, or ISBN"
+                                value={searchInput}
+                                onChange={handleFormChange}
+                            />
+                            <button type="submit" className='btn btn-primary'>Submit</button>
                         </div>
-                    </section>
-                </div>
-            </Layout>
+                        <label className="label">
+                            <span className="label-text-alt">Search for a book!</span>
+                        </label>
+                    </form>
+                    <div className=''>
+                        {searchResults.items && searchResults.items.map(b => <SearchBook
+                            key={b.id}
+                            google_id={b.id}
+                            title={b.volumeInfo.title}
+                            authors={b.volumeInfo.authors}
+                            cover={b.volumeInfo.imageLinks?.thumbnail}
+                            pageCount={b.volumeInfo.pageCount}
+                            handleAdd={handleAdd}
+                        />)}
+                    </div>
+                </section>
+            </div>
         </>
     );
 }

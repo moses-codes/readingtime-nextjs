@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import '@/styles/globals.css'
-// import { ClerkProvider, SignedIn, SignedOut, SignIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignIn, UserButton } from "@clerk/nextjs";
 
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -8,7 +8,11 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <ClerkProvider {...pageProps}>
+
       <Component {...pageProps} />
+      {/* <Layout></Layout> */}
+      {/* </Component> */}
+
     </ClerkProvider>
   );
 }

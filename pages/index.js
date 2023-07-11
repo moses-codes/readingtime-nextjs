@@ -71,19 +71,17 @@ export default function Home(props) {
   console.log(shelf)
 
   return (
-    <Layout>
-      <main
-        className="p-12">
+    <main
+      className="p-12">
 
-        <span className="loading loading-ring loading-lg"></span>
+      <span className="loading loading-ring loading-lg"></span>
 
-        <BookShelf
-          shelf={shelf}
-          handleDelete={handleDelete}
-          handleSaveChanges={handleSaveChanges}
-        />
+      <BookShelf
+        shelf={shelf}
+        handleDelete={handleDelete}
+        handleSaveChanges={handleSaveChanges}
+      />
 
-      </main>
-    </Layout>
+    </main>
   )
 }
