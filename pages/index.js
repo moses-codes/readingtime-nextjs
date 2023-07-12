@@ -76,7 +76,7 @@ export default function Home(props) {
     <main
       className="p-12">
 
-
+      <h1>Welcome to readingtime!</h1>
 
 
     </main></Layout>
