@@ -1,10 +1,13 @@
 import Navbar from './Navbar';
+import { useState } from 'react';
 // import Footer from './Footer';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, pending }) => {
     return (
         <>
-            <Navbar />
+            <Navbar
+                pending={pending}
+            />
             {children}
         </>
     );

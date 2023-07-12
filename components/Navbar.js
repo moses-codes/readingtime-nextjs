@@ -1,7 +1,11 @@
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default function Navbar() {
+export default function Navbar(props) {
+
+    let { pending } = props
+
+    console.log(pending)
     return (
         <div className="navbar bg-base-100 flex justify-between md:px-5 w-full">
             <div className="flex-none">
@@ -11,7 +15,13 @@ export default function Navbar() {
                 /></Link>
                 <ul className="menu menu-horizontal px-1">
 
-                    <li><Link href="/">Library</Link></li>
+                    <li><div><Link href="/library/dashboard">Library</Link>
+                        {pending > 0 &&
+                            <span className="badge badge-secondary badge-sm">{pending}
+                            </span>
+                        }
+                    </div>
+                    </li>
                     <li><Link href="/booksearch/addBook">Add Book</Link></li>
                     {/* <li>
                         <div className='flex '>
@@ -28,7 +38,7 @@ export default function Navbar() {
                     </li> */}
                 </ul>
             </div>
-            <li><UserButton /></li>
+            <li><UserButton afterSignOutUrl="/library/dashboard" /></li>
         </div>
     );
 }

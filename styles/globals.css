@@ -23,3 +23,15 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.cardHover{
+  transition: 0.1s;
+}
+
+.cardHover:hover{
+  transform: translate(0, -3px);
+}
+
+.bookAdd{
+
+}

@@ -5,8 +5,15 @@ export default function Book(props) {
 
     if (!cover) cover = '/bookPlaceholder.png';
 
+    let authorsDisplay
+    if (authors) {
+        authorsDisplay = authors.length === 1 ? authors[0] : authors.slice(0, 3).join(', ') + " et al."
+    } else {
+        authorsDisplay = 'No information found'
+    }
+
     return (
-        <div key={google_id} className='mx-auto card card-side bg-base-100 my-3 lg:w-1/2 w-full flex shadow-lg rounded-md'>
+        <div key={google_id} className='mx-auto card card-side bg-base-100 my-3 lg:w-1/2 w-full flex shadow-lg rounded-md cardHover'>
             <div className=''>
                 <img
                     src={cover}
@@ -17,7 +24,7 @@ export default function Book(props) {
             <div className='my-4 mx-5 flex flex-col justify-between'>
                 <div>
                     <p className='md:text-xl text-lg font-bold'>{title}</p>
-                    <p>{authors.length === 1 ? authors[0] : authors.slice(0, 3).join(', ') + " et al."}</p>
+                    <p>{authorsDisplay}</p>
                     <p>{pageCount} p.</p>
                 </div>
                 <button

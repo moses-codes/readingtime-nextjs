@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 
 import Layout from '../../components/Layout'
 
@@ -15,6 +15,8 @@ export default function BookSearch() {
     const [currUser, setUser] = useState('')
 
     const [searchResults, setSearchResults] = useState({})
+
+    const [pendingCount, setPendingCount] = useState(0)
 
     useEffect(() => {
         if (currUser === '') {
@@ -74,19 +76,21 @@ export default function BookSearch() {
 
         if (response.ok) {
             console.log('Document added successfully');
+            setPendingCount(prevCount => prevCount + 1)
         } else {
             console.error('Failed to add document');
         }
     };
 
-
-
     let { searchInput } = formData
+
     return (
         <>
-            <Layout>
+            <Layout
+                pending={pendingCount}
+            >
                 {/* <SetGoal /> */}
-                <div
+                < div
                     className="">
                     <section className='m-6'>
                         <form className='form-control w-full max-w-xs mx-auto' onSubmit={handleSubmit}>
@@ -119,7 +123,7 @@ export default function BookSearch() {
                         </div>
                     </section>
                 </div>
-            </Layout>
+            </Layout >
         </>
     );
 }

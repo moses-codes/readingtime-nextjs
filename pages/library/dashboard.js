@@ -70,8 +70,6 @@ export default function Home(props) {
             <main
                 className="p-12">
 
-                <span className="loading loading-ring loading-lg"></span>
-
                 <BookShelf
                     shelf={shelf}
                     handleDelete={handleDelete}

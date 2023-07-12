@@ -8,7 +8,7 @@ export default function LibraryBook({ _id,
     return (
 
         <div
-            key={_id} className="card lg:card-side bg-base-100 shadow-xl rounded-md my-5 flex lg:mx-10 max-w-2xl w-full relative pt-5 pb-5 px-5 ">
+            key={_id} className="card lg:card-side bg-base-100 shadow-xl rounded-md my-5 flex lg:mx-10 max-w-2xl w-full relative pt-5 pb-5 px-5">
             <div className="dropdown dropdown-bottom dropdown-left absolute right-0 top-0 ">
                 <label tabIndex={0} className="btn btn-error btn-xs font-extrabold text-white m-1">. . .</label>
                 <ul tabIndex={0} className="dropdown-content menu p-2 shadow rounded-box w-52 bg-red-200">
