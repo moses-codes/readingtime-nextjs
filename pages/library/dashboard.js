@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
+
 // import { getAuth, clerkClient, buildClerkProps } from '@clerk/nextjs/server'
 // import { connectMongo } from "@/utils/connectMongo"
+
+
 
 export default function Home(props) {
     const [shelf, setShelf] = useState([])
@@ -18,6 +21,8 @@ export default function Home(props) {
     useEffect(() => {
         fetchData();
     }, [])
+
+
 
     async function handleDelete(target) {
         // console.log() the _id
@@ -64,6 +69,8 @@ export default function Home(props) {
     }
 
     console.log(shelf)
+
+
 
     return (
         <Layout>

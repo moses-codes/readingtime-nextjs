@@ -38,7 +38,7 @@ export default function Navbar(props) {
                     </li> */}
                 </ul>
             </div>
-            <li><UserButton afterSignOutUrl="/library/dashboard" /></li>
+            <li><UserButton afterSignOutUrl="/" /></li>
         </div>
     );
 }

@@ -4,10 +4,19 @@ import '@/styles/globals.css'
 
 import { ClerkProvider } from '@clerk/nextjs';
 
+
+
 export default function MyApp({ Component, pageProps }) {
 
   return (
-    <ClerkProvider {...pageProps}>
+    <ClerkProvider {...pageProps} appearance={
+      {
+        variables: {
+          colorPrimary: "#89b0ae",
+          colorText: "black"
+        }
+      }
+    }>
       <Component {...pageProps} />
     </ClerkProvider>
   );

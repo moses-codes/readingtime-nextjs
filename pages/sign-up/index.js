@@ -1,6 +1,8 @@
 import { SignUp } from "@clerk/nextjs";
 
 const SignUpPage = () => (
-    <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />
+    <div className="flex justify-center items-center h-screen">
+        <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />
+    </div>
 );
 export default SignUpPage;
