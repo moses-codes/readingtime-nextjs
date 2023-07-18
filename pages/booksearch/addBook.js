@@ -4,6 +4,9 @@ import Layout from '../../components/Layout'
 
 import SearchBook from "../../components/SearchBook"
 
+import useSWR, { mutate } from 'swr'
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+
 
 export default function BookSearch() {
     const api_key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
@@ -12,21 +15,28 @@ export default function BookSearch() {
         searchInput: ''
     });
 
-    const [currUser, setUser] = useState('')
+    // const [currUser, setUser] = useState('')
 
     const [searchResults, setSearchResults] = useState({})
 
     const [pendingCount, setPendingCount] = useState(0)
 
-    useEffect(() => {
-        if (currUser === '') {
-            fetch("/api/auth/getUser")
-                .then(res => res.json())
-                .then(data => setUser(data))
-        }
-    }, [])
+    const { data, error, isLoading } = useSWR('/api/getData', fetcher)
+    let inUserLibrary
 
-    console.log(currUser)
+    if (!isLoading) {
+        console.log('swr fetched', data.updatedBooksReading)
+        inUserLibrary = data.updatedBooksReading.map(el => el.book.google_id)
+        console.log(inUserLibrary)
+    }
+
+    // useEffect(() => {
+    //     if (currUser === '') {
+    //         fetch("/api/auth/getUser")
+    //             .then(res => res.json())
+    //             .then(data => setUser(data))
+    //     }
+    // }, [])
 
     function handleFormChange(e) {
         let { name, value } = e.target
@@ -76,6 +86,7 @@ export default function BookSearch() {
 
         if (response.ok) {
             console.log('Document added successfully');
+            mutate('/api/getData')
             setPendingCount(prevCount => prevCount + 1)
         } else {
             console.error('Failed to add document');
@@ -112,6 +123,7 @@ export default function BookSearch() {
                         </form>
                         <div className=''>
                             {searchResults.items && searchResults.items.map(b => <SearchBook
+                                isReading={inUserLibrary.includes(b.id) ? true : false}
                                 key={b.id}
                                 google_id={b.id}
                                 title={b.volumeInfo.title}

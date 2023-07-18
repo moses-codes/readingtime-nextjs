@@ -1,19 +1,24 @@
 import { connectMongo } from "@/utils/connectMongo"
 import { getAuth, clerkClient } from "@clerk/nextjs/server";
-import { useUser } from "@clerk/nextjs";
 
 const Book = require('../../models/Book')
 const User = require('../../models/User')
 
 export default async function handler(req, res) {
     const { userId } = getAuth(req)
-
-    // const currentlyReading = user.publicMetadata.books_reading
+    await connectMongo();
+    console.log(userId)
     try {
         // Connect to the database
-        await connectMongo();
+        console.log('trying...')
+
         // const user = await clerkClient.users.getUser(userId);
-        const { booksReading } = await User.findOne({ clerkId: userId })
+        let { booksReading } = await User.findOne({
+            clerkId: userId
+        }).exec()
+
+        console.log(booksReading)
+        //console.log(user)
         //create an array of JUSt the book ids
         const ids = booksReading.map(el => el.bookId)
         const bookShelf = await Book.find({ _id: { $in: ids } })

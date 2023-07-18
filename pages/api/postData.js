@@ -40,6 +40,7 @@ export default async function handler(req, res) {
                 //Push bookToAdd to the booksReading array in the User object
                 mongoUser.booksReading.push({
                     bookId: bookToAdd._id,
+                    google_id: google_id,
                     progress: 0,
                     goal: 0,
                 })

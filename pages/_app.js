@@ -2,22 +2,37 @@ import Layout from '@/components/Layout';
 import '@/styles/globals.css'
 // import { ClerkProvider, SignedIn, SignedOut, SignIn, UserButton } from "@clerk/nextjs";
 
+import { useState, useEffect } from 'react'
+
 import { ClerkProvider } from '@clerk/nextjs';
 
 
 
 export default function MyApp({ Component, pageProps }) {
 
+  // const [currUser, setUser] = useState('')
+  // useEffect(() => {
+  //   if (currUser === '') {
+  //     fetch("/api/auth/getUser")
+  //       .then(res => res.json())
+  //       .then(data => setUser(data))
+  //   }
+  // }, [])
+
+  // console.log(currUser)
+
   return (
     <ClerkProvider {...pageProps} appearance={
       {
         variables: {
-          colorPrimary: "#89b0ae",
+          colorPrimary: "#5e3fa2",
           colorText: "black"
         }
       }
     }>
-      <Component {...pageProps} />
+      <Component {...pageProps}
+      // currUser={currUser}
+      />
     </ClerkProvider>
   );
 }

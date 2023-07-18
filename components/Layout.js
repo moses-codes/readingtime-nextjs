@@ -1,6 +1,6 @@
 import Navbar from './Navbar';
 import { useState } from 'react';
-// import Footer from './Footer';
+import Footer from './Footer';
 
 const Layout = ({ children, pending }) => {
     return (
@@ -8,7 +8,10 @@ const Layout = ({ children, pending }) => {
             <Navbar
                 pending={pending}
             />
-            {children}
+            <div className='min-h-screen'>
+                {children}
+            </div>
+            <Footer />
         </>
     );
 };

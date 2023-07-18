@@ -73,7 +73,7 @@ export default function ReadingGoalForm(props) {
                 </div>
 
                 <div className='flex mt-2 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2' htmlFor="">Pages Read:</label>
+                    <label className='w-1/2' htmlFor="">Current Page:</label>
                     <input
                         type='number'
                         max={props.pageCount}
@@ -82,11 +82,11 @@ export default function ReadingGoalForm(props) {
                         value={formData.bookProgress}
                         className='border-black border-2 rounded-md mx-2 px-2 w-16'
                     />
-                    <span> of {props.pageCount}</span>
+                    <span> / {props.pageCount}</span>
                 </div>
 
                 <div className='flex mt-2 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2' htmlFor="">Number of days to finish:</label>
+                    <label className='w-1/2' htmlFor="">Days left to finish:</label>
                     <input
                         type='number'
                         onChange={handleChange}

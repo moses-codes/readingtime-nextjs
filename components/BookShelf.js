@@ -11,7 +11,6 @@ export default function BookShelf(props) {
 
     return (<>
 
-        <h1 className='md:text-5xl text-xl mb-12'>Your Library</h1>
 
         <main className='flex flex-wrap justify-start'>
             {shelf && shelf.map(b => (
