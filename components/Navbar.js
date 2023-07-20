@@ -10,7 +10,7 @@ export default function Navbar(props) {
     return (
         <div className="navbar bg-base-100 flex justify-between md:px-5 w-full">
             <div className="flex-none">
-                <Link href="/library/dashboard" className="btn btn-ghost normal-case text-xl no-animation">
+                <Link href="/" className="btn btn-ghost normal-case text-xl no-animation">
                     <img
                         src='/bookOnly.png'
                         className='h-full rounded-md'
