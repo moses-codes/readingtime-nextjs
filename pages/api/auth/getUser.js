@@ -23,10 +23,8 @@ export default async function handler(req, res) {
             clerkId: userId
         })
 
-        console.log(currUser)
-
         if (currUser) {
-            console.log(currUser)
+            console.log('user found:', currUser)
         } else {
             const newUser = new User({
                 clerkId: userId,

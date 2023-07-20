@@ -24,6 +24,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+
 .cardHover{
   transition: 0.1s;
 }
@@ -32,6 +33,21 @@ body {
   transform: translate(0, -3px);
 }
 
-.bookAdd{
+.bookshelf-container.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
 
+.fade-in {
+  opacity: 0;
+  animation: fadeInAnimation 1s ease-in forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

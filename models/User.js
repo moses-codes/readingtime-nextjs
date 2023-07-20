@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Book',
         },
+        google_id: {
+            type: String,
+        },
         progress: {
             type: Number,
             default: 0,
@@ -45,4 +48,4 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
-module.exports = User;
+module.exports = User
