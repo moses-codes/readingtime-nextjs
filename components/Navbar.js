@@ -25,7 +25,24 @@ export default function Navbar(props) {
 
                     </div>
                     </li>
-                    <li><Link href="/booksearch/addBook">Add Book</Link></li>
+                    <li><Link href="/booksearch/">Add Book</Link></li>
+                    <li>
+                        <div className='flex'>
+                            <input
+                                className="input input-bordered w-full max-w-xs"
+                                id="searchInput"
+                                name="searchInput"
+                                type="text"
+                                placeholder="Search by title, author, or ISBN"
+                            // value={searchInput}
+                            // onChange={handleFormChange}
+                            />
+                            <button type="submit" className='btn btn-primary'>Submit</button>
+                        </div>
+                        <label className="label">
+                            <span className="label-text-alt">Search for a book!</span>
+                        </label>
+                    </li>
                 </ul>
             </div>
             <li><UserButton afterSignOutUrl="/" /></li>
