@@ -22,7 +22,7 @@ export default function Example() {
     } else {
         return (
             <div className='fade-in'>
-                <h1 className="mb-5 md:text-5xl text-3xl font-medium">It's reading time, {user.firstName}!</h1>
+                <h1 className="mb-5 md:text-5xl text-3xl font-medium">It&apos;s reading time, {user.firstName}!</h1>
                 <p className="mb-5">Find some books to add to your library.</p>
                 <Link href='#'><button className="btn btn-primary">Discover Books</button></Link>
             </div>
