@@ -20,8 +20,6 @@ export default function ReadingGoalForm(props) {
     }
 
 
-    console.log(formData.bookProgress, props.pageCount, currPercent)
-
     function handleChange(e) {
         setFormData({
             ...formData,

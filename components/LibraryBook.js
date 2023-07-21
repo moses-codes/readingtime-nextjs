@@ -24,7 +24,7 @@ export default function LibraryBook({ _id,
             <figure className='h-max min-w-1/4 mx-auto'><img className='rounded-md' src={cover} alt={"The book cover for " + title} /></figure>
 
             <div className='max-w-4xl md:text-left md:w-3/4 w-full md:ml-5 ml-3'>
-                <h3 className="lg:text-2xl text-lg card-title pt-2">{title.length < 30 ? title : title.slice(0, 30) + '...'}</h3>
+                <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3>
                 <ReadingGoalForm
                     pageCount={pageCount}
                     _id={_id}

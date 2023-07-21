@@ -1,5 +1,3 @@
-
-
 export default function Book(props) {
     let { google_id, title, authors, cover, pageCount, handleAdd, isReading } = props
 
@@ -11,8 +9,6 @@ export default function Book(props) {
     } else {
         authorsDisplay = 'No information found'
     }
-
-    console.log(props.isReading)
 
     return (
         <div key={google_id} className='mx-auto card card-side bg-base-100 my-3 lg:w-1/2 w-full flex shadow-lg rounded-md cardHover border-2 border-slate-500'>

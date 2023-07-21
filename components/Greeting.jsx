@@ -9,7 +9,6 @@ export default function Example() {
         return null
     }
 
-    console.log(user)
 
     if (!isSignedIn) {
         return (
