@@ -75,14 +75,22 @@ export default function Home(props) {
     } else if (error) {
         section = (<div>Error retrieving books</div>)
     } else if (data) {
+        console.log('library loaded')
         section = (
-            <BookShelf
-                className="fade-in"
-                shelf={data.updatedBooksReading}
-                handleDelete={handleDelete}
-                handleSaveChanges={handleSaveChanges}
-            />
-
+            <>
+                <BookShelf
+                    className="fade-in"
+                    shelf={data.updatedBooksReading}
+                    handleDelete={handleDelete}
+                    handleSaveChanges={handleSaveChanges}
+                />
+            </>
+        )
+    } else {
+        section = (
+            <>
+                <h2>No books</h2>
+            </>
         )
     }
 
@@ -92,7 +100,8 @@ export default function Home(props) {
                 className="p-12">
 
                 <h1 className='md:text-5xl text-2xl'>Your Library</h1>
-                {section}
+                <div>{section}</div>
+
 
             </main>
         </Layout>

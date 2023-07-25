@@ -32,7 +32,9 @@ export default function BookSearch(props) {
 
     if (!isLoading1) {
         console.log('swr fetched', data1.updatedBooksReading)
-        inUserLibrary = data1.updatedBooksReading.map(el => el.book.google_id)
+        if (data1.updatedBooksReading) {
+            inUserLibrary = data1.updatedBooksReading.map(el => el.book.google_id)
+        }
 
     }
 
@@ -59,7 +61,7 @@ export default function BookSearch(props) {
             <div className=''>
                 <h2 className='font-bold'>Search results for <span className='italic'>{searchInput}</span></h2>
                 {data2.items && data2.items.map(b => <SearchBook
-                    isReading={inUserLibrary.includes(b.id) ? true : false}
+                    isReading={inUserLibrary && inUserLibrary.includes(b.id) ? true : false}
                     key={b.id}
                     google_id={b.id}
                     title={b.volumeInfo.title}

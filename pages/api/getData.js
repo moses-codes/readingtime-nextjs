@@ -7,7 +7,6 @@ const User = require('../../models/User')
 export default async function handler(req, res) {
     const { userId } = getAuth(req)
     await connectMongo();
-    console.log(userId)
     try {
         // Connect to the database
         console.log('trying...')
@@ -16,6 +15,12 @@ export default async function handler(req, res) {
         let { booksReading } = await User.findOne({
             clerkId: userId
         }).exec()
+
+        if (!booksReading || booksReading.length === 0) {
+            // If the library is empty or booksReading is not an array,
+            // return an empty array.
+            return res.status(200).json({ updatedBooksReading: [] });
+        }
 
         console.log(booksReading)
         //console.log(user)
