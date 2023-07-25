@@ -47,7 +47,7 @@ export default function ReadingGoalForm(props) {
         <button
             onClick={handleClick}
             name="dailyGoal"
-
+            type="button"
             className={`btn btn-xs btn-accent ${formData.daysGoal <= 0 || formData.bookProgress >= props.pageCount ? " btn-disabled" : ""}`}
 
         >Goal met!</button>
@@ -90,7 +90,7 @@ export default function ReadingGoalForm(props) {
                         onChange={handleChange}
                         name='daysGoal'
                         value={formData.daysGoal}
-                        className='border-black border-2 rounded-md mx-2 px-2  w-16'
+                        className='border-black border-2 rounded-md mx-2 px-2 w-16'
                     />
                 </div>
 
