@@ -51,3 +51,29 @@ body {
     opacity: 1;
   }
 }
+
+/* keyframes for wiggle-alert */
+@keyframes wiggle-alert {
+  0%, 100% { transform: translateX(0px); }
+  25% { transform: translateX(-3px); } 
+  75% { transform: translateX(3px); } 
+}
+
+.wiggle-alert {
+  animation: wiggle-alert 0.2s; 
+}
+
+/* keyframes for big-wiggle */
+@keyframes big-wiggle {
+  0%, 100% { transform: translateX(0px); }
+  25% { transform: translateX(-10px); } 
+  75% { transform: translateX(10px); } 
+}
+
+.big-wiggle {
+  animation: big-wiggle 0.3s linear 3;
+}
+
+.button-press {
+  transform: scale(0.96);
+}

@@ -9,6 +9,8 @@ export default function ReadingGoalForm(props) {
         bookProgress: progress,
     })
 
+    const [saveChanges, toggleSaveChanges] = useState(false)
+
     let dailyGoal = Math.ceil((props.pageCount - formData.bookProgress) / formData.daysGoal)
     let currPercent = Math.floor((formData.bookProgress / props.pageCount) * 100)
 
@@ -21,6 +23,7 @@ export default function ReadingGoalForm(props) {
 
 
     function handleChange(e) {
+        toggleSaveChanges(p => p = true)
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -30,7 +33,7 @@ export default function ReadingGoalForm(props) {
     //this function updates the form if the user has met their day goal
     function handleClick(e) {
         e.preventDefault()
-
+        toggleSaveChanges(p => p = true)
         if (e.target.name === "dailyGoal") {
             console.log("goal is " + dailyGoal)
             let newProgress = Number(formData.bookProgress) + Number(dailyGoal)
@@ -57,6 +60,7 @@ export default function ReadingGoalForm(props) {
     return (
         <>
             <form className='text-left' onSubmit={(e) => {
+                toggleSaveChanges(!saveChanges)
                 e.preventDefault()
                 handleSaveChanges({
                     ...formData,
@@ -100,7 +104,10 @@ export default function ReadingGoalForm(props) {
                 </div>
                 <button
                     type='submit'
-                    className="btn btn-sm w-40 mt-3 btn-primary">save changes</button>
+                    className={`btn btn-sm w-40 mt-3 btn-primary 
+                    ${saveChanges && 'wiggle-alert'}
+                    ${!saveChanges && 'btn-disabled'}
+                    `}>save changes</button>
             </form >
         </>
     )

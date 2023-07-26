@@ -16,6 +16,8 @@ export default async function handler(req, res) {
             clerkId: userId
         }).exec()
 
+        console.log(booksReading)
+
         if (!booksReading || booksReading.length === 0) {
             // If the library is empty or booksReading is not an array,
             // return an empty array.
