@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export default function ReadingGoalForm(props) {
-    const { handleSaveChanges, progress, goal } = props
+    const { handleSaveChanges, progress, goal, title } = props
     // const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -54,22 +54,29 @@ export default function ReadingGoalForm(props) {
                 name="dailyGoal"
                 type="button"
 
-                className={`btn btn-sm btn-accent ${formData.daysGoal <= 0 || formData.bookProgress >= props.pageCount ? " btn-disabled" : ""}`}
+                className={`btn btn-sm btn-accent  ml-2 ${formData.daysGoal <= 0 || formData.bookProgress >= props.pageCount ? " btn-disabled" : ""}`}
 
             >Goal Achieved!</button>
         </div>
     )
 
-    const daysGoal = (<p className="mr-2 "> Read {dailyGoal} pages a day.</p>)
+    const daysGoal = (<p className="mr-2 ">{dailyGoal} pages a day</p>)
     return (
         <>
-            <form className='text-left relative' >
-
+            <div className=''>
+                <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3>
                 <div className='flex align-center mt-2'>
                     <progress className="progress progress-info w-56 my-auto mr-2" value={currPercent} min="0" max="100">
                     </progress>
                     <p>{currPercent}% {currPercent === 100 && <span>&#127881;</span>}</p>
                 </div>
+            </div>
+            <form className='text-left relative' >
+                <div className='flex justify-start mt-2 md:text-lg text-xs px-0'>
+                    <div className='w-1/2'>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>Your daily goal will go here!</p>}</div>
+                    <div className='w-1/2'>{goalButton}</div>
+                </div>
+
 
                 <div className='flex mt-2 justify-start md:text-lg text-xs'>
                     <label className='w-1/2' htmlFor="">Current Page:</label>
@@ -80,7 +87,7 @@ export default function ReadingGoalForm(props) {
                         onChange={handleChange}
                         name='bookProgress'
                         value={formData.bookProgress}
-                        className='border-black border-2 rounded-md mx-2 px-2 w-16'
+                        className='border-black border-2 rounded-md mx-2 px-2 w-20'
                     />
                     <span> / {props.pageCount} p.</span>
                 </div>
@@ -93,14 +100,11 @@ export default function ReadingGoalForm(props) {
                         name='daysGoal'
                         min='0'
                         value={formData.daysGoal}
-                        className='border-black border-2 rounded-md mx-2 px-2 w-16'
+                        className='border-black border-2 rounded-md mx-2 px-2 w-20'
                     />
                 </div>
 
-                <div className='flex justify-start mt-2 md:text-lg text-xs px-0'>
-                    <div className='w-1/2'>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>Your daily goal will go here!</p>}</div>
-                    <div className='w-1/2'>{goalButton}</div>
-                </div>
+
 
 
                 <button
