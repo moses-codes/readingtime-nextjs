@@ -59,16 +59,18 @@ export default function BookSearch({ toggleAlert }) {
         searchResults = (
             <div className=''>
                 <h2 className='font-bold'>Search results for <span className='italic'>{searchInput}</span></h2>
-                {data2.items && data2.items.map(b => <SearchBook
-                    isReading={inUserLibrary && inUserLibrary.includes(b.id) ? true : false}
-                    key={b.id}
-                    google_id={b.id}
-                    title={b.volumeInfo.title}
-                    authors={b.volumeInfo.authors}
-                    cover={b.volumeInfo.imageLinks?.thumbnail}
-                    pageCount={b.volumeInfo.pageCount}
-                    handleAdd={handleAdd}
-                />)}
+                {data2.items && data2.items
+                    .filter(b => b.volumeInfo.pageCount >= 0)
+                    .map(b => <SearchBook
+                        isReading={inUserLibrary && inUserLibrary.includes(b.id) ? true : false}
+                        key={b.id}
+                        google_id={b.id}
+                        title={b.volumeInfo.title}
+                        authors={b.volumeInfo.authors}
+                        cover={b.volumeInfo.imageLinks?.thumbnail}
+                        pageCount={b.volumeInfo.pageCount}
+                        handleAdd={handleAdd}
+                    />)}
             </div>
         )
     } else {
