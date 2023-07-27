@@ -77,3 +77,25 @@ body {
 .button-press {
   transform: scale(0.96);
 }
+
+.active-book {
+  transition: all .2s ease-out;
+}
+
+.active-book:hover {
+  transform: scale(1.03);
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+}
+
+.animate-alert-pop {
+  animation: fadeInOut 3s ease-in-out;
+  /* Add more styles for the transition here if needed */
+}

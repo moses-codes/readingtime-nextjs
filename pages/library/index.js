@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
+import Alert from '@/components/Alert'
 
 import useSWR, { mutate } from 'swr'
 
@@ -9,29 +10,80 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 // import { getAuth, clerkClient, buildClerkProps } from '@clerk/nextjs/server'
 // import { connectMongo } from "@/utils/connectMongo"
 
-export default function Home(props) {
-    // const [shelf, setShelf] = useState([])
+export default function Home({ toggleAlert }) {
 
+    // const [showAlert, toggleAlert] = useState({
+    //     status: false,
+    //     title: null,
+    //     type: null,
+    // })
 
     const { data, error, isLoading } = useSWR('/api/getData', fetcher)
 
-
-    async function handleDelete(target) {
+    async function handleUpdatePageCount(value) {
         // console.log() the _id
-        console.log(target)
+        console.log('changing page count to ', value)
         // TODO: Submit the form data to the server
-        const response = await fetch('/api/book/deleteBook', {
-            method: 'POST',
+        const response = await fetch('/api/book/updatePageCount', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ target }),
+            body: JSON.stringify(value),
         });
 
         console.log(response)
 
         if (response.ok) {
             mutate('/api/getData')
+            console.log('Book page count updated successfully');
+            toggleAlert({
+                status: true,
+                type: 'updated',
+                title: value.title
+            })
+            setTimeout(() => {
+                toggleAlert({
+                    status: false,
+                    type: null,
+                    title: null,
+                });
+            }, 2900);
+        } else {
+            console.error('Failed to change');
+        }
+    }
+
+
+
+    async function handleDelete({ _id, title }) {
+        // console.log() the _id
+        console.log(_id, title)
+        // TODO: Submit the form data to the server
+        const response = await fetch('/api/book/deleteBook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ _id }),
+        });
+
+        console.log(response)
+
+        if (response.ok) {
+            mutate('/api/getData')
+            toggleAlert({
+                status: true,
+                type: 'deleted',
+                title: title,
+            })
+            setTimeout(() => {
+                toggleAlert({
+                    status: false,
+                    type: null,
+                    title: null,
+                });
+            }, 2900);
             console.log('Document removed successfully');
         } else {
             console.error('Failed to remove document');
@@ -82,7 +134,7 @@ export default function Home(props) {
             </>
         )
     } else if (data) {
-        console.log('library loaded', data.updatedBooksReading.length)
+        // console.log('library loaded', data.updatedBooksReading)
         section = (
             <>
                 <BookShelf
@@ -90,6 +142,7 @@ export default function Home(props) {
                     shelf={data.updatedBooksReading}
                     handleDelete={handleDelete}
                     handleSaveChanges={handleSaveChanges}
+                    handleUpdatePageCount={handleUpdatePageCount}
                 />
             </>
         )
@@ -100,7 +153,7 @@ export default function Home(props) {
             <main
                 className="p-12">
 
-                <h1 className='md:text-5xl text-2xl'>Your Library</h1>
+                <h1 className='md:text-5xl text-2xl mb-10'>Your Library</h1>
                 <div>{section}</div>
 
 

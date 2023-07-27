@@ -30,7 +30,11 @@ const userSchema = new mongoose.Schema({
         goal: {
             type: Number,
             default: 0,
-        }
+        },
+        pageCount: {
+            type: Number,
+            default: 0,
+        },
     }],
     booksCompleted: [{
         book: {

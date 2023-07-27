@@ -43,6 +43,8 @@ export default async function handler(req, res) {
                     google_id: google_id,
                     progress: 0,
                     goal: 0,
+                    pageCount: bookToAdd.pageCount,
+                    thing: 'thing',
                 })
 
                 const savedUser = await mongoUser.save();
@@ -51,7 +53,7 @@ export default async function handler(req, res) {
             } catch (error) {
                 console.error(error);
             }
-            console.log(`added ${title} to user ${userId}'s reading shelf`)
+            console.log(`added ${title} to user ${userId}'s reading shelf. `)
             return res.status(200).json({ data: `added ${title} to user ${userId}'s reading shelf` });
         } catch (error) {
             res.status(500).json({ success: false, error: 'Server Error' });

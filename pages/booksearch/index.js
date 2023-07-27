@@ -17,7 +17,7 @@ function fetcher(...urls) {
 }
 
 
-export default function BookSearch(props) {
+export default function BookSearch({ toggleAlert }) {
     const router = useRouter();
     const searchInput = router.query.myProp || '';
 
@@ -31,7 +31,6 @@ export default function BookSearch(props) {
     let inUserLibrary
 
     if (!isLoading1) {
-        console.log('swr fetched', data1.updatedBooksReading)
         if (data1.updatedBooksReading) {
             inUserLibrary = data1.updatedBooksReading.map(el => el.book.google_id)
         }
@@ -97,6 +96,18 @@ export default function BookSearch(props) {
             console.log('Document added successfully');
             mutate('/api/getData')
             setPendingCount(prevCount => prevCount + 1)
+            toggleAlert({
+                type: "added",
+                title: bookInfo.title,
+                status: true,
+            })
+            setTimeout(() => {
+                toggleAlert({
+                    status: false,
+                    type: null,
+                    title: null,
+                });
+            }, 3000)
         } else {
             console.error('Failed to add document');
         }
@@ -104,9 +115,10 @@ export default function BookSearch(props) {
 
     return (
         <>
+
             <Layout pending={pendingCount} >
                 < div
-                    className="">
+                    className="relative z-auto">
                     <section className='m-6'>
                         {searchResults}
                     </section>
