@@ -14,7 +14,7 @@ export default function Navbar(props) {
     let { pending } = props
 
     return (
-        <div className="navbar bg-base-100 flex justify-between md:px-5 w-full">
+        <div className="navbar top-0 bg-white flex justify-between md:px-5 w-full border-b-2 sticky z-50">
             <div className="flex-none">
                 <Link href="/" className="btn btn-ghost normal-case text-xl no-animation">
                     <img

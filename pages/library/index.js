@@ -162,7 +162,7 @@ export default function Home({ toggleAlert }) {
             <main
                 className="p-12">
 
-                <h1 className='md:text-5xl text-2xl mb-10'>Your Library</h1>
+                <h1 className='md:text-5xl text-2xl mb-10 text-center font-light'>Your Library</h1>
                 <div>{section}</div>
 
 

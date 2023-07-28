@@ -72,11 +72,6 @@ export default function ReadingGoalForm(props) {
                 </div>
             </div>
             <form className='text-left relative' >
-                <div className='flex justify-start mt-2 md:text-lg text-xs px-0'>
-                    <div className='w-1/2'>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>Your daily goal will go here!</p>}</div>
-                    <div className='w-1/2'>{goalButton}</div>
-                </div>
-
 
                 <div className='flex mt-2 justify-start md:text-lg text-xs'>
                     <label className='w-1/2' htmlFor="">Current Page:</label>
@@ -104,25 +99,30 @@ export default function ReadingGoalForm(props) {
                     />
                 </div>
 
+                <div className='flex justify-start mt-2 md:text-lg text-xs px-0'>
+                    <div className='w-1/2'>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>Your daily goal will go here!</p>}</div>
 
+                    <div className='w-1/2'>{goalButton}</div>
+                </div>
 
-
-                <button
-                    type='submit'
-                    onClick={(e) => {
-                        toggleSaveChanges(!saveChanges)
-                        e.preventDefault()
-                        handleSaveChanges({
-                            ...formData,
-                            _id: props._id
-                        })
-                    }}
-                    className={`btn btn-sm w-40 mt-3 btn-primary 
+                <div className='flex items-center mt-2'>
+                    <button
+                        type='submit'
+                        onClick={(e) => {
+                            toggleSaveChanges(!saveChanges)
+                            e.preventDefault()
+                            handleSaveChanges({
+                                ...formData,
+                                _id: props._id
+                            })
+                        }}
+                        className={`btn btn-sm w-40  btn-primary 
                     ${saveChanges && 'wiggle-alert'}
                     ${!saveChanges && 'btn-disabled'}
                     
                     `}>
-                    save changes</button>
+                        save changes</button>
+                </div>
             </form >
         </>
     )

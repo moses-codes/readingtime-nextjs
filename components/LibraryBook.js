@@ -13,8 +13,8 @@ export default function LibraryBook({ _id,
 
         <div
             key={_id} className="card sm:card-side bg-base-100 shadow-xl rounded-md my-5 flex lg:mx-10 max-w-2xl w-full relative pt-5 pb-5 px-5 border-2 border-gray-400 active-book">
-            <div className="dropdown dropdown-bottom dropdown-left absolute right-0 top-0 bg-white">
-                <label tabIndex={0} className="btn btn-error btn-xs font-extrabold text-white m-1 hover:bg-red-300">. . . <span className='sr-only'>Click here for more options</span></label>
+            <div className="dropdown dropdown-bottom dropdown-left absolute right-0 top-0 bg-base-100 rounded-xl">
+                <label tabIndex={0} className="btn btn-error btn-xs font-extrabold text-white m-1 hover:bg-red-300 ">. . . <span className='sr-only'>Click here for more options</span></label>
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow-lg rounded-box w-52  bg-slate-100 border-2 border-slate-400">
                     <li>
                         <ChangePageCount
@@ -38,7 +38,9 @@ export default function LibraryBook({ _id,
                 </ul>
             </div>
 
-            <figure className='h-max min-w-1/4 mx-auto'><img className='rounded-md' src={cover} alt={"The book cover for " + title} /></figure>
+            <div className='flex items-center'>
+                <figure className='h-max max-h-52 min-w-1/4 mx-auto'><img className='rounded-md' src={cover} alt={"The book cover for " + title} /></figure>
+            </div>
 
             <div className='max-w-4xl md:text-left md:w-3/4 w-full md:ml-5 ml-3'>
                 {/* <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3> */}
