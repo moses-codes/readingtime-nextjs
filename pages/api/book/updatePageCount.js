@@ -9,13 +9,19 @@ export default async function handler(req, res) {
     try {
         await connectMongo();
         const { userId } = getAuth(req)
-        const { _id } = req.body; // Assuming the target is passed in the request body
+        const formData = req.body; // Assuming the target is passed in the request body
+        const { pageCount, _id } = formData
         const currUser = await User.findOneAndUpdate(
-            { clerkId: userId },
-            { $pull: { booksReading: { bookId: _id } } },
+            { clerkId: userId, 'booksReading.bookId': _id },
+            {
+                $set: {
+                    'booksReading.$.pageCount': pageCount, // Update the progress field of the matched bookId
+                },
+            },
         );
+        console.log(formData, currUser)
         //   // Handle successful deletion and return the updated user or appropriate response
-        return res.status(200).json({ message: "Book deleted successfully" });
+        return res.status(200).json({ message: "Book's page count updated successfully" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });

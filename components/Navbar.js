@@ -1,14 +1,20 @@
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { useState } from "react";
 // import readingTimeLogo from '/default.png'
 
 export default function Navbar(props) {
 
+    const [searchValue, setSearchValue] = useState(props.searchVal || '')
+
+    function handleChange(e) {
+        setSearchValue(e.target.value)
+    }
+
     let { pending } = props
 
-    // console.log(pending)
     return (
-        <div className="navbar bg-base-100 flex justify-between md:px-5 w-full">
+        <div className="navbar top-0 bg-white flex justify-between md:px-5 w-full border-b-2 sticky z-50">
             <div className="flex-none">
                 <Link href="/" className="btn btn-ghost normal-case text-xl no-animation">
                     <img
@@ -25,7 +31,25 @@ export default function Navbar(props) {
 
                     </div>
                     </li>
-                    <li><Link href="/booksearch/addBook">Add Book</Link></li>
+                    {/* <li><Link href="/booksearch/">Add Book</Link></li> */}
+                    <li>
+                        <form>
+                            <div className='flex'>
+                                <input
+                                    className="input input-bordered w-full max-w-xs"
+                                    id="searchInput"
+                                    name="searchInput"
+                                    type="text"
+                                    placeholder="Search all books"
+                                    value={searchValue}
+                                    onChange={handleChange}
+                                // value={searchInput}
+                                // onChange={handleFormChange}
+                                />
+                                <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/"><button type="submit" className='btn btn-primary'>Search</button></Link>
+                            </div>
+                        </form>
+                    </li>
                 </ul>
             </div>
             <li><UserButton afterSignOutUrl="/" /></li>
