@@ -126,8 +126,17 @@ export default function Home({ toggleAlert }) {
         )
     } else if (error) {
         section = (<div>Error retrieving books</div>)
-    } else if (data.updatedBooksReading.length === 0) {
-        console.log('library loaded', data.updatedBooksReading.length)
+    }
+    // else if (!data.updatedBooksReading.length) {
+    //     console.log('library loaded')
+    //     section = (
+    //         <>
+    //             <h2 className='mt-10'>You have no books in your library.</h2>
+    //         </>
+    //     )
+    // } 
+    else if (!data.updatedBooksReading || data.updatedBooksReading.length === 0) {
+        console.log('library loaded')
         section = (
             <>
                 <h2 className='mt-10'>You have no books in your library.</h2>

@@ -8,7 +8,13 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 import Alert from '@/components/Alert';
 
+import useSWR from 'swr'
+
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+
 export default function MyApp({ Component, pageProps }) {
+
+  const { data, error, isLoading } = useSWR('/api/auth/getUser', fetcher)
 
   const [showAlert, toggleAlert] = useState({
     status: false,
