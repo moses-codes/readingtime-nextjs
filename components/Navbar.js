@@ -24,10 +24,11 @@ export default function Navbar(props) {
                 </Link>
                 <ul className="menu menu-horizontal px-1">
 
-                    <li><div className='relative indicator md:mr-5'><Link href="/library/">Library {pending > 0 &&
-                        <span className="indicator-item badge badge-sm badge-secondary mt-2">+{pending}
-                        </span>
-                    }</Link>
+                    <li><div className='relative indicator md:mr-5'>
+                        <Link href="/library/">Library {pending > 0 &&
+                            <span className="indicator-item badge badge-sm badge-secondary mt-2">+{pending}
+                            </span>
+                        }</Link>
 
                     </div>
                     </li>
@@ -36,17 +37,17 @@ export default function Navbar(props) {
                         <form>
                             <div className='flex'>
                                 <input
-                                    className="input input-bordered w-full max-w-xs"
+                                    className="input input-bordered md:w-full w-20 md:input-mdinput-sm"
                                     id="searchInput"
                                     name="searchInput"
                                     type="text"
-                                    placeholder="Search all books"
+                                    placeholder="Enter a title..."
                                     value={searchValue}
                                     onChange={handleChange}
                                 // value={searchInput}
                                 // onChange={handleFormChange}
                                 />
-                                <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/"><button type="submit" className='btn btn-primary'>Search</button></Link>
+                                <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/"><button type="submit" className='btn btn-primary md:btn-md w-16 btn-sm'>Search</button></Link>
                             </div>
                         </form>
                     </li>

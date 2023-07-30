@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export default function ReadingGoalForm(props) {
-    const { handleSaveChanges, progress, goal, title } = props
+    const { handleSaveChanges, progress, goal, title, showBook } = props
     // const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -65,7 +65,7 @@ export default function ReadingGoalForm(props) {
         <>
             <div className=''>
                 <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3>
-                <div className='flex align-center mt-2'>
+                <div className='flex align-center mt-1'>
                     <progress className="progress progress-info w-56 my-auto mr-2" value={currPercent} min="0" max="100">
                     </progress>
                     <p>{currPercent}% {currPercent === 100 && <span>&#127881;</span>}</p>
@@ -88,7 +88,7 @@ export default function ReadingGoalForm(props) {
                 </div>
 
                 <div className='flex mt-2 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2' htmlFor="">Days left to finish:</label>
+                    <label className='w-1/2' htmlFor="">Days to finish:</label>
                     <input
                         type='number'
                         onChange={handleChange}
@@ -100,7 +100,7 @@ export default function ReadingGoalForm(props) {
                 </div>
 
                 <div className='flex justify-start mt-2 md:text-lg text-xs px-0'>
-                    <div className='w-1/2'>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>Your daily goal will go here!</p>}</div>
+                    <div className='w-1/2'>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>no goal yet!</p>}</div>
 
                     <div className='w-1/2'>{goalButton}</div>
                 </div>
@@ -124,6 +124,7 @@ export default function ReadingGoalForm(props) {
                         save changes</button>
                 </div>
             </form >
+
         </>
     )
 }
