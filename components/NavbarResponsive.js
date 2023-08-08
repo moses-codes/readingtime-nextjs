@@ -64,8 +64,13 @@ export default function Navbar(props) {
             <div className="navbar-start hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
 
-                    <li><a>Home</a></li>
-                    <li><a>Library</a></li>
+                    <Link href="/">
+                        <li>Home</li>
+                    </Link>
+
+                    <Link href="/library/">
+                        <li>Library</li>
+                    </Link>
                 </ul>
             </div>
             <div className="navbar-end">

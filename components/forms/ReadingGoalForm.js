@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export default function ReadingGoalForm(props) {
-    const { handleSaveChanges, progress, goal, title, showBook } = props
+    const { handleSaveChanges, progress, goal, title } = props
     // const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -62,7 +62,7 @@ export default function ReadingGoalForm(props) {
 
     const daysGoal = (<p className="mr-2 ">{dailyGoal} pages a day</p>)
     return (
-        <>
+        <div className='px-5 py-5'>
             <div className=''>
                 <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3>
                 <div className='flex align-center mt-1'>
@@ -125,7 +125,7 @@ export default function ReadingGoalForm(props) {
                 </div>
             </form >
 
-        </>
+        </div>
     )
 }
 
