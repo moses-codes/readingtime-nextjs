@@ -44,11 +44,11 @@ export default function LibraryBook({ _id,
                         </li>
                         <li className=' bg-red-100'>
                             <a onClick={() => {
+                                setSelectedId(null)
                                 handleDelete({
                                     _id: _id,
                                     title: title
                                 })
-                                setSelectedId(null)
                             }
                             }>
                                 <span>Remove this book </span>

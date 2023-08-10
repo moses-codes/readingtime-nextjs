@@ -16,10 +16,10 @@ export default function Navbar(props) {
     return (
         <div className="navbar bg-base-100">
             {/*the mobile navbar*/}
-            <div className="navbar-start">
-                <div className="dropdown relative indicator ">
+            <div className="navbar-start lg:hidden">
+                <div className="dropdown relative indicator lg:hidden mr-5">
                     {pending > 0 &&
-                        <span className="indicator-item badge badge-sm badge-secondary mt-2">+{pending}
+                        <span className="indicator-item badge badge-sm badge-secondary mt-2">
                         </span>
                     }
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -34,17 +34,21 @@ export default function Navbar(props) {
                             </li>
                         </Link>
                         <Link href="/library/">
-                            <li>
-                                <div className='md:mr-5'>
-                                    Library
+                            <li className="">
+
+                                <div className='md:mr-5 flex'>
+                                    <p>Library</p>
+                                    {pending && <span className="badge badge-secondary">+{pending}</span>}
                                 </div>
                             </li>
                         </Link>
                     </ul>
                 </div>
-                <div className='flex'>
+
+
+                <div className='flex lg:hidden'>
                     <input
-                        className="input input-bordered md:w-full w-20 md:input-md input-sm"
+                        className="input input-bordered md:w-full w-20 sm:input-md input-sm"
                         id="searchInput"
                         name="searchInput"
                         type="text"
@@ -55,23 +59,43 @@ export default function Navbar(props) {
                     // onChange={handleFormChange}
                     />
                     <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/">
-                        <button type="submit" className='btn btn-primary w-20 md:btn-md btn-sm' onClick={() => console.log('clicked')}>Search</button>
+                        <button type="submit" className='btn btn-primary w-20 sm:btn-md btn-sm' onClick={() => console.log('clicked')}>Search</button>
                     </Link>
                 </div>
             </div>
 
             {/*the desktop navbar*/}
             <div className="navbar-start hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
+                <div className="menu menu-horizontal px-20 w-full flex">
 
                     <Link href="/">
-                        <li>Home</li>
+                        <li className="pr-14">Home</li>
                     </Link>
 
                     <Link href="/library/">
-                        <li>Library</li>
+                        <div className="indicator w-16">
+                            {pending && <span className="indicator-item indicator-end badge badge-secondary">+{pending}</span>}
+                            <li className="">Library</li>
+                        </div>
                     </Link>
-                </ul>
+
+                </div>
+            </div>
+            <div className='lg:flex navbar-center justify-center hidden'>
+                <input
+                    className="input input-bordered md:w-full w-20 md:input-md input-sm"
+                    id="searchInput"
+                    name="searchInput"
+                    type="text"
+                    placeholder="Enter a title..."
+                    value={searchValue}
+                    onChange={handleChange}
+                // value={searchInput}
+                // onChange={handleFormChange}
+                />
+                <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/">
+                    <button type="submit" className='btn btn-primary w-20 md:btn-md btn-sm' onClick={() => console.log('clicked')}>Search</button>
+                </Link>
             </div>
             <div className="navbar-end">
                 <UserButton afterSignOutUrl="/" />
