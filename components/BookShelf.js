@@ -52,47 +52,50 @@ export default function BookShelf(props) {
     return (<>
         <main className='flex flex-wrap justify-start relative'>
 
-            {/*Animate card - to - modal when a book is selected*/}
             <LayoutGroup>
-                {shelf && shelf.map(b => (
+                <div className='z-0 flex flex-wrap'>
 
-                    <LibraryBook
-                        _id={b.book._id}
-                        title={b.book.title}
-                        pageCount={b.pageCount}
-                        cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
-                        setSelectedId={setSelectedId}
-                        goal={b.goal}
+                    {/*Animate card - to - modal when a book is selected*/}
 
-                    />
-                ))}
+                    {shelf && shelf.map((b, i) => (
 
-                {/*Animate modal-to-card when user clicks the 'close' button or outside of the modal's active area*/}
-                {currBook && (
-                    <div className='h-screen w-screen bg-black bg-opacity-40 fixed top-0 left-0 flex items-center z-40'
-                        onClick={handleParentClick}
-                    >
-                        <AnimatePresence>
-                            {/*The Animate Presence only works with direct children*/}
-                            <LibraryBookModal
-                                _id={currBook.book._id}
-                                title={currBook.book.title}
-                                pageCount={currBook.pageCount}
-                                progress={currBook.progress}
-                                cover={`https://books.google.com/books/publisher/content/images/frontcover/${currBook.book.google_id}?fife=w400-h600&source=gbs_api`}
-                                goal={currBook.goal}
-                                handleButtonClick={handleButtonClick}
-                                selectedId={selectedId}
-                                setSelectedId={setSelectedId}
-                                handleDelete={handleDelete}
-                                handleSaveChanges={handleSaveChanges}
-                                handleUpdatePageCount={handleUpdatePageCount}
-                            />
-                        </AnimatePresence>
-                    </div>
-                )}
-
+                        <LibraryBook
+                            _id={b.book._id}
+                            title={b.book.title}
+                            pageCount={b.pageCount}
+                            cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
+                            setSelectedId={setSelectedId}
+                            goal={b.goal}
+                            z_index={shelf.length - i}
+                        />
+                    ))}
+                </div>
             </LayoutGroup>
+            {/*Animate modal-to-card when user clicks the 'close' button or outside of the modal's active area*/}
+            {currBook && (
+                <div className='h-screen w-screen bg-black bg-opacity-40 fixed top-0 left-0 flex items-center z-40'
+                    onClick={handleParentClick}
+                >
+                    <AnimatePresence>
+                        {/*The Animate Presence only works with direct children*/}
+                        <LibraryBookModal
+                            _id={currBook.book._id}
+                            title={currBook.book.title}
+                            pageCount={currBook.pageCount}
+                            progress={currBook.progress}
+                            cover={`https://books.google.com/books/publisher/content/images/frontcover/${currBook.book.google_id}?fife=w400-h600&source=gbs_api`}
+                            goal={currBook.goal}
+                            handleButtonClick={handleButtonClick}
+                            selectedId={selectedId}
+                            setSelectedId={setSelectedId}
+                            handleDelete={handleDelete}
+                            handleSaveChanges={handleSaveChanges}
+                            handleUpdatePageCount={handleUpdatePageCount}
+                        />
+                    </AnimatePresence>
+                </div>
+            )}
+
         </main >
     </>
     )

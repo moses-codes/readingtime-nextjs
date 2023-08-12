@@ -4,7 +4,7 @@ import ReadingGoalForm from '../forms/ReadingGoalForm'
 
 export default function LibraryBook({
     _id, title, cover, pageCount, progress, goal,
-    setSelectedId
+    setSelectedId, z_index
     //  handleDelete, handleSaveChanges, handleUpdatePageCount 
 }) {
 
@@ -18,9 +18,12 @@ export default function LibraryBook({
 
     return (
         <motion.div
+
             layout
             key='_id'
-            className='card w-60 min-h-min bg-base-100 shadow-xl mx-2 mt-2 z-0'
+            className={`card w-60 min-h-min bg-base-100 
+            z-${z_index * 10}
+            shadow-xl mx-2 mt-2 z-0`}
             layoutId={_id}
             onClick={() => {
                 setSelectedId(_id)

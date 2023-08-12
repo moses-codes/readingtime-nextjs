@@ -74,7 +74,7 @@ export default function Navbar(props) {
 
                     <Link href="/library/">
                         <div className="indicator w-16">
-                            {pending && <span className="indicator-item indicator-end badge badge-secondary">+{pending}</span>}
+                            {pending > 0 && <span className="indicator-item indicator-end badge badge-secondary">+{pending}</span>}
                             <li className="">Library</li>
                         </div>
                     </Link>

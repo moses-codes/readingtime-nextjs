@@ -23,7 +23,7 @@ export default function LibraryBook({ _id,
             animate={{ opacity: 1, y: 0, scale: 1 }} // Animation when component is shown
             exit={{ opacity: 0, y: -20, scale: 0.9 }} // Animation when component is removed from the DOM
             transition={{ duration: 0.4, type: 'spring' }} // Duration of the animation
-
+            s
         >
             {/* fix motion div to make the book expand and contract smoothly*/}
             <div
