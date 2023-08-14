@@ -8,7 +8,10 @@ import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 export default function BookShelf(props) {
 
 
-    const [selectedId, setSelectedId] = useState(null)
+    const [selectedId, setSelectedId] = useState({
+        currentId: null,
+        lastSelectedId: null,
+    })
 
 
     console.log(selectedId)
@@ -22,31 +25,41 @@ export default function BookShelf(props) {
 
     let currBook
 
-    if (selectedId) {
-        let item = findObjectById(shelf, selectedId)
-        console.log(item)
+    if (selectedId.currentId) {
+        let item = findObjectById(shelf, selectedId.currentId)
         currBook = item
         console.log('the current book is ', currBook.book.title)
+        console.log(selectedId.currentId === currBook.book._id ? "the ids match" : 'they do not')
     } else {
         currBook = null
     }
-
-    console.log(currBook ? currBook : 'no book selected')
 
 
     const handleParentClick = () => {
         // Do something when the parent div is clicked
         console.log('parent clicked')
-        setSelectedId(null)
+        setSelectedId(p => {
+            return {
+                ...p,
+                currentId: null,
+            }
+        })
     };
 
     const handleButtonClick = (e) => {
         // Do something when the button inside the child div is clicked
 
         // e.stopPropagation(); // Stop event propagation to the parent div
-        console.log('button clicked')
-        setSelectedId(null)
+        console.log('parent clicked')
+        setSelectedId(p => {
+            return {
+                ...p,
+                currentId: null,
+            }
+        })
     };
+
+
 
 
     return (<>
@@ -58,16 +71,17 @@ export default function BookShelf(props) {
                     {/*Animate card - to - modal when a book is selected*/}
 
                     {shelf && shelf.map((b, i) => (
-
-                        <LibraryBook
-                            _id={b.book._id}
-                            title={b.book.title}
-                            pageCount={b.pageCount}
-                            cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
-                            setSelectedId={setSelectedId}
-                            goal={b.goal}
-                            z_index={shelf.length - i}
-                        />
+                        <AnimatePresence>
+                            <LibraryBook
+                                _id={b.book._id}
+                                title={b.book.title}
+                                pageCount={b.pageCount}
+                                cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
+                                setSelectedId={setSelectedId}
+                                goal={b.goal}
+                                z_index={selectedId.lastSelectedId === b.book._id ? 1 : -1}
+                            />
+                        </AnimatePresence>
                     ))}
                 </div>
             </LayoutGroup>
@@ -76,8 +90,8 @@ export default function BookShelf(props) {
                 <div className='h-screen w-screen bg-black bg-opacity-40 fixed top-0 left-0 flex items-center z-40'
                     onClick={handleParentClick}
                 >
+                    {/*The Animate Presence only works with direct children*/}
                     <AnimatePresence>
-                        {/*The Animate Presence only works with direct children*/}
                         <LibraryBookModal
                             _id={currBook.book._id}
                             title={currBook.book.title}
@@ -86,7 +100,7 @@ export default function BookShelf(props) {
                             cover={`https://books.google.com/books/publisher/content/images/frontcover/${currBook.book.google_id}?fife=w400-h600&source=gbs_api`}
                             goal={currBook.goal}
                             handleButtonClick={handleButtonClick}
-                            selectedId={selectedId}
+                            selectedId={selectedId.currentId}
                             setSelectedId={setSelectedId}
                             handleDelete={handleDelete}
                             handleSaveChanges={handleSaveChanges}
