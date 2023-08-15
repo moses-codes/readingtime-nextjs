@@ -97,7 +97,7 @@ export default function BookShelf(props) {
                             title={currBook.book.title}
                             pageCount={currBook.pageCount}
                             progress={currBook.progress}
-                            cover={`https://books.google.com/books/publisher/content/images/frontcover/${currBook.book.google_id}?fife=w400-h600&source=gbs_api`}
+                            // cover={`https://books.google.com/books/publisher/content/images/frontcover/${currBook.book.google_id}?fife=w400-h600&source=gbs_api`}
                             goal={currBook.goal}
                             handleButtonClick={handleButtonClick}
                             selectedId={selectedId.currentId}

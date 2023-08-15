@@ -1,7 +1,6 @@
-
 import { Inter } from 'next/font/google'
 import Layout from '../components/Layout'
-
+//import Image from 'next/image' //<-- breaks the app
 import Greeting from '../components/Greeting'
 
 import useSWR from 'swr'
