@@ -45,15 +45,16 @@ export default function LibraryBook({ _id,
                     </li>
                     <li className=' bg-red-100'>
                         <a onClick={() => {
+
+                            handleDelete({
+                                _id: _id,
+                                title: title
+                            })
                             setSelectedId(p => {
                                 return {
                                     lastSelectedId: null,
                                     currentId: null,
                                 }
-                            })
-                            handleDelete({
-                                _id: _id,
-                                title: title
                             })
                         }
                         }>

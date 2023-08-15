@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import router from 'next/router'
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
 import Alert from '@/components/Alert'
 
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
@@ -11,12 +12,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 // import { connectMongo } from "@/utils/connectMongo"
 
 export default function Home({ toggleAlert }) {
-
-    // const [showAlert, toggleAlert] = useState({
-    //     status: false,
-    //     title: null,
-    //     type: null,
-    // })
+    const { mutate } = useSWRConfig()
 
     const { data, error, isLoading } = useSWR('/api/getData', fetcher)
 
@@ -35,7 +31,7 @@ export default function Home({ toggleAlert }) {
         console.log(response)
 
         if (response.ok) {
-            mutate('/api/getData')
+
             console.log('Book page count updated successfully');
             toggleAlert({
                 status: true,
@@ -49,6 +45,7 @@ export default function Home({ toggleAlert }) {
                     title: null,
                 });
             }, 2900);
+            mutate('/api/getData')
         } else {
             console.error('Failed to change');
         }
@@ -86,6 +83,7 @@ export default function Home({ toggleAlert }) {
             }, 2900);
             console.log('Document removed successfully');
             mutate('/api/getData')
+            // router.reload(window.location.pathname)
         } else {
             console.error('Failed to remove document');
         }

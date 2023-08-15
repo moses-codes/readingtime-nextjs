@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-// import Image from 'next/image'
+import Image from 'next/image'
 import { motion, AnimatePresence } from "framer-motion"
 import ReadingGoalForm from '../forms/ReadingGoalForm'
 
@@ -24,6 +24,7 @@ export default function LibraryBook({
             style={{
                 zIndex: z_index,
             }}
+            id={title}
             layout
             key='_id'
             className={`card w-60 min-h-min bg-slate-700 
@@ -44,7 +45,10 @@ export default function LibraryBook({
 
             exit={{ opacity: 0 }}
         >
-            <motion.img src={cover}
+            <Image
+                src={cover}
+                height={400}
+                width={400}
                 layout
                 className='w-full h-full rounded-t-xl'
             />
