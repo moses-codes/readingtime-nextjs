@@ -34,20 +34,24 @@ export default function Navbar(props) {
                     </li>
                     {/* <li><Link href="/booksearch/">Add Book</Link></li> */}
                     <li>
-                        <form>
-                            <div className='flex'>
+                        <form onSubmit={handleSubmit}>
+                            <div className="flex">
                                 <input
-                                    className="input input-bordered md:w-full w-20 md:input-mdinput-sm"
+                                    className="input input-bordered md:w-full w-20 md:input-md input-sm"
                                     id="searchInput"
                                     name="searchInput"
                                     type="text"
                                     placeholder="Enter a title..."
                                     value={searchValue}
                                     onChange={handleChange}
-                                // value={searchInput}
-                                // onChange={handleFormChange}
                                 />
-                                <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/"><button type="submit" className='btn btn-primary md:btn-md w-16 btn-sm'>Search</button></Link>
+                                <button
+                                    type="submit btn btn-primary"
+                                    className="btn btn-primary md:btn-md w-16 btn-sm"
+                                    disabled // Disable button if searchValue is empty
+                                >
+                                    Search
+                                </button>
                             </div>
                         </form>
                     </li>

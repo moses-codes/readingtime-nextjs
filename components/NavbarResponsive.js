@@ -1,6 +1,7 @@
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/router"; // Import the useRouter hook
 // import readingTimeLogo from '/default.png'
 
 export default function Navbar(props) {
@@ -12,6 +13,34 @@ export default function Navbar(props) {
     }
 
     let { pending } = props
+
+    const router = useRouter()
+
+    // Handle form submission for mobile section
+    function handleSubmitMobile(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        if (searchValue.trim() !== "") {
+            // Navigate to the search page with the query parameter
+            router.push({
+                pathname: "/booksearch/",
+                query: { myProp: searchValue }
+            });
+        }
+    }
+
+    // Handle form submission for desktop section
+    function handleSubmitDesktop(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        if (searchValue.trim() !== "") {
+            // Navigate to the search page with the query parameter
+            router.push({
+                pathname: "/booksearch/",
+                query: { myProp: searchValue }
+            });
+        }
+    }
 
     return (
         <div className="navbar bg-base-100">
@@ -46,21 +75,19 @@ export default function Navbar(props) {
                 </div>
 
 
-                <div className='flex lg:hidden'>
-                    <input
-                        className="input input-bordered md:w-full w-20 sm:input-md input-sm"
-                        id="searchInput"
-                        name="searchInput"
-                        type="text"
-                        placeholder="Enter a title..."
-                        value={searchValue}
-                        onChange={handleChange}
-                    // value={searchInput}
-                    // onChange={handleFormChange}
-                    />
-                    <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/">
+                <div className=' lg:hidden'>
+                    <form className='flex' onSubmit={handleSubmitMobile}>
+                        <input
+                            className="input input-bordered md:w-full w-20 sm:input-md input-sm"
+                            id="searchInput"
+                            name="searchInput"
+                            type="text"
+                            placeholder="Enter a title..."
+                            value={searchValue}
+                            onChange={handleChange}
+                        />
                         <button type="submit" className='btn btn-primary w-20 sm:btn-md btn-sm' onClick={() => console.log('clicked')}>Search</button>
-                    </Link>
+                    </form>
                 </div>
             </div>
 
@@ -82,20 +109,21 @@ export default function Navbar(props) {
                 </div>
             </div>
             <div className='lg:flex navbar-center justify-center hidden'>
-                <input
-                    className="input input-bordered md:w-full w-20 md:input-md input-sm"
-                    id="searchInput"
-                    name="searchInput"
-                    type="text"
-                    placeholder="Enter a title..."
-                    value={searchValue}
-                    onChange={handleChange}
-                // value={searchInput}
-                // onChange={handleFormChange}
-                />
-                <Link href={{ pathname: '/booksearch/', query: { myProp: searchValue } }} as="/booksearch/">
-                    <button type="submit" className='btn btn-primary w-20 md:btn-md btn-sm' onClick={() => console.log('clicked')}>Search</button>
-                </Link>
+                <form onSubmit={handleSubmitDesktop} className='flex'>
+                    <input
+                        className="input input-bordered md:w-full w-20 md:input-md input-sm mx-1"
+                        id="searchInput"
+                        name="searchInput"
+                        type="text"
+                        placeholder="Enter a title..."
+                        value={searchValue}
+                        onChange={handleChange}
+                    />
+                    <button type="submit"
+                        className={`${!searchValue && 'btn-disabled'} btn btn-primary w-20 md:btn-md btn-sm`}
+
+                        onClick={() => console.log('clicked')}>Search</button>
+                </form>
             </div>
             <div className="navbar-end">
                 <UserButton afterSignOutUrl="/" />

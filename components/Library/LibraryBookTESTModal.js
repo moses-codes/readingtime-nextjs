@@ -22,7 +22,7 @@ export default function LibraryBook({ _id,
         // <AnimatePresence>
         <motion.div
             layout
-            className='card w-full md:w-96 h-96 bg-base-100 absolute inset-x-0 mx-auto z-50'
+            className='card md:w-96 h-96 bg-base-100 absolute inset-x-0 mx-5 md:mx-auto z-50'
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}

@@ -28,7 +28,7 @@ export default function LibraryBook({
             layout
             key='_id'
             className={`card w-60 min-h-min bg-slate-700 
-            shadow-xl mx-2 mt-2 z-0`}
+            shadow-xl mx-2 mt-5 z-0`}
             layoutId={_id}
             onClick={() => {
                 setSelectedId(p => {

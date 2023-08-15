@@ -64,26 +64,26 @@ export default function BookShelf(props) {
 
 
     return (<>
-        <main className='flex flex-wrap justify-start relative'>
+        <main className='flex flex-wrap justify-start relative '>
 
             <LayoutGroup>
-                <div className='z-0 flex flex-wrap'>
-                    <AnimatePresence initial={false} >
+                <div className='z-0 flex flex-wrap md:justify-start
+                justify-center'>
+                    <AnimatePresence >
                         {shelf &&
                             shelf.map((b, i) => (
-                                selectedId.currentId !== b.book._id && (
-                                    <LibraryBook
-                                        key={b.book._id}
-                                        _id={b.book._id}
-                                        title={b.book.title}
-                                        pageCount={b.pageCount}
-                                        cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
-                                        setSelectedId={setSelectedId}
-                                        goal={b.goal}
-                                        z_index={selectedId.lastSelectedId === b.book._id ? 1 : -1}
 
-                                    />
-                                )
+                                <LibraryBook
+                                    key={b.book._id}
+                                    _id={b.book._id}
+                                    title={b.book.title}
+                                    pageCount={b.pageCount}
+                                    cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
+                                    setSelectedId={setSelectedId}
+                                    goal={b.goal}
+                                    z_index={selectedId.lastSelectedId === b.book._id ? 1 : -1}
+                                />
+
                             ))}
                     </AnimatePresence>
                 </div>
@@ -95,7 +95,7 @@ export default function BookShelf(props) {
                     onClick={handleParentClick}
                 >
                     {/*The Animate Presence only works with direct children*/}
-                    <AnimatePresence key={currBook.book._id} mode='wait'>
+                    <AnimatePresence key={currBook.book._id} mode='popLayout'>
                         <LibraryBookModal
                             _id={currBook.book._id}
                             title={currBook.book.title}
