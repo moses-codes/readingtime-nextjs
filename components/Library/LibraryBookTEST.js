@@ -11,8 +11,9 @@ export default function LibraryBook({
 
     //change the page count from coming from the book schema to the booksreading array in the user schema
 
+    console.log(progress)
 
-    let dailyGoal = Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil(pageCount / goal)} pages per day` : "No goal yet"
+    let dailyGoal = Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages per day` : "No goal yet"
 
     return (
         <motion.div
@@ -49,6 +50,7 @@ export default function LibraryBook({
                 alt={`cover for ${title}`}
                 className='w-full h-full rounded-t-xl'
             />
+
             <motion.div
                 className='relative bottom-0 bg-base-100 text-black w-full rounded-b-xl px-2 py-2'
             >

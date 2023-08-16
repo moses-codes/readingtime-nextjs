@@ -47,7 +47,7 @@ export default function Home({ toggleAlert }) {
                     title: null,
                 });
             }, 2900);
-            // mutate('/api/getData')
+            mutate('/api/getData')
         } else {
             console.error('Failed to change');
         }
@@ -84,7 +84,7 @@ export default function Home({ toggleAlert }) {
                 });
             }, 2900);
             console.log('Document removed successfully');
-            // mutate('/api/getData')
+            mutate('/api/getData')
         } else {
             console.error('Failed to remove document');
         }

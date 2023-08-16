@@ -83,7 +83,7 @@ export default function BookShelf(props) {
                                     selectedId={selectedId}
                                     goal={b.goal}
                                     z_index={selectedId.lastSelectedId === b.book._id ? 1 : -1}
-
+                                    progress={b.progress}
                                 />
                                 )
                                 // }
