@@ -1,7 +1,10 @@
 import Image from 'next/image'
 import Checkmark from '../../public/seal_checked.svg'
 import Unchecked from '../../public/seal_empty.svg'
+import WarningTriangle from '../../public/exc_triangle.svg'
 import { motion } from "framer-motion"
+
+import { useState } from 'react'
 
 
 export default function LibraryBook({
@@ -9,20 +12,39 @@ export default function LibraryBook({
     setSelectedId, z_index, selectedId,
 }) {
 
-    let goalAchieved
+    const [isHover, toggleHover] = useState(false)
+
+    let goalAchieved = true, goalBehind;
 
     if (pageCount === 0) pageCount = 1;
 
-    let dailyGoal = Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages per day` : "No goal yet"
+    let currPercent = Math.floor((progress / pageCount) * 100)
+
+    //format currPercent 
+    if (currPercent >= 100) {
+        currPercent = 100
+    } else if (currPercent <= 0) {
+        currPercent = 0
+    }
+
+
+    let dailyGoal = Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages / day` : "No goal yet"
 
     return (
         <motion.div
+
+            onMouseEnter={() => {
+                toggleHover(true)
+            }}
+            onMouseLeave={() => {
+                toggleHover(false)
+            }}
             style={{
                 zIndex: z_index,
             }}
             layout
             key={_id}
-            className={`card w-60 min-h-min bg-slate-700 
+            className={`card w-60 min-h-min bg-slate-100
             shadow-xl mx-2 mt-5 z-0 
             ${selectedId.currentId === _id && 'invisible'}
             `}
@@ -42,42 +64,49 @@ export default function LibraryBook({
 
             exit={{ opacity: 0 }}
         >
-            <Image
-                src={cover}
-                height={400}
-                width={400}
-                priority
-                alt={`cover for ${title}`}
-                className='w-full h-full rounded-t-xl'
-            />
+            <motion.div
+                className='h-96'
+
+            >
+                {isHover && <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.2 }} className="absolute right-2 top-2
+                radial-progress bg-slate-200 text-primary border-4 border-slate-200 text-xs" style={{ "--value": `${currPercent}`, "--size": "2.55rem", "--thickness": "2px" }}>{currPercent}%</motion.div>}
+
+                <Image
+                    src={cover}
+                    height={400}
+                    width={400}
+                    priority
+                    alt={`cover for ${title}`}
+                    className='w-full h-full rounded-t-xl'
+                />
+
+            </motion.div>
 
             <motion.div
-                className='relative bottom-0 bg-base-100 text-black w-full rounded-b-xl px-2 py-2'
+                className={`relative bottom-0
+                ${goalAchieved && 'bg-emerald-300'} 
+                ${goalBehind && 'bg-red-200'}
+                 text-black w-full rounded-b-xl px-2 py-2`}
             >
                 <div className='flex items-center'>
                     <motion.span className='inline-block italic font-bold w-10/12 overflow-ellipsis truncate whitespace-nowrap'
                     >{title}</motion.span>
-                    <motion.span className='inline-block w-2/12'
+                    <motion.span className='flex justify-end w-2/12'
                     >
-                        {goalAchieved ?
-                            <svg
-                                className='mx-auto'
-                                width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="24" height="24" fill="none" />
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.55879 3.6972C10.7552 2.02216 13.2447 2.02216 14.4412 3.6972L14.6317 3.96387C14.8422 4.25867 15.1958 4.41652 15.5558 4.37652L16.4048 4.28218C18.3156 4.06988 19.9301 5.68439 19.7178 7.59513L19.6235 8.44415C19.5835 8.8042 19.7413 9.15774 20.0361 9.36831L20.3028 9.55879C21.9778 10.7552 21.9778 13.2447 20.3028 14.4412L20.0361 14.6317C19.7413 14.8422 19.5835 15.1958 19.6235 15.5558L19.7178 16.4048C19.9301 18.3156 18.3156 19.9301 16.4048 19.7178L15.5558 19.6235C15.1958 19.5835 14.8422 19.7413 14.6317 20.0361L14.4412 20.3028C13.2447 21.9778 10.7553 21.9778 9.55879 20.3028L9.36831 20.0361C9.15774 19.7413 8.8042 19.5835 8.44414 19.6235L7.59513 19.7178C5.68439 19.9301 4.06988 18.3156 4.28218 16.4048L4.37652 15.5558C4.41652 15.1958 4.25867 14.8422 3.96387 14.6317L3.6972 14.4412C2.02216 13.2447 2.02216 10.7553 3.6972 9.55879L3.96387 9.36831C4.25867 9.15774 4.41652 8.8042 4.37652 8.44414L4.28218 7.59513C4.06988 5.68439 5.68439 4.06988 7.59513 4.28218L8.44415 4.37652C8.8042 4.41652 9.15774 4.25867 9.36831 3.96387L9.55879 3.6972ZM15.7071 9.29289C16.0976 9.68342 16.0976 10.3166 15.7071 10.7071L11.8882 14.526C11.3977 15.0166 10.6023 15.0166 10.1118 14.526L8.29289 12.7071C7.90237 12.3166 7.90237 11.6834 8.29289 11.2929C8.68342 10.9024 9.31658 10.9024 9.70711 11.2929L11 12.5858L14.2929 9.29289C14.6834 8.90237 15.3166 8.90237 15.7071 9.29289Z" fill="#323232" />
-                            </svg>
-                            :
-                            <svg
-                                className='mx-auto'
-                                width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10.8685 3.13134C11.2645 2.73533 11.4625 2.53732 11.6908 2.46313C11.8917 2.39787 12.108 2.39787 12.3089 2.46313C12.5372 2.53732 12.7352 2.73532 13.1312 3.13134L14.5312 4.53134C14.7042 4.70429 14.7906 4.79077 14.8916 4.85261C14.981 4.90744 15.0786 4.94784 15.1806 4.97234C15.2957 4.99997 15.418 4.99997 15.6626 4.99997H17.3998C17.9599 4.99997 18.2399 4.99997 18.4538 5.10896C18.642 5.20484 18.795 5.35782 18.8909 5.54598C18.9998 5.75989 18.9998 6.03992 18.9998 6.59997V8.33723C18.9998 8.58182 18.9998 8.70412 19.0275 8.8192C19.052 8.92124 19.0924 9.01878 19.1472 9.10826C19.2091 9.20917 19.2955 9.29565 19.4685 9.4686L20.8685 10.8686C21.2645 11.2646 21.4625 11.4626 21.5367 11.691C21.6019 11.8918 21.6019 12.1081 21.5367 12.309C21.4625 12.5373 21.2645 12.7353 20.8685 13.1313L19.4685 14.5313C19.2955 14.7043 19.2091 14.7908 19.1472 14.8917C19.0924 14.9812 19.052 15.0787 19.0275 15.1807C18.9998 15.2958 18.9998 15.4181 18.9998 15.6627V17.4C18.9998 17.96 18.9998 18.2401 18.8909 18.454C18.795 18.6421 18.642 18.7951 18.4538 18.891C18.2399 19 17.9599 19 17.3998 19H15.6626C15.418 19 15.2957 19 15.1806 19.0276C15.0786 19.0521 14.981 19.0925 14.8916 19.1473C14.7906 19.2092 14.7042 19.2956 14.5312 19.4686L13.1312 20.8686C12.7352 21.2646 12.5372 21.4626 12.3089 21.5368C12.108 21.6021 11.8917 21.6021 11.6908 21.5368C11.4625 21.4626 11.2645 21.2646 10.8685 20.8686L9.46848 19.4686C9.29553 19.2956 9.20905 19.2092 9.10813 19.1473C9.01866 19.0925 8.92112 19.0521 8.81908 19.0276C8.70399 19 8.5817 19 8.33711 19H6.59985C6.0398 19 5.75977 19 5.54586 18.891C5.3577 18.7951 5.20472 18.6421 5.10884 18.454C4.99985 18.2401 4.99985 17.96 4.99985 17.4V15.6627C4.99985 15.4181 4.99985 15.2958 4.97222 15.1807C4.94772 15.0787 4.90732 14.9812 4.85249 14.8917C4.79065 14.7908 4.70417 14.7043 4.53122 14.5313L3.13122 13.1313C2.7352 12.7353 2.53719 12.5373 2.46301 12.309C2.39775 12.1081 2.39775 11.8918 2.46301 11.691C2.53719 11.4626 2.7352 11.2646 3.13122 10.8686L4.53122 9.4686C4.70417 9.29565 4.79065 9.20917 4.85249 9.10826C4.90732 9.01878 4.94772 8.92124 4.97222 8.8192C4.99985 8.70412 4.99985 8.58182 4.99985 8.33723V6.59997C4.99985 6.03992 4.99985 5.75989 5.10884 5.54598C5.20472 5.35782 5.3577 5.20484 5.54586 5.10896C5.75977 4.99997 6.0398 4.99997 6.59985 4.99997H8.33711C8.5817 4.99997 8.70399 4.99997 8.81908 4.97234C8.92112 4.94784 9.01866 4.90744 9.10813 4.85261C9.20905 4.79077 9.29553 4.70429 9.46848 4.53134L10.8685 3.13134Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>}
+                        {
+                            goalBehind ? <Image className='' src={WarningTriangle} alt='Warning: Behind goal' /> :
+                                goalAchieved ? <Image src={Checkmark} alt="Checkmark: Task Completed" /> :
+                                    <Image src={Unchecked} alt="Pending: Checkmark Placeholder" />
+                        }
                     </motion.span>
                 </div>
                 <motion.h5
                     className='font-light'
                 >{dailyGoal}</motion.h5>
             </motion.div>
-        </motion.div>
+        </motion.div >
     )
 }

@@ -3,7 +3,7 @@ import ReadingGoalForm from './forms/ReadingGoalForm'
 import LibraryBook from "./Library/LibraryBookTEST"
 import LibraryBookModal from './Library/LibraryBookTESTModal'
 
-import { AnimatePresence, LayoutGroup } from 'framer-motion'
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 
 export default function BookShelf(props) {
 
@@ -67,8 +67,10 @@ export default function BookShelf(props) {
         <main className='flex flex-wrap justify-start relative '>
 
             <LayoutGroup>
-                <div className='z-0 flex flex-wrap md:justify-start justify-center
-                flex-center '>
+                <motion.div
+                    className='z-0 flex flex-wrap md:justify-start justify-center flex-center '
+
+                >
                     <AnimatePresence >
                         {shelf &&
                             shelf.map(b => {
@@ -84,13 +86,13 @@ export default function BookShelf(props) {
                                     goal={b.goal}
                                     z_index={selectedId.lastSelectedId === b.book._id ? 1 : -1}
                                     progress={b.progress}
-                                />
-                                )
-                                // }
-                            }
-                            )}
+                                    goalAchievedAt={b.goalAchievedAt}
+                                    lastUpdated={b.lastUpdated}
+                                />)
+                            })
+                        }
                     </AnimatePresence>
-                </div>
+                </motion.div>
             </LayoutGroup>
 
             {/*Animate modal-to-card when user clicks the 'close' button or outside of the modal's active area*/}
@@ -113,6 +115,8 @@ export default function BookShelf(props) {
                             handleDelete={handleDelete}
                             handleSaveChanges={handleSaveChanges}
                             handleUpdatePageCount={handleUpdatePageCount}
+                            goalAchievedAt={currBook.goalAchievedAt}
+                            lastUpdated={currBook.lastUpdated}
                         />
                     </AnimatePresence>
                 </div>

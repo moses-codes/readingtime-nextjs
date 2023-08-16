@@ -35,7 +35,9 @@ export default async function handler(req, res) {
                 book: matchingBook,
                 progress: el.progress,
                 goal: el.goal,
-                pageCount: el.pageCount
+                pageCount: el.pageCount,
+                // goalAchievedAt: goalAchievedAt,
+                // lastUpdated: lastUpdated,
             };
         });
 

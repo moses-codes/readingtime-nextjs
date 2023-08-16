@@ -5,7 +5,9 @@ import ReadingGoalForm from '../forms/ReadingGoalForm'
 
 export default function LibraryBook({ _id,
     title, cover, pageCount, progress, goal,
-    handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId }) {
+    handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId,
+    goalAchievedAt, lastUpdated
+}) {
 
     if (pageCount === 0) pageCount = 1;
 
@@ -77,6 +79,8 @@ export default function LibraryBook({ _id,
                 handleSaveChanges={handleSaveChanges}
                 showBook={showBook}
                 setSelectedId={setSelectedId}
+                goalAchievedAt={goalAchievedAt}
+                lastUpdated={lastUpdated}
             />
         </motion.div >
         //</AnimatePresence> 

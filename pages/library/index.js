@@ -14,10 +14,6 @@ export default function Home({ toggleAlert }) {
 
     const { data, error, isLoading } = useSWR('/api/getData', fetcher)
 
-    async function refreshLibrary() {
-        mutate('/api/getData')
-    }
-
     async function handleUpdatePageCount(value) {
         // console.log() the _id
         console.log('changing page count to ', value)

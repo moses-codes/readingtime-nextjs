@@ -9,17 +9,19 @@ export default async function handler(req, res) {
         await connectMongo();
         const { userId } = getAuth(req)
         const { formData } = req.body; // Assuming the target is passed in the request body
-        const { daysGoal, bookProgress, _id } = formData
+        const { daysGoal, bookProgress, _id, goalAchievedAt, lastUpdated } = formData
         const currUser = await User.findOneAndUpdate(
             { clerkId: userId, 'booksReading.bookId': _id },
             {
                 $set: {
                     'booksReading.$.progress': bookProgress, // Update the progress field of the matched bookId
                     'booksReading.$.goal': daysGoal, // Update the goal field of the matched bookId
+                    'booksReading.$.goalAchievedAt': goalAchievedAt,
+                    'booksReading.$.lastUpdated': lastUpdated,
                 },
             },
         );
-        console.log(formData, currUser)
+        console.log()
         //   // Handle successful deletion and return the updated user or appropriate response
         return res.status(200).json({ message: "Book updated successfully" });
     } catch (error) {
