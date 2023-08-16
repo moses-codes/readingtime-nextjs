@@ -11,7 +11,7 @@ export default function LibraryBook({
 
     //change the page count from coming from the book schema to the booksreading array in the user schema
 
-    console.log(progress)
+    if (pageCount === 0) pageCount = 1;
 
     let dailyGoal = Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages per day` : "No goal yet"
 

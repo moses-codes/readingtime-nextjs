@@ -7,6 +7,8 @@ export default function LibraryBook({ _id,
     title, cover, pageCount, progress, goal,
     handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId }) {
 
+    if (pageCount === 0) pageCount = 1;
+
     //change the page count from coming from the book schema to the booksreading array in the user schema
 
     const [changePageCount, toggleChangePageCount] = useState(false)

@@ -46,7 +46,7 @@ export default function Home({ toggleAlert }) {
                     type: null,
                     title: null,
                 });
-            }, 2900);
+            }, 3100);
             mutate('/api/getData')
         } else {
             console.error('Failed to change');
@@ -82,7 +82,7 @@ export default function Home({ toggleAlert }) {
                     type: null,
                     title: null,
                 });
-            }, 2900);
+            }, 3100);
             console.log('Document removed successfully');
             mutate('/api/getData')
         } else {
@@ -117,7 +117,7 @@ export default function Home({ toggleAlert }) {
                     type: null,
                     title: null,
                 });
-            }, 2900);
+            }, 3100);
             console.log('Book updated successfully');
         } else {
             console.error('Failed to remove document');
