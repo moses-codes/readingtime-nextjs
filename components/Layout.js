@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+import Navbar from './NavbarResponsive';
 import { useState } from 'react';
 import Footer from './Footer';
 

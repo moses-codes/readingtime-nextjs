@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback } from 'react';
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
-import Alert from '@/components/Alert'
 
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
@@ -11,14 +10,13 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 // import { connectMongo } from "@/utils/connectMongo"
 
 export default function Home({ toggleAlert }) {
-
-    // const [showAlert, toggleAlert] = useState({
-    //     status: false,
-    //     title: null,
-    //     type: null,
-    // })
+    const { mutate } = useSWRConfig()
 
     const { data, error, isLoading } = useSWR('/api/getData', fetcher)
+
+    async function refreshLibrary() {
+        mutate('/api/getData')
+    }
 
     async function handleUpdatePageCount(value) {
         // console.log() the _id
@@ -35,7 +33,7 @@ export default function Home({ toggleAlert }) {
         console.log(response)
 
         if (response.ok) {
-            mutate('/api/getData')
+
             console.log('Book page count updated successfully');
             toggleAlert({
                 status: true,
@@ -49,6 +47,7 @@ export default function Home({ toggleAlert }) {
                     title: null,
                 });
             }, 2900);
+            mutate('/api/getData')
         } else {
             console.error('Failed to change');
         }
@@ -71,7 +70,7 @@ export default function Home({ toggleAlert }) {
         console.log(response)
 
         if (response.ok) {
-            mutate('/api/getData')
+
             toggleAlert({
                 status: true,
                 type: 'deleted',
@@ -85,6 +84,7 @@ export default function Home({ toggleAlert }) {
                 });
             }, 2900);
             console.log('Document removed successfully');
+            mutate('/api/getData')
         } else {
             console.error('Failed to remove document');
         }
@@ -106,6 +106,18 @@ export default function Home({ toggleAlert }) {
 
         if (response.ok) {
             mutate('/api/getData')
+            toggleAlert({
+                status: true,
+                type: 'updated',
+                title: formData.title,
+            })
+            setTimeout(() => {
+                toggleAlert({
+                    status: false,
+                    type: null,
+                    title: null,
+                });
+            }, 2900);
             console.log('Book updated successfully');
         } else {
             console.error('Failed to remove document');
@@ -139,7 +151,7 @@ export default function Home({ toggleAlert }) {
         console.log('library loaded')
         section = (
             <>
-                <h2 className='mt-10'>You have no books in your library.</h2>
+                <h2 className='mt-10 text-center'>You have no books in your library.</h2>
             </>
         )
     } else if (data) {
