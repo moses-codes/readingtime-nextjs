@@ -5,17 +5,12 @@ import ReadingGoalForm from '../forms/ReadingGoalForm'
 
 export default function LibraryBook({
     _id, title, cover, pageCount, progress, goal,
-    setSelectedId, z_index
+    setSelectedId, z_index, selectedId,
     //  handleDelete, handleSaveChanges, handleUpdatePageCount 
 }) {
 
     //change the page count from coming from the book schema to the booksreading array in the user schema
 
-    function handleClick(e) {
-        toggleShowBook(!showBook)
-    }
-
-    console.log(title, z_index)
 
     let dailyGoal = Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil(pageCount / goal)} pages per day` : "No goal yet"
 
@@ -24,11 +19,12 @@ export default function LibraryBook({
             style={{
                 zIndex: z_index,
             }}
-            id={title}
             layout
-            key='_id'
+            key={_id}
             className={`card w-60 min-h-min bg-slate-700 
-            shadow-xl mx-2 mt-5 z-0`}
+            shadow-xl mx-2 mt-5 z-0 
+            ${selectedId.currentId === _id && 'invisible'}
+            `}
             layoutId={_id}
             onClick={() => {
                 setSelectedId(p => {
@@ -49,7 +45,8 @@ export default function LibraryBook({
                 src={cover}
                 height={400}
                 width={400}
-                layout
+                priority
+                alt={`cover for ${title}`}
                 className='w-full h-full rounded-t-xl'
             />
             <motion.div

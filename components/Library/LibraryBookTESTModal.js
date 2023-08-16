@@ -25,7 +25,7 @@ export default function LibraryBook({ _id,
             className='card md:w-96 h-96 bg-base-100 absolute inset-x-0 mx-5 md:mx-auto z-50'
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, scale: 0.8, transition: { duration: .2 } }}
             onClick={(e) => e.stopPropagation()}
             layoutId={selectedId}
         >
@@ -74,13 +74,14 @@ export default function LibraryBook({ _id,
                 goal={goal}
                 handleSaveChanges={handleSaveChanges}
                 showBook={showBook}
+                setSelectedId={setSelectedId}
             />
         </motion.div >
         //</AnimatePresence> 
     )
 }
 
-export function ChangePageCount({ displayForm, pageCount, toggleForm, handleUpdatePageCount, _id, title }) {
+export function ChangePageCount({ setSelectedId, displayForm, pageCount, toggleForm, handleUpdatePageCount, _id, title }) {
 
     const [pageCountValue, setPageCountValue] = useState(pageCount)
 
@@ -111,7 +112,7 @@ export function ChangePageCount({ displayForm, pageCount, toggleForm, handleUpda
                     })
                 }}
                 className="btn btn-outline btn-secondary btn-sm">save</button>
-        </motion.div>
+        </motion.div >
     )
 }
 

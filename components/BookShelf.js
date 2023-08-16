@@ -67,24 +67,28 @@ export default function BookShelf(props) {
         <main className='flex flex-wrap justify-start relative '>
 
             <LayoutGroup>
-                <div className='z-0 flex flex-wrap md:justify-start
-                justify-center'>
+                <div className='z-0 flex flex-wrap md:justify-start justify-center
+                flex-center '>
                     <AnimatePresence >
                         {shelf &&
-                            shelf.map((b, i) => (
-
-                                <LibraryBook
+                            shelf.map((b, i) => {
+                                // if (selectedId.currentId !== b.book._id) {
+                                return (<LibraryBook
                                     key={b.book._id}
                                     _id={b.book._id}
                                     title={b.book.title}
                                     pageCount={b.pageCount}
                                     cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
                                     setSelectedId={setSelectedId}
+                                    selectedId={selectedId}
                                     goal={b.goal}
                                     z_index={selectedId.lastSelectedId === b.book._id ? 1 : -1}
-                                />
 
-                            ))}
+                                />
+                                )
+                                // }
+                            }
+                            )}
                     </AnimatePresence>
                 </div>
             </LayoutGroup>
@@ -95,7 +99,7 @@ export default function BookShelf(props) {
                     onClick={handleParentClick}
                 >
                     {/*The Animate Presence only works with direct children*/}
-                    <AnimatePresence key={currBook.book._id} mode='popLayout'>
+                    <AnimatePresence key={currBook.book._id}>
                         <LibraryBookModal
                             _id={currBook.book._id}
                             title={currBook.book.title}

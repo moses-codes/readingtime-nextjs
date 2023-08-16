@@ -7,6 +7,7 @@ export default function ReadingGoalForm(props) {
     const [formData, setFormData] = useState({
         daysGoal: goal,
         bookProgress: progress,
+        title: title
     })
 
     const [saveChanges, toggleSaveChanges] = useState(false)
