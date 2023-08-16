@@ -151,7 +151,7 @@ export default function Home({ toggleAlert }) {
         console.log('library loaded')
         section = (
             <>
-                <h2 className='mt-10'>You have no books in your library.</h2>
+                <h2 className='mt-10 text-center'>You have no books in your library.</h2>
             </>
         )
     } else if (data) {

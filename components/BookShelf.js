@@ -71,7 +71,7 @@ export default function BookShelf(props) {
                 flex-center '>
                     <AnimatePresence >
                         {shelf &&
-                            shelf.map((b, i) => {
+                            shelf.map(b => {
                                 // if (selectedId.currentId !== b.book._id) {
                                 return (<LibraryBook
                                     key={b.book._id}

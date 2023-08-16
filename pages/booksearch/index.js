@@ -58,7 +58,7 @@ export default function BookSearch({ toggleAlert }) {
     } else if (data2 && !isLoading2 && !isLoading1) {
         searchResults = (
             <div className=''>
-                <h2 className='font-bold text-center'>Search results for '<span className='italic'>{searchInput}</span>'</h2>
+                <h2 className='font-bold text-center'>Search results for &apos;<span className='italic'>{searchInput}</span>&apos;</h2>
                 {data2.items && data2.items
                     .filter(b => b.volumeInfo.pageCount >= 0)
                     .map(b => <SearchBook
