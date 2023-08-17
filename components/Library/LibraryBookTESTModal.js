@@ -9,18 +9,20 @@ export default function LibraryBook({ _id,
     goalAchievedAt, lastUpdated
 }) {
 
-    if (pageCount === 0) pageCount = 1;
+    //goalDate - now = how many days left
 
-    //change the page count from coming from the book schema to the booksreading array in the user schema
+    //goalAchieved is true (and goalBehind is false) if before midnight && goal is achieved
+
+    //goalBehind is true (and goalAchieved is false) if lastUpdated >= 36 hours
+
+    //if both goalAchieved and goalBehind are false, the bg of the component is white
+
+    if (pageCount === 0) pageCount = 1;
 
     const [changePageCount, toggleChangePageCount] = useState(false)
 
     const [showBook, toggleShowBook] = useState(false)
 
-    // function handleClick(e) {
-    //     toggleShowBook(!showBook)
-
-    // }
 
     return (
         // <AnimatePresence>
@@ -121,20 +123,3 @@ export function ChangePageCount({ setSelectedId, displayForm, pageCount, toggleF
         </motion.div >
     )
 }
-
-// motion.div
-//                             layout
-//                             className='card w-full md:w-96 h-96 bg-base-100 absolute inset-x-0 mx-auto z-50'
-//                             initial={{ opacity: 1 }}
-//                             animate={{ opacity: 1 }}
-//                             exit={{ opacity: 0 }}
-//                             onClick={(e) => e.stopPropagation()}
-//                             layoutId={selectedId}>
-//                             <motion.h5 layout>{title}</motion.h5>
-//                             <motion.h2>{_id}</motion.h2>
-//                             <motion.button className='btn' onClick={() => {
-//                                 // setSelectedId(null)
-//                                 handleButtonClick()
-//                             }
-//                             } >Button</motion.button>
-//                         </motion.div>

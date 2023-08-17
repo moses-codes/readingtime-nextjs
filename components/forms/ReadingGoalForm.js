@@ -79,7 +79,7 @@ export default function ReadingGoalForm(props) {
         <div className='px-5 py-5 flex flex-col h-full'>
             <div className='h-1/2  border-b-2 border-slate-300'>
                 <div className=''>
-                    <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title} {lastUpdated && `last updated on ${lastUpdated}`}</h3>
+                    <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3>
                     <div className='flex align-center mt-1'>
                         <progress className="progress progress-info w-3/4 my-auto mr-2" value={currPercent} min="0" max="100">
                         </progress>

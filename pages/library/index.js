@@ -1,23 +1,22 @@
 import { useCallback } from 'react';
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
+import Dashboard from '../../components/Dashboard'
 
 import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-// import { getAuth, clerkClient, buildClerkProps } from '@clerk/nextjs/server'
-// import { connectMongo } from "@/utils/connectMongo"
-
 export default function Home({ toggleAlert }) {
+
     const { mutate } = useSWRConfig()
 
     const { data, error, isLoading } = useSWR('/api/getData', fetcher)
 
+    let totalPages
+
     async function handleUpdatePageCount(value) {
-        // console.log() the _id
         console.log('changing page count to ', value)
-        // TODO: Submit the form data to the server
         const response = await fetch('/api/book/updatePageCount', {
             method: 'PUT',
             headers: {
@@ -48,13 +47,8 @@ export default function Home({ toggleAlert }) {
             console.error('Failed to change');
         }
     }
-
-
-
     async function handleDelete({ _id, title }) {
-        // console.log() the _id
         console.log(_id, title)
-        // TODO: Submit the form data to the server
         const response = await fetch('/api/book/deleteBook', {
             method: 'POST',
             headers: {
@@ -85,11 +79,8 @@ export default function Home({ toggleAlert }) {
             console.error('Failed to remove document');
         }
     }
-
     async function handleSaveChanges(formData) {
-        // console.log() the _id
         console.log(formData)
-        // TODO: Submit the form data to the server
         const response = await fetch('/api/book/updateBook', {
             method: 'PUT',
             headers: {
@@ -135,14 +126,6 @@ export default function Home({ toggleAlert }) {
     } else if (error) {
         section = (<div>Error retrieving books</div>)
     }
-    // else if (!data.updatedBooksReading.length) {
-    //     console.log('library loaded')
-    //     section = (
-    //         <>
-    //             <h2 className='mt-10'>You have no books in your library.</h2>
-    //         </>
-    //     )
-    // } 
     else if (!data.updatedBooksReading || data.updatedBooksReading.length === 0) {
         console.log('library loaded')
         section = (
@@ -151,7 +134,8 @@ export default function Home({ toggleAlert }) {
             </>
         )
     } else if (data) {
-        // console.log('library loaded', data.updatedBooksReading)
+        // console.log(data.updatedBooksReading) 
+        totalPages = data.updatedBooksReading.reduce((a, b) => a + Math.ceil((b.pageCount - b.progress) / b.goal), 0)
         section = (
             <>
                 <BookShelf
@@ -171,7 +155,12 @@ export default function Home({ toggleAlert }) {
                 className="p-12">
 
                 <h1 className='md:text-5xl text-2xl mb-10 text-center font-light'>Your Library</h1>
-                <div>{section}</div>
+                <section className='flex'>
+                    <Dashboard
+                        totalPages={totalPages}
+                    />
+                    <div className=' ml-5 w-3/4'>{section}</div>
+                </section>
 
 
             </main>

@@ -44,8 +44,8 @@ export default async function handler(req, res) {
                     progress: 0,
                     goal: 0,
                     pageCount: bookToAdd.pageCount,
-                    goalAchievedAt: 0,
-                    lastUpdated: 0,
+                    goalAchievedAt: null,
+                    lastUpdated: null,
                 })
 
                 const savedUser = await mongoUser.save();

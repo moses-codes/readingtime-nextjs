@@ -36,8 +36,8 @@ export default async function handler(req, res) {
                 progress: el.progress,
                 goal: el.goal,
                 pageCount: el.pageCount,
-                // goalAchievedAt: goalAchievedAt,
-                // lastUpdated: lastUpdated,
+                goalAchievedAt: el.goalAchievedAt,
+                lastUpdated: el.lastUpdated,
             };
         });
 

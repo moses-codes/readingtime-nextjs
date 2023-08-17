@@ -12,9 +12,9 @@ export default function LibraryBook({
     setSelectedId, z_index, selectedId,
 }) {
 
-    const [isHover, toggleHover] = useState(false)
+    let goalAchieved = false, goalBehind = false;
 
-    let goalAchieved = true, goalBehind;
+    const [isHover, toggleHover] = useState(false)
 
     if (pageCount === 0) pageCount = 1;
 
