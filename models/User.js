@@ -42,6 +42,10 @@ const userSchema = new mongoose.Schema({
         goalAchievedAt: {
             type: Date,
             default: null,
+        },
+        dateOfCompletion: {
+            type: Date,
+            default: null
         }
     }],
     booksCompleted: [{

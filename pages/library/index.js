@@ -3,6 +3,8 @@ import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
 import Dashboard from '../../components/Dashboard'
 
+import { timeChecker } from '@/utils/timeChecker';
+
 import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -134,8 +136,7 @@ export default function Home({ toggleAlert }) {
             </>
         )
     } else if (data) {
-        // console.log(data.updatedBooksReading) 
-        totalPages = data.updatedBooksReading.reduce((a, b) => a + Math.ceil((b.pageCount - b.progress) / b.goal), 0)
+        totalPages = calculateTotalPages(data.updatedBooksReading)
         section = (
             <>
                 <BookShelf
@@ -166,4 +167,30 @@ export default function Home({ toggleAlert }) {
             </main>
         </Layout>
     )
+}
+
+function calculateTotalPages(arr) {
+
+    let result
+    const now = new Date()
+
+    //check if goalAchieved === today
+
+    //filter out the books whose goalAchieved === today
+
+    let incompleteBooks = arr.filter(book => timeChecker(new Date(book.goalAchievedAt), now, 'days') === false)
+
+    // console.log(incompleteBooks.map(book => book.book.title))
+
+    //iterate thru the array and reduce to the total number of pages
+
+    result = incompleteBooks.reduce((accumulator, currentBook) => {
+        const laterDate = new Date(currentBook.dateOfCompletion)
+        let daysRemaining = Math.ceil((laterDate - now) / (1000 * 60 * 60 * 24))
+        // console.log([currentBook.book.title, daysRemaining])
+        return accumulator + Math.ceil(((currentBook.pageCount - currentBook.progress) / daysRemaining))
+    }, 0)
+
+    return Math.ceil(result)
+
 }

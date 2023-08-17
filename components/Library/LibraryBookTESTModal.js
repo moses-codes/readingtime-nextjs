@@ -2,12 +2,19 @@ import { useState, useEffect } from 'react'
 // import Image from 'next/image'
 import { motion, AnimatePresence } from "framer-motion"
 import ReadingGoalForm from '../forms/ReadingGoalForm'
+import { timeChecker } from '@/utils/timeChecker'
+
 
 export default function LibraryBook({ _id,
     title, cover, pageCount, progress, goal,
     handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId,
     goalAchievedAt, lastUpdated
 }) {
+
+    const now = new Date().getTime()
+
+    let goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days'),
+        goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
 
     //goalDate - now = how many days left
 
@@ -28,7 +35,9 @@ export default function LibraryBook({ _id,
         // <AnimatePresence>
         <motion.div
             layout
-            className='card md:w-96 h-96 bg-base-100 absolute inset-x-0 mx-5 md:mx-auto z-50'
+            className={`card md:w-96 h-96 
+            bg-base-100
+            absolute inset-x-0 mx-5 md:mx-auto z-50`}
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.8, transition: { duration: .2 } }}
@@ -83,6 +92,9 @@ export default function LibraryBook({ _id,
                 setSelectedId={setSelectedId}
                 goalAchievedAt={goalAchievedAt}
                 lastUpdated={lastUpdated}
+                goalStatus={goalAchieved === true && goalBehind === false ? "goalAchieved" :
+                    goalAchieved === false && goalBehind === true ? 'goalBehind' : null
+                }
             />
         </motion.div >
         //</AnimatePresence> 

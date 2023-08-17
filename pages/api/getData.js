@@ -38,6 +38,7 @@ export default async function handler(req, res) {
                 pageCount: el.pageCount,
                 goalAchievedAt: el.goalAchievedAt,
                 lastUpdated: el.lastUpdated,
+                dateOfCompletion: el.dateOfCompletion,
             };
         });
 

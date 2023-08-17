@@ -6,13 +6,19 @@ import { motion } from "framer-motion"
 
 import { useState } from 'react'
 
+import { timeChecker } from '@/utils/timeChecker'
+
 
 export default function LibraryBook({
     _id, title, cover, pageCount, progress, goal,
     setSelectedId, z_index, selectedId,
+    goalAchievedAt, lastUpdated
 }) {
 
-    let goalAchieved = false, goalBehind = false;
+    const now = new Date().getTime()
+
+    let goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days'),
+        goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
 
     const [isHover, toggleHover] = useState(false)
 
@@ -28,7 +34,7 @@ export default function LibraryBook({
     }
 
 
-    let dailyGoal = Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages / day` : "No goal yet"
+    let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages / day` : "No goal yet"
 
     return (
         <motion.div
@@ -110,3 +116,34 @@ export default function LibraryBook({
         </motion.div >
     )
 }
+
+// function timeChecker(date1, date2, unit) {
+//     //find the difference between two timestamps
+//     let result
+
+//     if (unit === 'hours') {
+//         const timeDifference = date2 - date1;
+
+//         // Convert the time difference from milliseconds to hrs
+//         const hrsDifference = timeDifference / (1000 * 60 * 60);
+
+//         if (hrsDifference >= 36) return true;
+
+//         console.log(hrsDifference)
+
+//         return false
+
+//     } else if (unit === 'days') {
+//         // Calculate the difference in milliseconds between the two dates
+//         const timeDifference = date2 - date1;
+
+//         // Convert the time difference from milliseconds to days
+//         const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+//         if (daysDifference < 1) return true;
+
+//         return false
+//     }
+
+//     return result
+// }

@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import Image from 'next/image'
+import Checkmark from '../../public/seal_checked.svg'
+import WarningTriangle from '../../public/exc_triangle.svg'
 
 export default function ReadingGoalForm(props) {
 
-    const { handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated } = props
+    const { handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated, goalStatus } = props
     // const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -79,7 +82,10 @@ export default function ReadingGoalForm(props) {
         <div className='px-5 py-5 flex flex-col h-full'>
             <div className='h-1/2  border-b-2 border-slate-300'>
                 <div className=''>
-                    <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3>
+                    <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}
+                        {goalStatus === "goalAchieved" && <Image src={Checkmark} alt="Checkmark: Task Completed" />}
+                        {goalStatus === "goalBehind" && <Image className='' src={WarningTriangle} alt='Warning: Behind goal' />}
+                    </h3>
                     <div className='flex align-center mt-1'>
                         <progress className="progress progress-info w-3/4 my-auto mr-2" value={currPercent} min="0" max="100">
                         </progress>
