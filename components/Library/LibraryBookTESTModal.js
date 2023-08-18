@@ -28,7 +28,7 @@ export default function LibraryBook({ _id,
 
     const [changePageCount, toggleChangePageCount] = useState(false)
 
-    const [showBook, toggleShowBook] = useState(false)
+
 
 
     return (
@@ -80,7 +80,6 @@ export default function LibraryBook({ _id,
                 </ul>
             </div>
             {/* <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3> */}
-
             <ReadingGoalForm
                 title={title}
                 pageCount={pageCount}
@@ -88,7 +87,7 @@ export default function LibraryBook({ _id,
                 progress={progress}
                 goal={goal}
                 handleSaveChanges={handleSaveChanges}
-                showBook={showBook}
+                // showBook={showBook}
                 setSelectedId={setSelectedId}
                 goalAchievedAt={goalAchievedAt}
                 lastUpdated={lastUpdated}

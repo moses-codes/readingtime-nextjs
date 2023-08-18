@@ -34,7 +34,17 @@ export default function LibraryBook({
     }
 
 
-    let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages / day` : "No goal yet"
+    // let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages / day` : "No goal yet"
+    let dailyGoal = goal > 0 ? Math.ceil(pageCount / goal) : 'No goal set.'
+    let message
+
+    if (dailyGoal > 1) {
+        message = `${dailyGoal} pages per day`
+    } else if (dailyGoal === 1) {
+        message = "One page per day"
+    } else {
+        message = dailyGoal
+    }
 
     return (
         <motion.div
@@ -51,7 +61,7 @@ export default function LibraryBook({
             layout
             key={_id}
             className={`card w-60 min-h-min bg-slate-100
-            shadow-xl mx-2 mt-5 z-0 
+            shadow-xl mx-5 mt-5 z-0 
             ${selectedId.currentId === _id && 'invisible'}
             `}
             layoutId={_id}
@@ -111,39 +121,8 @@ export default function LibraryBook({
                 </div>
                 <motion.h5
                     className='font-light'
-                >{dailyGoal}</motion.h5>
+                >{message}</motion.h5>
             </motion.div>
         </motion.div >
     )
 }
-
-// function timeChecker(date1, date2, unit) {
-//     //find the difference between two timestamps
-//     let result
-
-//     if (unit === 'hours') {
-//         const timeDifference = date2 - date1;
-
-//         // Convert the time difference from milliseconds to hrs
-//         const hrsDifference = timeDifference / (1000 * 60 * 60);
-
-//         if (hrsDifference >= 36) return true;
-
-//         console.log(hrsDifference)
-
-//         return false
-
-//     } else if (unit === 'days') {
-//         // Calculate the difference in milliseconds between the two dates
-//         const timeDifference = date2 - date1;
-
-//         // Convert the time difference from milliseconds to days
-//         const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-
-//         if (daysDifference < 1) return true;
-
-//         return false
-//     }
-
-//     return result
-// }

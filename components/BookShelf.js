@@ -68,7 +68,7 @@ export default function BookShelf(props) {
 
             <LayoutGroup>
                 <motion.div
-                    className='z-0 flex flex-wrap md:justify-start justify-center flex-center '
+                    className='z-0 flex flex-wrap md:justify-start justify-around '
 
                 >
                     <AnimatePresence >
