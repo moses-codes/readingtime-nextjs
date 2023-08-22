@@ -8,7 +8,7 @@ export default async function handler(req, res) {
         // Connect to the database
         await connectMongo();
 
-        const { google_id, title, authors, pageCount, cover } = req.body;
+        const { google_id, title, authors, pageCount, cover, dateOfCompletion } = req.body;
         //object destructuring to make the object properties simpler to work with
         const { userId } = getAuth(req);
 
@@ -37,16 +37,16 @@ export default async function handler(req, res) {
                 let { username, booksReading } = mongoUser
                 let bookToAdd = await Book.findOne({ google_id: google_id })
 
-                //Push bookToAdd to the booksReading array in the User object
+
                 mongoUser.booksReading.push({
                     bookId: bookToAdd._id,
                     google_id: google_id,
                     progress: 0,
-                    goal: 0,
+                    // goal: 0,
                     pageCount: bookToAdd.pageCount,
                     goalAchievedAt: null,
                     lastUpdated: null,
-                    dateOfCompletion: null,
+                    dateOfCompletion: new Date(),
                 })
 
                 const savedUser = await mongoUser.save();

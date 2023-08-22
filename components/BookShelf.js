@@ -83,11 +83,12 @@ export default function BookShelf(props) {
                                     cover={`https://books.google.com/books/publisher/content/images/frontcover/${b.book.google_id}?fife=w400-h600&source=gbs_api`}
                                     setSelectedId={setSelectedId}
                                     selectedId={selectedId}
-                                    goal={b.goal}
+                                    // goal={b.goal}
                                     z_index={selectedId.lastSelectedId === b.book._id ? 1 : -1}
                                     progress={b.progress}
                                     goalAchievedAt={b.goalAchievedAt}
                                     lastUpdated={b.lastUpdated}
+                                    dateOfCompletion={b.dateOfCompletion}
                                 />)
                             })
                         }
@@ -108,7 +109,7 @@ export default function BookShelf(props) {
                             pageCount={currBook.pageCount}
                             progress={currBook.progress}
                             // cover={`https://books.google.com/books/publisher/content/images/frontcover/${currBook.book.google_id}?fife=w400-h600&source=gbs_api`}
-                            goal={currBook.goal}
+                            // goal={currBook.goal}
                             handleButtonClick={handleButtonClick}
                             selectedId={selectedId.currentId}
                             setSelectedId={setSelectedId}
@@ -117,6 +118,7 @@ export default function BookShelf(props) {
                             handleUpdatePageCount={handleUpdatePageCount}
                             goalAchievedAt={currBook.goalAchievedAt}
                             lastUpdated={currBook.lastUpdated}
+                            dateOfCompletion={currBook.dateOfCompletion}
                         />
                     </AnimatePresence>
                 </div>

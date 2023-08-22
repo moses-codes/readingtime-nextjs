@@ -6,7 +6,8 @@ import { timeChecker } from '@/utils/timeChecker'
 
 
 export default function LibraryBook({ _id,
-    title, cover, pageCount, progress, goal,
+    title, cover, pageCount, progress, dateOfCompletion,
+    // goal,
     handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId,
     goalAchievedAt, lastUpdated
 }) {
@@ -85,7 +86,8 @@ export default function LibraryBook({ _id,
                 pageCount={pageCount}
                 _id={_id}
                 progress={progress}
-                goal={goal}
+                // goal={goal}
+                dateOfCompletion={dateOfCompletion}
                 handleSaveChanges={handleSaveChanges}
                 // showBook={showBook}
                 setSelectedId={setSelectedId}

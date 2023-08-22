@@ -10,7 +10,9 @@ import { timeChecker } from '@/utils/timeChecker'
 
 
 export default function LibraryBook({
-    _id, title, cover, pageCount, progress, goal,
+    _id, title, cover, pageCount, progress,
+    dateOfCompletion,
+    // goal,
     setSelectedId, z_index, selectedId,
     goalAchievedAt, lastUpdated
 }) {
@@ -19,6 +21,13 @@ export default function LibraryBook({
 
     let goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days'),
         goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
+
+    console.log(goalAchieved, goalBehind)
+
+    if (pageCount === progress) {
+        goalAchieved = true
+        goalBehind = false
+    }
 
     const [isHover, toggleHover] = useState(false)
 
@@ -35,7 +44,8 @@ export default function LibraryBook({
 
 
     // let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages / day` : "No goal yet"
-    let dailyGoal = goal > 0 ? Math.ceil(pageCount / goal) : 'No goal set.'
+    const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+    let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
     let message
 
     if (dailyGoal > 1) {

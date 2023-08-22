@@ -27,10 +27,11 @@ const userSchema = new mongoose.Schema({
             type: Number,
             default: 0,
         },
-        goal: {
-            type: Number,
-            default: 0,
-        },
+        // goal: {
+        //     type: Number,
+        //     default: 0,
+        // },
+        // replace "goal" with dateOfCompletion
         pageCount: {
             type: Number,
             default: 0,

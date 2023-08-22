@@ -3,22 +3,33 @@ import Image from 'next/image'
 import Checkmark from '../../public/seal_checked.svg'
 import WarningTriangle from '../../public/exc_triangle.svg'
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { parseISO } from 'date-fns';
+
 export default function ReadingGoalForm(props) {
 
-    const { handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated, goalStatus } = props
+    const { pageCount, handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion } = props
     // const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
-        daysGoal: goal,
+        dateOfCompletion: parseISO(dateOfCompletion),
         bookProgress: progress,
         title: title
     })
 
+    console.log(formData)
+
     const [saveChanges, toggleSaveChanges] = useState(false)
 
-    let dailyGoal = Math.ceil((props.pageCount - formData.bookProgress) / formData.daysGoal)
+    const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+
+
+    let dailyGoal = dateOfCompletion ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
+
+    console.log(['days remaining:', daysLeft], ['goal', dailyGoal])
     // console.log(dailyGoal)
-    let currPercent = Math.floor((formData.bookProgress / props.pageCount) * 100)
+    let currPercent = Math.ceil((formData.bookProgress / pageCount) * 100)
 
     //format currPercent 
     if (currPercent >= 100) {
@@ -35,6 +46,15 @@ export default function ReadingGoalForm(props) {
             [e.target.name]: e.target.value
         })
     }
+
+    const handleDateChange = (date) => {
+        let newDate = parseISO(date)
+        console.log('the new date is', date)
+        setFormData((prevData) => ({
+            ...prevData,
+            dateOfCompletion: date,
+        }));
+    };
 
     //this function updates the form if the user has met their day goal
     function handleClick(e) {
@@ -65,19 +85,22 @@ export default function ReadingGoalForm(props) {
     }
 
     const goalButton = (
-        <div className=' tooltip tooltip-bottom tooltip-accent' data-tip={dailyGoal !== Infinity ? `Click this when you've read ${dailyGoal} pages today!` : `Click this when you've met your goal!`}>
+        <div className=' tooltip tooltip-bottom tooltip-accent' data-tip={dailyGoal !== Infinity && dailyGoal > 0 ? `Click this when you've read ${dailyGoal} pages today!` : `Click this when you've met your goal!`}>
             <button
                 onClick={handleClick}
                 name="dailyGoal"
                 type="button"
 
-                className={`btn btn-sm btn-accent  ml-2 ${formData.daysGoal <= 0 || formData.bookProgress >= props.pageCount ? " btn-disabled" : ""}`}
+                className={`btn btn-sm btn-accent  ml-2 ${daysLeft <= 0 || formData.bookProgress >= props.pageCount ? " btn-disabled" : ""}`}
 
             >Goal Achieved!</button>
         </div>
     )
 
-    const daysGoal = (<p className="mr-2 ">{dailyGoal} pages a day</p>)
+    const daysGoal = daysLeft > 0 && dailyGoal > 0 ? <p className="mr-2 ">{dailyGoal} pages for {daysLeft} days.</p> :
+        progress === pageCount ? "Finished!" : 'No goal set.'
+
+
     return (
         <div className='px-5 py-5 flex flex-col h-full'>
             <div className='h-1/2  border-b-2 border-slate-300'>
@@ -93,7 +116,7 @@ export default function ReadingGoalForm(props) {
                     </div>
                 </div>
                 <div className='flex justify-start mt-5 md:text-lg text-xs px-0'>
-                    <div className='w-1/2'>{formData.daysGoal > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>No goal set.</p>}</div>
+                    <div className='w-1/2'>{daysLeft > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>No goal set.</p>}</div>
 
                     <div className='w-1/2'>{goalButton}</div>
                 </div>
@@ -117,15 +140,17 @@ export default function ReadingGoalForm(props) {
                 </div>
 
                 <div className='flex mt-4 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2' htmlFor="">Days to finish:</label>
-                    <input
-                        type='number'
-                        onChange={handleChange}
-                        onKeyDown={() => toggleSaveChanges(true)}
-                        name='daysGoal'
-                        min='0'
-                        value={formData.daysGoal}
-                        className='border-black border-2 rounded-md mx-2 px-2 w-20'
+                    <label className='w-1/2 ' htmlFor="finish date selection">
+                        Finish Date:
+                    </label>
+                    <DatePicker
+                        selected={formData.dateOfCompletion}
+                        onChange={(date) => {
+                            toggleSaveChanges(true)
+                            handleDateChange(date)
+                        }}
+                        className='border-black border-2 rounded-md mx-2 px-2 w-32'
+                        minDate={new Date()} // Set the minimum date to the current date
                     />
                 </div>
 

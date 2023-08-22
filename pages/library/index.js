@@ -174,26 +174,26 @@ export default function Home({ toggleAlert }) {
 
 function calculateTotalPages(arr) {
 
-    let result
     const now = new Date()
 
     //check if goalAchieved === today
-
     //filter out the books whose goalAchieved === today
 
-    let incompleteBooks = arr.filter(book => timeChecker(new Date(book.goalAchievedAt), now, 'days') === false)
 
-    // console.log(incompleteBooks.map(book => book.book.title))
+    let totalPages = arr.filter(book => {
+        console.log(book)
+        const daysLeft = book.dateOfCompletion ? Math.ceil((new Date(book.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+        return timeChecker(new Date(book.goalAchievedAt), now, 'days') === false && daysLeft > 0;
+    })
+        //iterate thru the array and reduce to the total number of pages
+        .reduce((acc, c) => {
+            //get the remaining pages
+            const daysLeft = c.dateOfCompletion ? Math.ceil((new Date(c.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+            return acc + Math.ceil((c.pageCount - c.progress) / daysLeft)
+        }, 0)
 
-    //iterate thru the array and reduce to the total number of pages
+    console.log('total pages is', totalPages)
 
-    result = incompleteBooks.reduce((accumulator, currentBook) => {
-        const laterDate = new Date(currentBook.dateOfCompletion)
-        let daysRemaining = Math.ceil((laterDate - now) / (1000 * 60 * 60 * 24))
-        // console.log([currentBook.book.title, daysRemaining])
-        return accumulator + Math.ceil(((currentBook.pageCount - currentBook.progress) / daysRemaining))
-    }, 0)
-
-    return Math.ceil(result)
+    return totalPages
 
 }
