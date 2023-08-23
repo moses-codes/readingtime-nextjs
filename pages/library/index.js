@@ -118,6 +118,7 @@ export default function Home({ toggleAlert }) {
     // console.log(data)
 
     if (isLoading) {
+        totalPages = "loading library..."
         section = (
             <div role="status" className='flex justify-center'>
                 <svg
@@ -157,12 +158,16 @@ export default function Home({ toggleAlert }) {
         <Layout>
             <main
                 className="p-12">
-
-                <h1 className='md:text-5xl text-4xl mb-10 text-center font-light'>Your Library</h1>
-                <section className='flex md:flex-row flex-col flex-shrink-0 md:items-start items-center'>
+                <div
+                // className='flex justify-start items-center'
+                >
+                    <h1 className='w-3/4 md:text-5xl text-4xl mb-10  mx-5 font-light'>Your Library</h1>
                     <Dashboard
                         totalPages={totalPages}
                     />
+                </div>
+                <section className='flex md:flex-row flex-col flex-shrink-0 md:items-start items-center'>
+
                     <div className='ml-5 w-3/4'>{section}</div>
                 </section>
 
