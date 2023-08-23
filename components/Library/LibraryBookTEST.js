@@ -126,12 +126,12 @@ export default function LibraryBook({
                     <motion.span className='flex justify-end w-2/12'
                     >
                         {
-                            goalBehind ? <Image className='' src={WarningTriangle} alt='Warning: Behind goal' /> :
+                            goalBehind ? <Image className='' src={WarningTriangle} alt='Warning: Falling behind goal' /> :
                                 goalAchieved ?
-                                    <Image src={Checkmark} alt="Checkmark: Task Completed"
+                                    <Image src={Checkmark} alt="Checkmark: Reading goal met"
                                     />
                                     :
-                                    <Image src={Unchecked} alt="Pending: Checkmark Placeholder"
+                                    <Image src={Unchecked} alt="Pending: Click here if you've met your goal"
                                         className='transition-all hover:scale-125 hover:cursor-pointer	'
                                         onClick={(e) => {
                                             e.stopPropagation()

@@ -35,7 +35,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     const [saveChanges, toggleSaveChanges] = useState(false)
 
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
-    let dailyGoal = formData.bookProgress > 0 ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
+    let dailyGoal = formData.bookProgress >= 0 ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
 
     // console.log(['days remaining:', daysLeft], ['goal', dailyGoal])
     // console.log(dailyGoal)

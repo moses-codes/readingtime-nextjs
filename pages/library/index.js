@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
-import Dashboard from '../../components/Dashboard'
+// import Dashboard from '../../components/Dashboard'
 
 import { timeChecker } from '@/utils/timeChecker';
 
@@ -43,7 +43,7 @@ export default function Home({ toggleAlert }) {
                     type: null,
                     title: null,
                 });
-            }, 3100);
+            }, 2800);
             mutate('/api/getData')
         } else {
             console.error('Failed to change');
@@ -74,7 +74,7 @@ export default function Home({ toggleAlert }) {
                     type: null,
                     title: null,
                 });
-            }, 3100);
+            }, 2800);
             console.log('Document removed successfully');
             mutate('/api/getData')
         } else {
@@ -106,7 +106,7 @@ export default function Home({ toggleAlert }) {
                     type: null,
                     title: null,
                 });
-            }, 3100);
+            }, 2800);
             console.log('Book updated successfully');
         } else {
             console.error('Failed to remove document');
@@ -149,6 +149,7 @@ export default function Home({ toggleAlert }) {
                     handleDelete={handleDelete}
                     handleSaveChanges={handleSaveChanges}
                     handleUpdatePageCount={handleUpdatePageCount}
+                    totalPages={totalPages}
                 />
             </>
         )
@@ -161,14 +162,14 @@ export default function Home({ toggleAlert }) {
                 <div
                 // className='flex justify-start items-center'
                 >
-                    <h1 className='w-3/4 md:text-5xl text-4xl mb-10  mx-5 font-light'>Your Library</h1>
-                    <Dashboard
-                        totalPages={totalPages}
-                    />
-                </div>
-                <section className='flex md:flex-row flex-col flex-shrink-0 md:items-start items-center'>
+                    <h1 className=' md:text-5xl text-4xl mb-10  mx-5 font-light'>Your Library</h1>
+                    {/* <div className='w-1/2'> */}
 
-                    <div className='ml-5 w-3/4'>{section}</div>
+                    {/* </div> */}
+                </div>
+                <section className='flex md:flex-row flex-col flex-shrink-0 md:justify-start items-center'>
+
+                    <div className=' w-3/4'>{section}</div>
                 </section>
 
 

@@ -38,6 +38,7 @@ export default function MyApp({ Component, pageProps }) {
           {showAlert.status && <Alert type={showAlert.type} title={showAlert.title} />}
         </AnimatePresence>
         <Component {...pageProps}
+
           toggleAlert={toggleAlert}
         />
       </div>

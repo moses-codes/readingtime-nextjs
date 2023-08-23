@@ -1,15 +1,30 @@
-export default function Dashboard({ totalPages }) {
+import { timeChecker } from "@/utils/timeChecker"
 
-    // let totalPages = shelf.filter(book => book.lastUpdated).length === 0 ? null : calculateTotalPages(shelf);
 
-    // let name = user.firstName || user.username
+export default function Dashboard({ totalPages, shelf }) {
+
+    let now = new Date()
+
+    let booksAchieved = shelf.filter(book => {
+        let goalLastMet = new Date(book.goalAchievedAt).toDateString()
+        return goalLastMet === now.toDateString()
+    })
+
+    function selectDisplayBook(books) {
+        if (books) {
+            books = books.sort((a, b) => new Date(b.goalAchievedAt) - new Date(a.goalAchievedAt))
+            console.log(books)
+            return books[0]
+        } else {
+            return null
+        }
+    }
+    let displayBook = selectDisplayBook(booksAchieved) ? selectDisplayBook(booksAchieved).book : null
 
     let message
 
-    // console.log(totalPages)
-
     if (totalPages > 1) {
-        message = `You have ${totalPages} pages left to read today.`
+        message = <>You have <span className='text-xl font-bold'>{totalPages}</span> pages left to read today.</>
     } else if (totalPages === 1) {
         message = `You have just ${totalPages} page left to read today!`
     } else if (totalPages === 0) {
@@ -27,13 +42,17 @@ export default function Dashboard({ totalPages }) {
     }
 
     return (
-        // <div className="card w-1/4 bg-base-100 shadow-xl my-5 mx-5 h-auto">
-        //     <div className="card-body">
-        //         <h2 className="card-title">Hello!</h2>
-        //         <p className='text-xl'>{message}</p>
-        //     </div>
-        // </div>
-        <h2>Hello! {message}</h2>
+        <div className="card w-60 bg-base-100 shadow-xl my-5 mx-5 h-auto border-2 border-black">
+
+            <div className="card-body ">
+                <h3 className='uppercase'>{now.toDateString()}</h3>
+                <h2 className='text-3xl card-title mt-8'>Hello! </h2>
+                <p className='py-5'>{message}</p>
+                {displayBook && <p>
+                    How was <span className='italic'>{displayBook.title}</span>?
+                </p>}
+            </div>
+        </div >
     )
 }
 

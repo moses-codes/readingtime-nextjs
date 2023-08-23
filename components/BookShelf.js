@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import ReadingGoalForm from './forms/ReadingGoalForm'
 import LibraryBook from "./Library/LibraryBookTEST"
 import LibraryBookModal from './Library/LibraryBookTESTModal'
+import Dashboard from './Dashboard'
 
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 
@@ -15,7 +16,7 @@ export default function BookShelf(props) {
 
 
     // console.log(selectedId)
-    const { shelf, handleDelete, handleSaveChanges, handleUpdatePageCount } = props
+    const { shelf, handleDelete, handleSaveChanges, handleUpdatePageCount, totalPages } = props
 
     // console.log(shelf)
 
@@ -71,6 +72,10 @@ export default function BookShelf(props) {
                     className='z-0 flex flex-wrap md:justify-start justify-around '
 
                 >
+                    <Dashboard
+                        totalPages={totalPages}
+                        shelf={shelf}
+                    />
                     <AnimatePresence >
                         {shelf &&
                             shelf.map(b => {
