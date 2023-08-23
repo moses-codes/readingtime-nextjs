@@ -14,10 +14,10 @@ export default function BookShelf(props) {
     })
 
 
-    console.log(selectedId)
+    // console.log(selectedId)
     const { shelf, handleDelete, handleSaveChanges, handleUpdatePageCount } = props
 
-    console.log(shelf)
+    // console.log(shelf)
 
 
     function findObjectById(array, idToFind) {
@@ -29,8 +29,8 @@ export default function BookShelf(props) {
     if (selectedId.currentId) {
         let item = findObjectById(shelf, selectedId.currentId)
         currBook = item
-        console.log('the current book is ', currBook.book.title)
-        console.log(selectedId.currentId === currBook.book._id ? "the ids match" : 'they do not')
+        // console.log('the current book is ', currBook.book.title)
+        // console.log(selectedId.currentId === currBook.book._id ? "the ids match" : 'they do not')
     } else {
         currBook = null
     }
@@ -38,7 +38,7 @@ export default function BookShelf(props) {
 
     const handleParentClick = () => {
         // Do something when the parent div is clicked
-        console.log('parent clicked')
+        // console.log('parent clicked')
         setSelectedId(p => {
             return {
                 ...p,
@@ -51,7 +51,7 @@ export default function BookShelf(props) {
         // Do something when the button inside the child div is clicked
 
         // e.stopPropagation(); // Stop event propagation to the parent div
-        console.log('parent clicked')
+        // console.log('parent clicked')
         setSelectedId(p => {
             return {
                 ...p,
@@ -89,6 +89,7 @@ export default function BookShelf(props) {
                                     goalAchievedAt={b.goalAchievedAt}
                                     lastUpdated={b.lastUpdated}
                                     dateOfCompletion={b.dateOfCompletion}
+                                    handleSaveChanges={handleSaveChanges}
                                 />)
                             })
                         }

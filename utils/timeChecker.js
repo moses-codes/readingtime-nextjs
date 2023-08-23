@@ -23,11 +23,11 @@ export function timeChecker(date1, date2, unit) {
 
         // Convert the time difference from milliseconds to days
         const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-        console.log('the difference is', daysDifference)
+        // console.log('the difference is', daysDifference)
         //the days difference < .5, aka it was met 12 hours ago.
         if (daysDifference < .5) return true;
 
-        console.log('the difference is', daysDifference)
+        // console.log('the difference is', daysDifference)
 
         return false
     }

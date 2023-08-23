@@ -14,7 +14,8 @@ export default function LibraryBook({
     dateOfCompletion,
     // goal,
     setSelectedId, z_index, selectedId,
-    goalAchievedAt, lastUpdated
+    goalAchievedAt, lastUpdated,
+    handleSaveChanges,
 }) {
 
     const now = new Date().getTime()
@@ -22,7 +23,7 @@ export default function LibraryBook({
     let goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days'),
         goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
 
-    console.log(goalAchieved, goalBehind)
+    // console.log(goalAchieved, goalBehind)
 
     if (pageCount === progress) {
         goalAchieved = true
@@ -33,7 +34,7 @@ export default function LibraryBook({
 
     if (pageCount === 0) pageCount = 1;
 
-    let currPercent = Math.floor((progress / pageCount) * 100)
+    let currPercent = Math.ceil((progress / pageCount) * 100)
 
     //format currPercent 
     if (currPercent >= 100) {
@@ -45,6 +46,8 @@ export default function LibraryBook({
 
     // let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / goal) !== Infinity ? `${Math.ceil((pageCount - progress) / goal)} pages / day` : "No goal yet"
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+    let dailyGoalNum = Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ?
+        Math.ceil((pageCount - progress) / daysLeft) : 0
     let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
     let message
 
@@ -124,8 +127,25 @@ export default function LibraryBook({
                     >
                         {
                             goalBehind ? <Image className='' src={WarningTriangle} alt='Warning: Behind goal' /> :
-                                goalAchieved ? <Image src={Checkmark} alt="Checkmark: Task Completed" /> :
-                                    <Image src={Unchecked} alt="Pending: Checkmark Placeholder" />
+                                goalAchieved ?
+                                    <Image src={Checkmark} alt="Checkmark: Task Completed"
+                                    />
+                                    :
+                                    <Image src={Unchecked} alt="Pending: Checkmark Placeholder"
+                                        className='transition-all hover:scale-125 hover:cursor-pointer	'
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            let now = Date.now()
+                                            handleSaveChanges({
+                                                bookProgress: progress + dailyGoalNum,
+                                                lastUpdated: now,
+                                                goalAchievedAt: now,
+                                                dateOfCompletion: dateOfCompletion,
+                                                _id: _id,
+                                                title: title,
+                                            })
+                                        }}
+                                    />
                         }
                     </motion.span>
                 </div>

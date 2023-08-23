@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Checkmark from '../../public/seal_checked.svg'
 import WarningTriangle from '../../public/exc_triangle.svg'
@@ -7,9 +7,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
-export default function ReadingGoalForm(props) {
+export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, progress, goal,
+    title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion }) {
 
-    const { pageCount, handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion } = props
+    // const { pageCount, handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion } = props
     // const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -18,16 +19,25 @@ export default function ReadingGoalForm(props) {
         title: title
     })
 
-    console.log(formData)
+    const [initialBookProgress, setBookProgress] = useState(progress)
+    // useEffect(() => {
+    //     setBookProgress(progress);
+    // }, [progress]);
+
+    useEffect(() => {
+        if (goalAchievedAt) {
+            setBookProgress(formData.bookProgress);
+        }
+    }, [goalAchievedAt]);
+
+    console.log(['current progress is', formData.bookProgress], ['old progress is', initialBookProgress])
 
     const [saveChanges, toggleSaveChanges] = useState(false)
 
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+    let dailyGoal = formData.bookProgress > 0 ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
 
-
-    let dailyGoal = dateOfCompletion ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
-
-    console.log(['days remaining:', daysLeft], ['goal', dailyGoal])
+    // console.log(['days remaining:', daysLeft], ['goal', dailyGoal])
     // console.log(dailyGoal)
     let currPercent = Math.ceil((formData.bookProgress / pageCount) * 100)
 
@@ -65,7 +75,7 @@ export default function ReadingGoalForm(props) {
             // console.log("goal is " + dailyGoal)
             let newProgress = Number(formData.bookProgress) + Number(dailyGoal)
             // let newDaysGoal = Number(formData.daysGoal) - 1
-            if (newProgress > props.pageCount) newProgress = props.pageCount;
+            if (newProgress > pageCount) newProgress = pageCount;
             setFormData(prevData => {
                 return {
                     ...prevData,
@@ -79,7 +89,7 @@ export default function ReadingGoalForm(props) {
                 bookProgress: newProgress,
                 lastUpdated: now,
                 goalAchievedAt: now,
-                _id: props._id
+                _id: _id
             })
         }
     }
@@ -91,7 +101,7 @@ export default function ReadingGoalForm(props) {
                 name="dailyGoal"
                 type="button"
 
-                className={`btn btn-sm btn-accent  ml-2 ${daysLeft <= 0 || formData.bookProgress >= props.pageCount ? " btn-disabled" : ""}`}
+                className={`btn btn-sm btn-accent  ml-2 ${daysLeft <= 0 || formData.bookProgress >= pageCount ? " btn-disabled" : ""}`}
 
             >Goal Achieved!</button>
         </div>
@@ -125,10 +135,10 @@ export default function ReadingGoalForm(props) {
             <form className='text-left relative h-1/2 mt-5' >
 
                 <div className='flex mt-4 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2' htmlFor="">Current Page:</label>
+                    <label className='w-1/2' htmlFor="">I&#8217;m on page...</label>
                     <input
                         type='number'
-                        max={props.pageCount}
+                        max={pageCount}
                         min='0'
                         onChange={handleChange}
                         onKeyDown={() => toggleSaveChanges(true)}
@@ -136,12 +146,12 @@ export default function ReadingGoalForm(props) {
                         value={formData.bookProgress}
                         className='border-black border-2 rounded-md mx-2 px-2 w-20'
                     />
-                    <span> / {props.pageCount} p.</span>
+                    <span> / {pageCount} </span>
                 </div>
 
                 <div className='flex mt-4 justify-start md:text-lg text-xs'>
                     <label className='w-1/2 ' htmlFor="finish date selection">
-                        Finish Date:
+                        I'd like to finish by...
                     </label>
                     <DatePicker
                         selected={formData.dateOfCompletion}
@@ -162,13 +172,28 @@ export default function ReadingGoalForm(props) {
                         type='submit'
                         onClick={(e) => {
                             let now = Date.now()
+                            let goalStatus;
+
+                            //if the user manually reduces page count, the goalStatus should reset to white
+                            if (formData.bookProgress < initialBookProgress) {
+                                //if we're going backwards in the book, reset the goalStatus
+                                console.log('condition1')
+                                goalStatus = null
+                            } else if (formData.bookProgress - initialBookProgress > dailyGoal) {
+                                goalStatus = now
+                                console.log('condition2', dailyGoal, formData.bookProgress, initialBookProgress)
+                            } else {
+                                goalStatus = null
+                                console.log('condition3')
+                            }
+
                             toggleSaveChanges(!saveChanges)
                             e.preventDefault()
                             handleSaveChanges({
                                 ...formData,
                                 lastUpdated: now,
-                                goalAchievedAt: goalAchievedAt,
-                                _id: props._id
+                                goalAchievedAt: goalStatus,
+                                _id: _id,
                             })
                         }}
                         className={`btn btn-sm w-40 mr-2 mx-2 btn-primary 
@@ -176,7 +201,7 @@ export default function ReadingGoalForm(props) {
                     ${!saveChanges && 'btn-disabled'}
                     
                     `}>
-                        Update Progress</button>
+                        Update Info</button>
                 </div>
             </form >
 

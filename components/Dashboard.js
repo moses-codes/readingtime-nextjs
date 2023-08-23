@@ -6,7 +6,7 @@ export default function Dashboard({ totalPages }) {
 
     let message
 
-    console.log(totalPages)
+    // console.log(totalPages)
 
     if (totalPages > 1) {
         message = `You have ${totalPages} pages left to read today.`

@@ -37,13 +37,15 @@ export default async function handler(req, res) {
                 let { username, booksReading } = mongoUser
                 let bookToAdd = await Book.findOne({ google_id: google_id })
 
+                let adjustedPageCount = bookToAdd.pageCount > 0 ? bookToAdd.pageCount : 100
+
 
                 mongoUser.booksReading.push({
                     bookId: bookToAdd._id,
                     google_id: google_id,
                     progress: 0,
                     // goal: 0,
-                    pageCount: bookToAdd.pageCount,
+                    pageCount: adjustedPageCount,
                     goalAchievedAt: null,
                     lastUpdated: null,
                     dateOfCompletion: new Date(),
