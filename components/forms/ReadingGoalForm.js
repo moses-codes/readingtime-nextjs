@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Checkmark from '../../public/seal_checked.svg'
 import WarningTriangle from '../../public/exc_triangle.svg'
@@ -24,11 +24,6 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     //     setBookProgress(progress);
     // }, [progress]);
 
-    useEffect(() => {
-        if (goalAchievedAt) {
-            setBookProgress(formData.bookProgress);
-        }
-    }, [goalAchievedAt]);
 
     console.log(['current progress is', formData.bookProgress], ['old progress is', initialBookProgress])
 
@@ -151,7 +146,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
 
                 <div className='flex mt-4 justify-start md:text-lg text-xs'>
                     <label className='w-1/2 ' htmlFor="finish date selection">
-                        I'd like to finish by...
+                        I&#8217;d like to finish by...
                     </label>
                     <DatePicker
                         selected={formData.dateOfCompletion}
