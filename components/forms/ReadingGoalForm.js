@@ -14,6 +14,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     // const [goalReached, setGoalReached] = useState(false);
 
     const [formData, setFormData] = useState({
+        pageCount: pageCount,
         dateOfCompletion: parseISO(dateOfCompletion),
         bookProgress: progress,
         title: title
@@ -137,8 +138,11 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                         type='number'
                         max={pageCount}
                         min='0'
-                        onChange={handleChange}
-                        onKeyDown={() => toggleSaveChanges(true)}
+                        onChange={(e) => {
+                            toggleSaveChanges(true)
+                            handleChange(e)
+                        }
+                        }
                         name='bookProgress'
                         value={formData.bookProgress}
                         className='border-black border-2 rounded-md mx-2 px-2 w-20'

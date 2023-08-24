@@ -33,7 +33,7 @@ export default function MyApp({ Component, pageProps }) {
         }
       }
     }>
-      <div className='relative z-auto'>
+      <div className='relative z-auto  bg-base-100'>
         <AnimatePresence>
           {showAlert.status && <Alert type={showAlert.type} title={showAlert.title} />}
         </AnimatePresence>

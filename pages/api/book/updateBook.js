@@ -11,9 +11,14 @@ export default async function handler(req, res) {
         const { formData } = req.body; // Assuming the target is passed in the request body
         const {
             // daysGoal, 
-            bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion } = formData
+            bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount } = formData
 
         console.log(['user form:', formData], ['date of completion:', dateOfCompletion])
+
+        if (bookProgress > pageCount) {
+            console.log('bad input')
+            return res.status(400).json({ message: "Invalid form data." })
+        }
 
         const currUser = await User.findOneAndUpdate(
             { clerkId: userId, 'booksReading.bookId': _id },

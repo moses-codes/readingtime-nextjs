@@ -43,7 +43,7 @@ export default function Navbar(props) {
     }
 
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-white">
             {/*the mobile navbar*/}
             <div className="navbar-start lg:hidden">
                 <div className="dropdown relative indicator lg:hidden mr-5">
