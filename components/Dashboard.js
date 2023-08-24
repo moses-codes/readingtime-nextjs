@@ -45,7 +45,7 @@ export default function Dashboard({ totalPages, shelf }) {
         <div className="card w-60 bg-base-100 shadow-xl my-5 mx-5 h-auto border-2 border-black">
 
             <div className="card-body ">
-                <h3 className='uppercase'>{now.toDateString()}</h3>
+                <h3 className='uppercase font-light'>{now.toDateString()}</h3>
                 <h2 className='text-3xl card-title mt-8'>Hello! </h2>
                 <p className='py-5'>{message}</p>
                 {displayBook && <p>

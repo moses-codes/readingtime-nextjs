@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import Dashboard from '@/components/Dashboard';
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
 // import Dashboard from '../../components/Dashboard'
@@ -136,7 +137,10 @@ export default function Home({ toggleAlert }) {
         console.log('library loaded')
         section = (
             <>
-                <h2 className='mt-10 text-center'>You have no books in your library.</h2>
+                <div className='flex '>
+                    <Dashboard shelf={[]} totalPages={''} />
+                    <h2 className='mt-10 text-center'>You have no books in your library.</h2>
+                </div>
             </>
         )
     } else if (data) {

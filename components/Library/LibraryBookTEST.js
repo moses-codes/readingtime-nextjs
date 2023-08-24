@@ -74,7 +74,7 @@ export default function LibraryBook({
             layout
             key={_id}
             className={`card w-60 min-h-min bg-slate-100
-            shadow-xl mx-5 mt-5 z-0 
+            shadow-xl mx-5 mt-5 z-0 hover:cursor-pointer
             ${selectedId.currentId === _id && 'invisible'}
             `}
             layoutId={_id}
@@ -100,7 +100,7 @@ export default function LibraryBook({
                 {isHover && <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2 }} className="absolute right-2 top-2
+                    transition={{ duration: 0.2 }} className="absolute right-2 top-2 
                 radial-progress bg-slate-200 text-primary border-4 border-slate-200 text-xs" style={{ "--value": `${currPercent}`, "--size": "2.55rem", "--thickness": "2px" }}>{currPercent}%</motion.div>}
 
                 <Image
@@ -120,22 +120,30 @@ export default function LibraryBook({
                 ${goalBehind && 'bg-red-200'}
                  text-black w-full rounded-b-xl px-2 py-2`}
             >
-                <div className='flex items-center'>
+                <div className='flex items-center overflow-hidden'>
                     <motion.span className='inline-block italic font-bold w-10/12 overflow-ellipsis truncate whitespace-nowrap'
-                    >{title}</motion.span>
-                    <motion.span className='flex justify-end w-2/12'
                     >
+
+                        {title}</motion.span>
+                    <motion.span className='flex justify-end w-3/12'
+                    >
+                        {goalBehind && <Image
+                            className='	'
+                            src={WarningTriangle} alt='Warning: Falling behind goal' />}
                         {
-                            goalBehind ? <Image className='' src={WarningTriangle} alt='Warning: Falling behind goal' /> :
-                                goalAchieved ?
-                                    <Image src={Checkmark} alt="Checkmark: Reading goal met"
-                                    />
-                                    :
-                                    <Image src={Unchecked} alt="Pending: Click here if you've met your goal"
-                                        className='transition-all hover:scale-125 hover:cursor-pointer	'
-                                        onClick={(e) => {
+
+                            goalAchieved ?
+                                <Image src={Checkmark} alt="Checkmark: Reading goal met"
+                                />
+                                :
+                                <Image src={Unchecked} alt="Pending: Click here if you've met your goal"
+                                    className='transition-all hover:scale-125 hover:cursor-pointer	'
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        let now = Date.now()
+                                        if (dailyGoal === "No goal yet") {
                                             e.stopPropagation()
-                                            let now = Date.now()
+                                        } else {
                                             handleSaveChanges({
                                                 bookProgress: progress + dailyGoalNum,
                                                 lastUpdated: now,
@@ -144,8 +152,9 @@ export default function LibraryBook({
                                                 _id: _id,
                                                 title: title,
                                             })
-                                        }}
-                                    />
+                                        }
+                                    }}
+                                />
                         }
                     </motion.span>
                 </div>

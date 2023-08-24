@@ -110,10 +110,12 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
         <div className='px-5 py-5 flex flex-col h-full'>
             <div className='h-1/2  border-b-2 border-slate-300'>
                 <div className=''>
-                    <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}
-                        {goalStatus === "goalAchieved" && <Image src={Checkmark} alt="Checkmark: Task Completed" />}
-                        {goalStatus === "goalBehind" && <Image className='' src={WarningTriangle} alt='Warning: Behind goal' />}
-                    </h3>
+                    <div className='flex items-center'>
+                        <h3 className="lg:text-2xl text-lg card-title pt-2 inline-block text-ellipsis truncate whitespace-nowrap w-10/12">{title}
+                        </h3>
+                        {goalStatus === "goalAchieved" && <Image src={Checkmark} className='' alt="Checkmark: Task Completed" />}
+                        {goalStatus === "goalBehind" && <Image className='w-1/12' src={WarningTriangle} alt='Warning: Behind goal' />}
+                    </div>
                     <div className='flex align-center mt-1'>
                         <progress className="progress progress-info w-3/4 my-auto mr-2" value={currPercent} min="0" max="100">
                         </progress>
@@ -170,7 +172,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                             let goalStatus;
 
                             //if the user manually reduces page count, the goalStatus should reset to white
-                            if (formData.bookProgress < initialBookProgress) {
+                            if (formData.bookProgress < initialBookProgress || dailyGoal === -Infinity) {
                                 //if we're going backwards in the book, reset the goalStatus
                                 console.log('condition1')
                                 goalStatus = null
