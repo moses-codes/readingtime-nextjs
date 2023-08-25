@@ -178,14 +178,14 @@ export default function Home({ toggleAlert }) {
                 <div
                 // className='flex justify-start items-center'
                 >
-                    <h1 className=' md:text-5xl text-4xl mb-10  mx-5 font-light'>Your Library</h1>
+                    <h1 className=' md:text-5xl text-4xl mb-10  mx-5 font-light text-center'>Your Library</h1>
                     {/* <div className='w-1/2'> */}
 
                     {/* </div> */}
                 </div>
                 <section className='flex md:flex-row flex-col flex-shrink-0 md:justify-start items-center'>
 
-                    <div className=' w-3/4'>{section}</div>
+                    <div className='mx-auto w-10/12'>{section}</div>
                 </section>
 
 
