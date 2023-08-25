@@ -92,7 +92,7 @@ export default function Home({ toggleAlert }) {
             body: JSON.stringify({ formData }),
         });
 
-        console.log(response)
+        // console.log(response)
 
         if (response.ok) {
             mutate('/api/getData')
@@ -110,7 +110,19 @@ export default function Home({ toggleAlert }) {
             }, 2800);
             console.log('Book updated successfully');
         } else {
-            console.error('Failed to remove document');
+            toggleAlert({
+                status: true,
+                type: 'failed',
+                title: formData.title,
+            })
+            setTimeout(() => {
+                toggleAlert({
+                    status: false,
+                    type: null,
+                    title: null,
+                });
+            }, 2800);
+            console.error('Failed to update book');
         }
     }
 

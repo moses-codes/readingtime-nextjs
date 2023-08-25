@@ -20,6 +20,11 @@ export default async function handler(req, res) {
             return res.status(400).json({ message: "Invalid form data." })
         }
 
+        // if (new Date(now) < new Date(dateOfCompletion)) {
+        //     console.log('bad input')
+        //     return res.status(400).json({ message: "Invalid form data." })
+        // }
+
         const currUser = await User.findOneAndUpdate(
             { clerkId: userId, 'booksReading.bookId': _id },
             {
