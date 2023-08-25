@@ -2,29 +2,43 @@ import { useState, useEffect } from 'react'
 // import Image from 'next/image'
 import { motion, AnimatePresence } from "framer-motion"
 import ReadingGoalForm from '../forms/ReadingGoalForm'
+import { timeChecker } from '@/utils/timeChecker'
+
 
 export default function LibraryBook({ _id,
-    title, cover, pageCount, progress, goal,
-    handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId }) {
+    title, cover, pageCount, progress, dateOfCompletion,
+    // goal,
+    handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId,
+    goalAchievedAt, lastUpdated
+}) {
+
+    const now = new Date().getTime()
+
+    let goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days'),
+        goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
+
+    //goalDate - now = how many days left
+
+    //goalAchieved is true (and goalBehind is false) if before midnight && goal is achieved
+
+    //goalBehind is true (and goalAchieved is false) if lastUpdated >= 36 hours
+
+    //if both goalAchieved and goalBehind are false, the bg of the component is white
 
     if (pageCount === 0) pageCount = 1;
 
-    //change the page count from coming from the book schema to the booksreading array in the user schema
-
     const [changePageCount, toggleChangePageCount] = useState(false)
 
-    const [showBook, toggleShowBook] = useState(false)
 
-    // function handleClick(e) {
-    //     toggleShowBook(!showBook)
 
-    // }
 
     return (
         // <AnimatePresence>
         <motion.div
             layout
-            className='card md:w-96 h-96 bg-base-100 absolute inset-x-0 mx-5 md:mx-auto z-50'
+            className={`card md:w-96 h-96 
+            bg-base-100
+            absolute inset-x-0 mx-5 md:mx-auto z-50`}
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.8, transition: { duration: .2 } }}
@@ -67,16 +81,21 @@ export default function LibraryBook({ _id,
                 </ul>
             </div>
             {/* <h3 className="lg:text-2xl text-lg card-title pt-2 truncate">{title}</h3> */}
-
             <ReadingGoalForm
                 title={title}
                 pageCount={pageCount}
                 _id={_id}
                 progress={progress}
-                goal={goal}
+                // goal={goal}
+                dateOfCompletion={dateOfCompletion}
                 handleSaveChanges={handleSaveChanges}
-                showBook={showBook}
+                // showBook={showBook}
                 setSelectedId={setSelectedId}
+                goalAchievedAt={goalAchievedAt}
+                lastUpdated={lastUpdated}
+                goalStatus={goalAchieved === true && goalBehind === false ? "goalAchieved" :
+                    goalAchieved === false && goalBehind === true ? 'goalBehind' : null
+                }
             />
         </motion.div >
         //</AnimatePresence> 
@@ -117,20 +136,3 @@ export function ChangePageCount({ setSelectedId, displayForm, pageCount, toggleF
         </motion.div >
     )
 }
-
-// motion.div
-//                             layout
-//                             className='card w-full md:w-96 h-96 bg-base-100 absolute inset-x-0 mx-auto z-50'
-//                             initial={{ opacity: 1 }}
-//                             animate={{ opacity: 1 }}
-//                             exit={{ opacity: 0 }}
-//                             onClick={(e) => e.stopPropagation()}
-//                             layoutId={selectedId}>
-//                             <motion.h5 layout>{title}</motion.h5>
-//                             <motion.h2>{_id}</motion.h2>
-//                             <motion.button className='btn' onClick={() => {
-//                                 // setSelectedId(null)
-//                                 handleButtonClick()
-//                             }
-//                             } >Button</motion.button>
-//                         </motion.div>

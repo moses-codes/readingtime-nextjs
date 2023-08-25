@@ -43,7 +43,7 @@ export default function Navbar(props) {
     }
 
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-white">
             {/*the mobile navbar*/}
             <div className="navbar-start lg:hidden">
                 <div className="dropdown relative indicator lg:hidden mr-5">
@@ -56,14 +56,14 @@ export default function Navbar(props) {
                     </label>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-10 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <Link href="/">
-                            <li>
+                            <li className='hover:underline'>
                                 <div className='md:mr-5'>
                                     Home
                                 </div>
                             </li>
                         </Link>
                         <Link href="/library/">
-                            <li className="">
+                            <li className="hover:underline">
 
                                 <div className='md:mr-5 flex'>
                                     <p>Library</p>
@@ -96,13 +96,13 @@ export default function Navbar(props) {
                 <div className="menu menu-horizontal px-20 w-full flex">
 
                     <Link href="/">
-                        <li className="pr-14">Home</li>
+                        <li className="pr-14 hover:underline transition-all">Home</li>
                     </Link>
 
                     <Link href="/library/">
                         <div className="indicator w-16">
                             {pending > 0 && <span className="indicator-item indicator-end badge badge-secondary">+{pending}</span>}
-                            <li className="">Library</li>
+                            <li className=" hover:underline">Library</li>
                         </div>
                     </Link>
 
