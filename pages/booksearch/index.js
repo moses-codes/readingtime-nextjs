@@ -76,7 +76,7 @@ export default function BookSearch({ toggleAlert }) {
     } else {
         searchResults = (
             <>
-                <p>Enter something into the search bar! Try a title, author, or ISBN.</p>
+                <p>Enter something into the search bar! Try a title or ISBN.</p>
             </>
         )
     }

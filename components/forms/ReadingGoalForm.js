@@ -35,7 +35,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
 
     // console.log(['days remaining:', daysLeft], ['goal', dailyGoal])
     // console.log(dailyGoal)
-    let currPercent = Math.ceil((formData.bookProgress / pageCount) * 100)
+    let currPercent = Math.floor((formData.bookProgress / pageCount) * 100)
 
     //format currPercent 
     if (currPercent >= 100) {

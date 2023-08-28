@@ -125,7 +125,7 @@ export default function Navbar(props) {
                         onClick={() => console.log('clicked')}>Search</button>
                 </form>
             </div>
-            <div className="navbar-end">
+            <div className="navbar-end px-5">
                 <UserButton afterSignOutUrl="/" />
             </div>
         </div >)
