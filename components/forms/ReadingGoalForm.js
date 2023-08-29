@@ -24,6 +24,8 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
 
     const [initialBookProgress, setBookProgress] = useState(progress)
 
+    const [isDateGoal, toggleDateGoal] = useState(true)
+
 
     console.log(['current progress is', formData.bookProgress], ['old progress is', initialBookProgress])
 
@@ -133,6 +135,12 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                 </div>
             </div>
 
+            {/* <input
+                onClick={() => toggleDateGoal(!isDateGoal)}
+                type="checkbox" className="toggle toggle-sm"
+                checked={isDateGoal} unchecked={!isDateGoal}
+            /> */}
+
             <DateByForm
                 pageCount={pageCount}
                 formData={formData}
@@ -153,3 +161,10 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
 }
 
 
+// export function Toggler({ toggleDateGoal, isDateGoal }) {
+//     return (<input
+//         onClick={() => toggleDateGoal(!isDateGoal)}
+//         type="checkbox" className="toggle toggle-sm"
+//         checked={isDateGoal} unchecked={!isDateGoal}
+//     />)
+// }
