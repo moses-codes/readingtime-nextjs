@@ -47,7 +47,11 @@ const userSchema = new mongoose.Schema({
         dateOfCompletion: {
             type: Date,
             default: null
-        }
+        },
+        isDateGoal: {
+            type: Boolean,
+            default: true,
+        },
     }],
     booksCompleted: [{
         book: {
