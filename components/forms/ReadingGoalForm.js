@@ -135,12 +135,6 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                 </div>
             </div>
 
-            {/* <input
-                onClick={() => toggleDateGoal(!isDateGoal)}
-                type="checkbox" className="toggle toggle-sm"
-                checked={isDateGoal} unchecked={!isDateGoal}
-            /> */}
-
             <DateByForm
                 pageCount={pageCount}
                 formData={formData}
