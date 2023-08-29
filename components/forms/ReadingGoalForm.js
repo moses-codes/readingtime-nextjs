@@ -3,8 +3,10 @@ import Image from 'next/image'
 import Checkmark from '../../public/seal_checked.svg'
 import WarningTriangle from '../../public/exc_triangle.svg'
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DateByForm from './DateByForm'
+
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
 export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, progress, goal,
@@ -21,9 +23,8 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     })
 
     const [initialBookProgress, setBookProgress] = useState(progress)
-    // useEffect(() => {
-    //     setBookProgress(progress);
-    // }, [progress]);
+
+    const [isDateGoal, toggleDateGoal] = useState(true)
 
 
     console.log(['current progress is', formData.bookProgress], ['old progress is', initialBookProgress])
@@ -33,9 +34,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
     let dailyGoal = formData.bookProgress >= 0 ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
 
-    // console.log(['days remaining:', daysLeft], ['goal', dailyGoal])
-    // console.log(dailyGoal)
-    let currPercent = Math.ceil((formData.bookProgress / pageCount) * 100)
+    let currPercent = Math.floor((formData.bookProgress / pageCount) * 100)
 
     //format currPercent 
     if (currPercent >= 100) {
@@ -103,13 +102,17 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
         </div>
     )
 
-    const daysGoal = daysLeft > 0 && dailyGoal > 0 ? <p className="mr-2 ">{dailyGoal} pages for {daysLeft} days.</p> :
+    const daysGoal = daysLeft > 0 && dailyGoal > 0 ? (
+        <>
+            <p className="mr-2 text-sm">You're reading <span className='font-bold'>{dailyGoal} pages </span> a day with <span className='font-bold'>{daysLeft} {daysLeft > 1 ? 'days' : 'day'}</span> left.</p>
+        </>
+    ) :
         progress === pageCount ? "Finished!" : 'No goal set.'
 
 
     return (
         <div className='px-5 py-5 flex flex-col h-full'>
-            <div className='h-1/2  border-b-2 border-slate-300'>
+            <div className='min-h-min pb-5  border-b-2 border-slate-300'>
                 <div className=''>
                     <div className='flex items-center'>
                         <h3 className="lg:text-2xl text-lg card-title pt-2 inline-block text-ellipsis truncate whitespace-nowrap w-10/12">{title}
@@ -123,91 +126,45 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                         <p>{currPercent}% {currPercent === 100 && <span>&#127881;</span>}</p>
                     </div>
                 </div>
-                <div className='flex justify-start mt-5 md:text-lg text-xs px-0'>
-                    <div className='w-1/2'>{daysLeft > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>No goal set.</p>}</div>
+                <div className='flex justify-start mt-2 md:text-lg text-xs px-0 items-center'>
+                    <div className='w-1/2'>
+                        {daysLeft > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>No goal set.</p>}
+                    </div>
 
                     <div className='w-1/2'>{goalButton}</div>
                 </div>
             </div>
 
-            <form className='text-left relative h-1/2 mt-5' >
+            {/* <input
+                onClick={() => toggleDateGoal(!isDateGoal)}
+                type="checkbox" className="toggle toggle-sm"
+                checked={isDateGoal} unchecked={!isDateGoal}
+            /> */}
 
-                <div className='flex mt-4 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2' htmlFor="">I&#8217;m on page...</label>
-                    <input
-                        type='number'
-                        max={pageCount}
-                        min='0'
-                        onChange={(e) => {
-                            toggleSaveChanges(true)
-                            handleChange(e)
-                        }
-                        }
-                        name='bookProgress'
-                        value={formData.bookProgress}
-                        className='border-black border-2 rounded-md mx-2 px-2 w-20'
-                    />
-                    <span> / {pageCount} </span>
-                </div>
-
-                <div className='flex mt-4 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2 ' htmlFor="finish date selection">
-                        I&#8217;d like to finish by...
-                    </label>
-                    <DatePicker
-                        selected={formData.dateOfCompletion}
-                        onChange={(date) => {
-                            toggleSaveChanges(true)
-                            handleDateChange(date)
-                        }}
-                        className='border-black border-2 rounded-md mx-2 px-2 w-32'
-                        minDate={new Date()} // Set the minimum date to the current date
-                    />
-                </div>
-
-
-
-                <div className='flex items-center justify-start mt-4'>
-                    <div className='w-1/2'></div>
-                    <button
-                        type='submit'
-                        onClick={(e) => {
-                            let now = Date.now()
-                            let goalStatus;
-
-                            //if the user manually reduces page count, the goalStatus should reset to white
-                            if (formData.bookProgress < initialBookProgress || dailyGoal === -Infinity) {
-                                //if we're going backwards in the book, reset the goalStatus
-                                console.log('condition1')
-                                goalStatus = null
-                            } else if (formData.bookProgress - initialBookProgress > dailyGoal) {
-                                goalStatus = now
-                                console.log('condition2', dailyGoal, formData.bookProgress, initialBookProgress)
-                            } else {
-                                goalStatus = null
-                                console.log('condition3')
-                            }
-
-                            toggleSaveChanges(!saveChanges)
-                            e.preventDefault()
-                            handleSaveChanges({
-                                ...formData,
-                                lastUpdated: now,
-                                goalAchievedAt: goalStatus,
-                                _id: _id,
-                            })
-                        }}
-                        className={`btn btn-sm w-40 mr-2 mx-2 btn-primary 
-                    ${saveChanges && 'wiggle-alert'}
-                    ${!saveChanges && 'btn-disabled'}
-                    
-                    `}>
-                        Update Info</button>
-                </div>
-            </form >
+            <DateByForm
+                pageCount={pageCount}
+                formData={formData}
+                initialBookProgress={initialBookProgress}
+                dailyGoal={dailyGoal}
+                toggleSaveChanges={toggleSaveChanges}
+                handleChange={handleChange}
+                handleSaveChanges={handleSaveChanges}
+                handleDateChange={handleDateChange}
+                goal={goal}
+                goalAchievedAt={goalAchievedAt}
+                lastUpdated={lastUpdated}
+                saveChanges={saveChanges}
+            />
 
         </div>
     )
 }
 
 
+// export function Toggler({ toggleDateGoal, isDateGoal }) {
+//     return (<input
+//         onClick={() => toggleDateGoal(!isDateGoal)}
+//         type="checkbox" className="toggle toggle-sm"
+//         checked={isDateGoal} unchecked={!isDateGoal}
+//     />)
+// }

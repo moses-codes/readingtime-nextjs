@@ -12,7 +12,7 @@ import useSWR from 'swr'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-import { AnimatePresence } from 'framer-motion';
+// import { AnimatePresence } from 'framer-motion';
 
 export default function MyApp({ Component, pageProps }) {
 
@@ -34,13 +34,14 @@ export default function MyApp({ Component, pageProps }) {
       }
     }>
       <div className='relative z-auto  bg-base-100'>
-        <AnimatePresence>
+        <div className='absolute z-50'>
           {showAlert.status && <Alert type={showAlert.type} title={showAlert.title} />}
-        </AnimatePresence>
-        <Component {...pageProps}
-
-          toggleAlert={toggleAlert}
-        />
+        </div>
+        <div className='relative'>
+          <Component {...pageProps}
+            toggleAlert={toggleAlert}
+          />
+        </div>
       </div>
     </ClerkProvider>
   );

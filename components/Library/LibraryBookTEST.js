@@ -29,12 +29,13 @@ export default function LibraryBook({
         goalAchieved = true
         goalBehind = false
     }
+    //if the user has completed the book, goalAchieved is always true
 
     const [isHover, toggleHover] = useState(false)
 
     if (pageCount === 0) pageCount = 1;
 
-    let currPercent = Math.ceil((progress / pageCount) * 100)
+    let currPercent = Math.floor((progress / pageCount) * 100)
 
     //format currPercent 
     if (currPercent >= 100) {
@@ -48,7 +49,9 @@ export default function LibraryBook({
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
     let dailyGoalNum = Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ?
         Math.ceil((pageCount - progress) / daysLeft) : 0
-    let dailyGoal = goalAchieved ? 'Goal achieved!' : Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
+    let dailyGoal = goalAchieved ?
+        progress === pageCount ? `Finished!` : 'Goal achieved!' :
+        Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
     let message
 
     if (dailyGoal > 1) {
@@ -160,7 +163,7 @@ export default function LibraryBook({
                 </div>
                 <motion.h5
                     className='font-light'
-                >{message}</motion.h5>
+                >{message} {currPercent === 100 && <span>&#127881;</span>}</motion.h5>
             </motion.div>
         </motion.div >
     )
