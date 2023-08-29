@@ -154,6 +154,8 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                 goalAchievedAt={goalAchievedAt}
                 lastUpdated={lastUpdated}
                 saveChanges={saveChanges}
+                handleClick={handleClick}
+                _id={_id}
             />
 
         </div>

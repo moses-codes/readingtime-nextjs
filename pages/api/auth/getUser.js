@@ -17,14 +17,14 @@ export default async function handler(req, res) {
         await connectMongo();
 
         // Use the db object to query the database
-        console.log('looking for user')
+        // console.log('looking for user')
         // let user
         let currUser = await User.findOne({
             clerkId: userId
         })
 
         if (currUser) {
-            console.log('user found:', currUser)
+            // console.log('user found:', currUser)
         } else {
             const newUser = new User({
                 clerkId: userId,
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
                 createdOn: createdAt,
             })
             const result = await newUser.save()
-            console.log("New user created: ", result)
+            // console.log("New user created: ", result)
         }
 
         // Return the query result

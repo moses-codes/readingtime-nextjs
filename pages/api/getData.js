@@ -9,14 +9,15 @@ export default async function handler(req, res) {
     await connectMongo();
     try {
         // Connect to the database
-        console.log('trying...')
+        // console.log('trying...')
+
 
         // const user = await clerkClient.users.getUser(userId);
         let { booksReading } = await User.findOne({
             clerkId: userId
         }).exec()
 
-        console.log(booksReading)
+        // console.log(booksReading)
 
         if (!booksReading || booksReading.length === 0) {
             // If the library is empty or booksReading is not an array,
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
             return res.status(200).json({ updatedBooksReading: [] });
         }
 
-        console.log(booksReading)
+        // console.log(booksReading)
         //console.log(user)
         //create an array of JUSt the book ids
         const ids = booksReading.map(el => el.bookId)

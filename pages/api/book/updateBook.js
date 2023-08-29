@@ -9,21 +9,15 @@ export default async function handler(req, res) {
         await connectMongo();
         const { userId } = getAuth(req)
         const { formData } = req.body; // Assuming the target is passed in the request body
-        const {
-            // daysGoal, 
-            bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount } = formData
+        const { bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount } = formData
 
-        console.log(['user form:', formData], ['date of completion:', dateOfCompletion])
+        console.log(_id)
+
 
         if (bookProgress > pageCount) {
             console.log('bad input')
             return res.status(400).json({ message: "Invalid form data." })
         }
-
-        // if (new Date(now) < new Date(dateOfCompletion)) {
-        //     console.log('bad input')
-        //     return res.status(400).json({ message: "Invalid form data." })
-        // }
 
         const currUser = await User.findOneAndUpdate(
             { clerkId: userId, 'booksReading.bookId': _id },
@@ -37,7 +31,7 @@ export default async function handler(req, res) {
                 },
             },
         );
-        // console.log()
+
         //   // Handle successful deletion and return the updated user or appropriate response
         return res.status(200).json({ message: "Book updated successfully" });
     } catch (error) {
