@@ -1,7 +1,9 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function PaceForm() {
+export default function PaceForm({ pageCount, formData, initialBookProgress, dailyGoal,
+    toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id
+}) {
     return (<form className='text-left relative h-1/2 mt-5' >
 
         <div className='flex mt-4 justify-start md:text-lg text-xs'>
@@ -24,17 +26,22 @@ export default function PaceForm() {
 
         <div className='flex mt-4 justify-start md:text-lg text-xs'>
             <label className='w-1/2 ' htmlFor="finish date selection">
-                I&#8217;d like to finish by...
+                I will read...
             </label>
-            <DatePicker
-                selected={formData.dateOfCompletion}
-                onChange={(date) => {
+            <input
+                type='number'
+                max={pageCount}
+                min='0'
+                onChange={(e) => {
                     toggleSaveChanges(true)
-                    handleDateChange(date)
-                }}
-                className='border-black border-2 rounded-md mx-2 px-2 w-32'
-                minDate={new Date()} // Set the minimum date to the current date
+                    handleChange(e)
+                }
+                }
+                name='bookProgress'
+                value={formData.bookProgress}
+                className='border-black border-2 rounded-md mx-2 px-2 w-20'
             />
+            <span className='text-md'> p. / day </span>
         </div>
 
 

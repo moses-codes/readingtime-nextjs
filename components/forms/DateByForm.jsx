@@ -3,7 +3,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
 export default function DateByForm({ pageCount, formData, initialBookProgress, dailyGoal,
-    toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges
+    toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id
 }) {
     return (
         <form className='text-left relative h-1/2 mt-5' >

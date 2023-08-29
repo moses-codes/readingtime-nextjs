@@ -4,6 +4,7 @@ import Checkmark from '../../public/seal_checked.svg'
 import WarningTriangle from '../../public/exc_triangle.svg'
 
 import DateByForm from './DateByForm'
+import PaceForm from './PaceForm'
 
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
@@ -135,27 +136,47 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                 </div>
             </div>
 
-            <input
-                onClick={() => toggleDateGoal(!isDateGoal)}
-                type="checkbox" className="toggle toggle-sm"
-                checked={isDateGoal} unchecked={!isDateGoal}
-            />
+            <div className='flex items-center mt-5'>
+                <input
+                    onClick={() => toggleDateGoal(!isDateGoal)}
+                    type="checkbox" className="toggle toggle-sm mr-2"
+                    checked={isDateGoal} unchecked={!isDateGoal}
+                />
+                <span>{isDateGoal ? 'I want to finish by a certain date.' : 'I want to set my own pace.'}</span>
+            </div>
 
-            <DateByForm
-                pageCount={pageCount}
-                formData={formData}
-                initialBookProgress={initialBookProgress}
-                dailyGoal={dailyGoal}
-                toggleSaveChanges={toggleSaveChanges}
-                handleChange={handleChange}
-                handleSaveChanges={handleSaveChanges}
-                handleDateChange={handleDateChange}
-                goal={goal}
-                goalAchievedAt={goalAchievedAt}
-                lastUpdated={lastUpdated}
-                saveChanges={saveChanges}
-            />
-
+            {
+                isDateGoal ?
+                    <DateByForm
+                        pageCount={pageCount}
+                        formData={formData}
+                        initialBookProgress={initialBookProgress}
+                        dailyGoal={dailyGoal}
+                        toggleSaveChanges={toggleSaveChanges}
+                        handleChange={handleChange}
+                        handleSaveChanges={handleSaveChanges}
+                        handleDateChange={handleDateChange}
+                        goal={goal}
+                        goalAchievedAt={goalAchievedAt}
+                        lastUpdated={lastUpdated}
+                        saveChanges={saveChanges}
+                    />
+                    :
+                    <PaceForm
+                        pageCount={pageCount}
+                        formData={formData}
+                        initialBookProgress={initialBookProgress}
+                        dailyGoal={dailyGoal}
+                        toggleSaveChanges={toggleSaveChanges}
+                        handleChange={handleChange}
+                        handleSaveChanges={handleSaveChanges}
+                        handleDateChange={handleDateChange}
+                        goal={goal}
+                        goalAchievedAt={goalAchievedAt}
+                        lastUpdated={lastUpdated}
+                        saveChanges={saveChanges}
+                    />
+            }
         </div>
     )
 }
