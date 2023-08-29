@@ -104,7 +104,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
 
     const daysGoal = daysLeft > 0 && dailyGoal > 0 ? (
         <>
-            <p className="mr-2 text-sm">You're reading <span className='font-bold'>{dailyGoal} pages </span> a day with <span className='font-bold'>{daysLeft} {daysLeft > 1 ? 'days' : 'day'}</span> left.</p>
+            <p className="mr-2 text-sm">You&lsquo;re reading <span className='font-bold'>{dailyGoal} pages </span> a day with <span className='font-bold'>{daysLeft} {daysLeft > 1 ? 'days' : 'day'}</span> left.</p>
         </>
     ) :
         progress === pageCount ? "Finished!" : 'No goal set.'

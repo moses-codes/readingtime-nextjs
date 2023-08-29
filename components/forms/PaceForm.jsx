@@ -1,3 +1,6 @@
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 export default function PaceForm() {
     return (<form className='text-left relative h-1/2 mt-5' >
 
