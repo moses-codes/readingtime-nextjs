@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         const { formData } = req.body; // Assuming the target is passed in the request body
         const {
             // daysGoal, 
-            bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount } = formData
+            bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount, isDateGoal, paceGoal } = formData
 
         console.log(['user form:', formData], ['date of completion:', dateOfCompletion])
 
@@ -34,6 +34,8 @@ export default async function handler(req, res) {
                     'booksReading.$.goalAchievedAt': goalAchievedAt,
                     'booksReading.$.lastUpdated': lastUpdated,
                     'booksReading.$.dateOfCompletion': dateOfCompletion,
+                    'booksReading.$.isDateGoal': isDateGoal,
+                    'booksReading.$.paceGoal': paceGoal,
                 },
             },
         );

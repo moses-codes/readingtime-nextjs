@@ -3,7 +3,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
 export default function DateByForm({ pageCount, formData, initialBookProgress, dailyGoal,
-    toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id
+    toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id,
+    isDateGoal = true
 }) {
     return (
         <form className='text-left relative h-1/2 mt-5' >
@@ -71,6 +72,7 @@ export default function DateByForm({ pageCount, formData, initialBookProgress, d
                             lastUpdated: now,
                             goalAchievedAt: goalStatus,
                             _id: _id,
+                            isDateGoal: true,
                         })
                     }}
                     className={`btn btn-sm w-40 mr-2 mx-2 btn-primary 

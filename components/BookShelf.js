@@ -18,6 +18,8 @@ export default function BookShelf(props) {
     // console.log(selectedId)
     const { shelf, handleDelete, handleSaveChanges, handleUpdatePageCount, totalPages } = props
 
+    console.log(shelf)
+
     // console.log(shelf)
 
 
@@ -95,6 +97,8 @@ export default function BookShelf(props) {
                                     lastUpdated={b.lastUpdated}
                                     dateOfCompletion={b.dateOfCompletion}
                                     handleSaveChanges={handleSaveChanges}
+                                    isDateGoal={b.isDateGoal}
+                                    paceGoal={b.paceGoal}
                                 />)
                             })
                         }
@@ -125,6 +129,8 @@ export default function BookShelf(props) {
                             goalAchievedAt={currBook.goalAchievedAt}
                             lastUpdated={currBook.lastUpdated}
                             dateOfCompletion={currBook.dateOfCompletion}
+                            isDateGoal={currBook.isDateGoal}
+                            paceGoal={currBook.paceGoal}
                         />
                     </AnimatePresence>
                 </div>

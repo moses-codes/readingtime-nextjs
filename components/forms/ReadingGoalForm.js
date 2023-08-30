@@ -10,8 +10,10 @@ import PaceForm from './PaceForm'
 // import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
-export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, progress, goal,
-    title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion }) {
+export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, progress,
+    title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion, isDateGoal, paceGoal = 1 }) {
+
+    console.log(title, paceGoal)
 
     // const { pageCount, handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion } = props
     // const [goalReached, setGoalReached] = useState(false);
@@ -20,12 +22,13 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
         pageCount: pageCount,
         dateOfCompletion: parseISO(dateOfCompletion),
         bookProgress: progress,
-        title: title
+        title: title,
+        paceGoal: paceGoal,
     })
 
     const [initialBookProgress, setBookProgress] = useState(progress)
 
-    const [isDateGoal, toggleDateGoal] = useState(true)
+    const [isDateForm, toggleDateForm] = useState(isDateGoal)
 
 
     console.log(['current progress is', formData.bookProgress], ['old progress is', initialBookProgress])
@@ -138,15 +141,19 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
 
             <div className='flex items-center mt-5'>
                 <input
-                    onClick={() => toggleDateGoal(!isDateGoal)}
+                    onChange={() => {
+                        toggleSaveChanges(true)
+                        toggleDateForm(!isDateForm)
+                    }
+                    }
                     type="checkbox" className="toggle toggle-sm mr-2"
-                    checked={isDateGoal} unchecked={!isDateGoal}
+                    checked={isDateForm} unchecked={!isDateForm}
                 />
-                <span>{isDateGoal ? 'I want to finish by a certain date.' : 'I want to set my own pace.'}</span>
+                <span>{isDateForm ? 'I want to finish by a certain date.' : 'I want to set my own pace.'}</span>
             </div>
 
             {
-                isDateGoal ?
+                isDateForm ?
                     <DateByForm
                         pageCount={pageCount}
                         formData={formData}
@@ -156,10 +163,11 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                         handleChange={handleChange}
                         handleSaveChanges={handleSaveChanges}
                         handleDateChange={handleDateChange}
-                        goal={goal}
+                        // goal={goal}
                         goalAchievedAt={goalAchievedAt}
                         lastUpdated={lastUpdated}
                         saveChanges={saveChanges}
+                        _id={_id}
                     />
                     :
                     <PaceForm
@@ -171,21 +179,14 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                         handleChange={handleChange}
                         handleSaveChanges={handleSaveChanges}
                         handleDateChange={handleDateChange}
-                        goal={goal}
+                        // goal={goal}
                         goalAchievedAt={goalAchievedAt}
                         lastUpdated={lastUpdated}
                         saveChanges={saveChanges}
+                        _id={_id}
+                        paceGoal={formData.paceGoal}
                     />
             }
         </div>
     )
 }
-
-
-// export function Toggler({ toggleDateGoal, isDateGoal }) {
-//     return (<input
-//         onClick={() => toggleDateGoal(!isDateGoal)}
-//         type="checkbox" className="toggle toggle-sm"
-//         checked={isDateGoal} unchecked={!isDateGoal}
-//     />)
-// }

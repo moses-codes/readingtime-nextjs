@@ -157,6 +157,7 @@ export default function Home({ toggleAlert }) {
         )
     } else if (data) {
         totalPages = data.updatedBooksReading.filter(book => book.lastUpdated).length === 0 ? null : calculateTotalPages(data.updatedBooksReading);
+        console.log(data)
         section = (
             <>
                 <BookShelf

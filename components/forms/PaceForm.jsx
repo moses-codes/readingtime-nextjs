@@ -2,7 +2,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function PaceForm({ pageCount, formData, initialBookProgress, dailyGoal,
-    toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id
+    toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id,
+    isDateGoal = false, paceGoal = 1
 }) {
     return (<form className='text-left relative h-1/2 mt-5' >
 
@@ -31,14 +32,14 @@ export default function PaceForm({ pageCount, formData, initialBookProgress, dai
             <input
                 type='number'
                 max={pageCount}
-                min='0'
+                min='1'
                 onChange={(e) => {
                     toggleSaveChanges(true)
                     handleChange(e)
                 }
                 }
-                name='bookProgress'
-                value={formData.bookProgress}
+                name='paceGoal'
+                value={formData.paceGoal}
                 className='border-black border-2 rounded-md mx-2 px-2 w-20'
             />
             <span className='text-md'> p. / day </span>
@@ -74,6 +75,8 @@ export default function PaceForm({ pageCount, formData, initialBookProgress, dai
                         lastUpdated: now,
                         goalAchievedAt: goalStatus,
                         _id: _id,
+                        isDateGoal: false,
+                        paceGoal: paceGoal,
                     })
                 }}
                 className={`btn btn-sm w-40 mr-2 mx-2 btn-primary 
