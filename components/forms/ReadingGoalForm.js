@@ -9,6 +9,7 @@ import PaceForm from './PaceForm'
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
+import { AnimatePresence } from 'framer-motion'
 
 export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, progress,
     title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion, isDateGoal, paceGoal = 1 }) {
@@ -36,7 +37,18 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     const [saveChanges, toggleSaveChanges] = useState(false)
 
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
-    let dailyGoal = formData.bookProgress >= 0 ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
+
+    const now = new Date();
+    const daysLeftAtPace = Math.floor((pageCount - progress) / paceGoal)
+    const projectedDateOfCompletion = new Date(now);
+    projectedDateOfCompletion.setDate(now.getDate() + daysLeftAtPace)
+
+    console.log(projectedDateOfCompletion)
+
+    let dailyGoal = (isDateForm ?
+        formData.bookProgress >= 0 ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
+        : paceGoal
+    )
 
     let currPercent = Math.floor((formData.bookProgress / pageCount) * 100)
 
@@ -107,11 +119,19 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     )
 
     const daysGoal = daysLeft > 0 && dailyGoal > 0 ? (
-        <>
-            <p className="mr-2 text-sm">You&lsquo;re reading <span className='font-bold'>{dailyGoal} pages </span> a day with <span className='font-bold'>{daysLeft} {daysLeft > 1 ? 'days' : 'day'}</span> left.</p>
-        </>
-    ) :
-        progress === pageCount ? "Finished!" : 'No goal set.'
+        isDateForm ?
+            <>
+                <p className="mr-2 md:text-sm text-xs"><span className='font-bold'>{dailyGoal} pages </span> a day. </p>
+
+
+                <p className="mr-2 md:text-xs text-2xs">Finish on <span className='font-bold'>{new Date(dateOfCompletion).toDateString()}. </span></p>
+                {/* <span className='font-extra light'>{daysLeft} more {daysLeft > 1 ? 'days' : 'day'}</span>! */}
+            </>
+            :
+            <>
+                <p className="mr-2 md:text-sm text-xs"><span className='font-bold'>{paceGoal} pages </span> daily, will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span></p>
+            </>
+    ) : progress === pageCount ? "Finished!" : 'No goal set.'
 
 
     return (
@@ -142,51 +162,52 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
             <div className='flex items-center mt-5'>
                 <input
                     onChange={() => {
-                        toggleSaveChanges(true)
+                        toggleSaveChanges(!isDateGoal)
                         toggleDateForm(!isDateForm)
                     }
                     }
                     type="checkbox" className="toggle toggle-sm mr-2"
                     checked={isDateForm} unchecked={!isDateForm}
                 />
-                <span>{isDateForm ? 'I want to finish by a certain date.' : 'I want to set my own pace.'}</span>
+                <span className='md:text-md text-sm'>{isDateForm ? 'I want to finish by a certain date.' : 'I want to set my own pace.'}</span>
             </div>
-
-            {
-                isDateForm ?
-                    <DateByForm
-                        pageCount={pageCount}
-                        formData={formData}
-                        initialBookProgress={initialBookProgress}
-                        dailyGoal={dailyGoal}
-                        toggleSaveChanges={toggleSaveChanges}
-                        handleChange={handleChange}
-                        handleSaveChanges={handleSaveChanges}
-                        handleDateChange={handleDateChange}
-                        // goal={goal}
-                        goalAchievedAt={goalAchievedAt}
-                        lastUpdated={lastUpdated}
-                        saveChanges={saveChanges}
-                        _id={_id}
-                    />
-                    :
-                    <PaceForm
-                        pageCount={pageCount}
-                        formData={formData}
-                        initialBookProgress={initialBookProgress}
-                        dailyGoal={dailyGoal}
-                        toggleSaveChanges={toggleSaveChanges}
-                        handleChange={handleChange}
-                        handleSaveChanges={handleSaveChanges}
-                        handleDateChange={handleDateChange}
-                        // goal={goal}
-                        goalAchievedAt={goalAchievedAt}
-                        lastUpdated={lastUpdated}
-                        saveChanges={saveChanges}
-                        _id={_id}
-                        paceGoal={formData.paceGoal}
-                    />
-            }
+            <AnimatePresence initial={false}>
+                {
+                    isDateForm ?
+                        <DateByForm
+                            pageCount={pageCount}
+                            formData={formData}
+                            initialBookProgress={initialBookProgress}
+                            dailyGoal={dailyGoal}
+                            toggleSaveChanges={toggleSaveChanges}
+                            handleChange={handleChange}
+                            handleSaveChanges={handleSaveChanges}
+                            handleDateChange={handleDateChange}
+                            // goal={goal}
+                            goalAchievedAt={goalAchievedAt}
+                            lastUpdated={lastUpdated}
+                            saveChanges={saveChanges}
+                            _id={_id}
+                        />
+                        :
+                        <PaceForm
+                            pageCount={pageCount}
+                            formData={formData}
+                            initialBookProgress={initialBookProgress}
+                            dailyGoal={dailyGoal}
+                            toggleSaveChanges={toggleSaveChanges}
+                            handleChange={handleChange}
+                            handleSaveChanges={handleSaveChanges}
+                            handleDateChange={handleDateChange}
+                            // goal={goal}
+                            goalAchievedAt={goalAchievedAt}
+                            lastUpdated={lastUpdated}
+                            saveChanges={saveChanges}
+                            _id={_id}
+                            paceGoal={formData.paceGoal}
+                        />
+                }
+            </AnimatePresence>
         </div>
     )
 }

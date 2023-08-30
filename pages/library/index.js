@@ -186,7 +186,7 @@ export default function Home({ toggleAlert }) {
                 </div>
                 <section className='flex md:flex-row flex-col flex-shrink-0 md:justify-start items-center'>
 
-                    <div className='mx-auto w-10/12'>{section}</div>
+                    <div className='md:mx-auto md:w-10/12'>{section}</div>
                 </section>
 
 

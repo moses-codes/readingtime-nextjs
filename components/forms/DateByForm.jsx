@@ -7,7 +7,7 @@ export default function DateByForm({ pageCount, formData, initialBookProgress, d
     isDateGoal = true
 }) {
     return (
-        <form className='text-left relative h-1/2 mt-5' >
+        <form className='text-left relative h-1/2 ' >
 
             <div className='flex mt-4 justify-start md:text-lg text-xs'>
                 <label className='w-1/2' htmlFor="">I&#8217;m on page...</label>

@@ -15,7 +15,7 @@ export default function LibraryBook({
     // goal,
     setSelectedId, z_index, selectedId,
     goalAchievedAt, lastUpdated,
-    handleSaveChanges,
+    handleSaveChanges, isDateGoal, paceGoal
 }) {
 
     const now = new Date().getTime()
@@ -49,9 +49,21 @@ export default function LibraryBook({
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
     let dailyGoalNum = Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ?
         Math.ceil((pageCount - progress) / daysLeft) : 0
-    let dailyGoal = goalAchieved ?
-        progress === pageCount ? `Finished!` : 'Goal achieved!' :
-        Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
+
+    let dailyGoal =
+
+        isDateGoal ?
+
+            goalAchieved ?
+                progress === pageCount ? `Finished!` : 'Goal achieved!' :
+                Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
+
+            :
+
+            paceGoal > 0 ?
+                paceGoal : 'No goal set.'
+
+
     let message
 
     if (dailyGoal > 1) {

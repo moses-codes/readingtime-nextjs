@@ -17,14 +17,14 @@ export default function Book(props) {
     }
 
     return (
-        <div key={google_id} className={`z-0 mx-auto card card-side bg-base-100 my-3 lg:w-1/2 w-full flex shadow-lg rounded-md cardHover border-2 border-slate-500
+        <div key={google_id} className={`z-0 mx-auto card card-side bg-base-100 my-3 lg:w-1/2 w-full flex shadow-lg rounded-md cardHover border-2 border-slate-500 md:items-start items-center
         ${added && 'button-press bg-blue-100'}
         `}>
             <div className=''>
                 <img
                     src={cover}
                     alt={`The cover of ${title}`}
-                    className="h-full w-32 max-w-lg "
+                    className="h-auto md:w-32 max-w-lg  rounded-xl md:rounded-none"
                 />
             </div>
             <div className='my-4 mx-5 flex flex-col justify-between'>
@@ -34,7 +34,7 @@ export default function Book(props) {
                     <p>{pageCount} p.</p>
                 </div>
                 <button
-                    className={`btn btn-outline btn-primary btn-sm w-32 ${isReading ? 'btn-disabled' : ''}`}
+                    className={`btn btn-outline btn-primary btn-sm mw-1/2 md:w-32 ${isReading ? 'btn-disabled' : ''}`}
                     onClick={() => {
                         toggleAdded(p => p = true)
                         handleAdd({
@@ -46,7 +46,7 @@ export default function Book(props) {
                         })
                     }}
                 >
-                    {isReading ? <span>In Library</span> : <span>Add Book</span>}
+                    {isReading ? <span>In Library</span> : <span>Add</span>}
                 </button></div>
         </div >
     )

@@ -67,7 +67,7 @@ export default function Navbar(props) {
 
                                 <div className='md:mr-5 flex'>
                                     <p>Library</p>
-                                    {pending && <span className="badge badge-secondary">+{pending}</span>}
+                                    {pending > 0 && <span className="badge badge-secondary">+{pending}</span>}
                                 </div>
                             </li>
                         </Link>
