@@ -31,6 +31,9 @@ export default function LibraryBook({
     }
     //if the user has completed the book, goalAchieved is always true
 
+
+
+
     const [isHover, toggleHover] = useState(false)
 
     if (pageCount === 0) pageCount = 1;
@@ -50,19 +53,39 @@ export default function LibraryBook({
     let dailyGoalNum = Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ?
         Math.ceil((pageCount - progress) / daysLeft) : 0
 
-    let dailyGoal =
+    let dailyGoal;
 
-        isDateGoal ?
+    if (isDateGoal) {
+        if (goalAchieved) {
+            if (progress === pageCount) {
+                dailyGoal = 'Finished!';
+            } else {
+                dailyGoal = 'Goal achieved!';
+            }
+        } else {
+            if (Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity) {
+                dailyGoal = `${Math.ceil((pageCount - progress) / daysLeft)} pages / day`;
+            } else {
+                dailyGoal = 'No goal set.';
+            }
+        }
+    } else {
+        if (progress === pageCount) {
+            dailyGoal = 'Finished!'
+        } else if (paceGoal > 0) {
+            dailyGoal = paceGoal;
+        } else {
+            dailyGoal = 'No goal set.';
+        }
+    }
 
-            goalAchieved ?
-                progress === pageCount ? `Finished!` : 'Goal achieved!' :
-                Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
-
-            :
-
-            paceGoal > 0 ?
-                paceGoal : 'No goal set.'
-
+    if (isDateGoal && dateOfCompletion && lastUpdated) {
+        if (new Date(dateOfCompletion).getTime() < now && pageCount !== progress) {
+            goalBehind = true
+            goalAchieved = false
+            dailyGoal = "Goal date expired!"
+        }
+    }
 
     let message
 

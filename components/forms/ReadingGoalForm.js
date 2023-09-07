@@ -118,20 +118,43 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
         </div>
     )
 
-    const daysGoal = daysLeft > 0 && dailyGoal > 0 ? (
-        isDateForm ?
-            <>
-                <p className="mr-2 md:text-sm text-xs"><span className='font-bold'>{dailyGoal} pages </span> a day. </p>
+    let daysGoal
 
-
-                <p className="mr-2 md:text-xs text-2xs">Finish on <span className='font-bold'>{new Date(dateOfCompletion).toDateString()}. </span></p>
-                {/* <span className='font-extra light'>{daysLeft} more {daysLeft > 1 ? 'days' : 'day'}</span>! */}
-            </>
-            :
+    if (daysLeft > 0 && dailyGoal > 0) {
+        if (isDateForm) {
+            daysGoal = (
+                <>
+                    <p className="mr-2 md:text-sm text-xs">
+                        <span className='font-bold'>{dailyGoal} pages </span> a day.
+                    </p>
+                    <p className="mr-2 md:text-xs text-2xs">
+                        Finish on <span className='font-bold'>{new Date(dateOfCompletion).toDateString()}. </span>
+                    </p>
+                    {/* <span className='font-extra light'>{daysLeft} more {daysLeft > 1 ? 'days' : 'day'}</span>! */}
+                </>
+            );
+        } else {
+            daysGoal = (
+                <>
+                    <p className="mr-2 md:text-sm text-xs">
+                        <span className='font-bold'>{paceGoal} pages </span> daily, will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
+                    </p>
+                </>
+            );
+        }
+    } else if (paceGoal > 0 && !isDateForm) {
+        daysGoal = (
             <>
-                <p className="mr-2 md:text-sm text-xs"><span className='font-bold'>{paceGoal} pages </span> daily, will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span></p>
+                <p className="mr-2 md:text-sm text-xs">
+                    <span className='font-bold'>{paceGoal} pages </span> daily, will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
+                </p>
             </>
-    ) : progress === pageCount ? "Finished!" : 'No goal set.'
+        );
+    } else if (progress === pageCount) {
+        daysGoal = "Finished!";
+    } else {
+        daysGoal = 'No goal set.';
+    }
 
 
     return (
@@ -152,7 +175,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
                 </div>
                 <div className='flex justify-start mt-2 md:text-lg text-xs px-0 items-center'>
                     <div className='w-1/2'>
-                        {daysLeft > 0 ? daysGoal : <p className='text-gray-600 mr-2 '>No goal set.</p>}
+                        {daysGoal}
                     </div>
 
                     <div className='w-1/2'>{goalButton}</div>
@@ -162,7 +185,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
             <div className='flex items-center mt-5'>
                 <input
                     onChange={() => {
-                        toggleSaveChanges(!isDateGoal)
+                        toggleSaveChanges(!saveChanges)
                         toggleDateForm(!isDateForm)
                     }
                     }

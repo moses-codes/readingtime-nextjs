@@ -10,11 +10,30 @@ import useSWR, { useSWRConfig } from 'swr'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-export default function Home({ toggleAlert }) {
+export async function getServerSideProps(context) {
+    try {
+        const data = await fetcher('/api/getData');
+        return {
+            props: {
+                initialData: data,
+            },
+        };
+    } catch (error) {
+        return {
+            props: {
+                initialData: null,
+            },
+        };
+    }
+}
+
+export default function Home({ initialData, toggleAlert }) {
 
     const { mutate } = useSWRConfig()
 
-    const { data, error, isLoading } = useSWR('/api/getData', fetcher)
+    const { data, error, isLoading } = useSWR('/api/getData', fetcher, {
+        initialData, // Pass the initial data fetched using getServerSideProps.
+    });
 
     let totalPages
 
