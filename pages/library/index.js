@@ -15,13 +15,13 @@ export async function getServerSideProps(context) {
         const data = await fetcher('/api/getData');
         return {
             props: {
-                initialData: data,
+                libraryData: data,
             },
         };
     } catch (error) {
         return {
             props: {
-                initialData: null,
+                libraryData: null,
             },
         };
     }
@@ -32,7 +32,7 @@ export default function Home({ initialData, toggleAlert }) {
     const { mutate } = useSWRConfig()
 
     const { data, error, isLoading } = useSWR('/api/getData', fetcher, {
-        initialData, // Pass the initial data fetched using getServerSideProps.
+        libraryData,
     });
 
     let totalPages
