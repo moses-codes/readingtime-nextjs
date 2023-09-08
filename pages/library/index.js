@@ -175,7 +175,9 @@ export default function Home({ libraryData, toggleAlert }) {
             </>
         )
     } else if (data) {
-        totalPages = data.updatedBooksReading.filter(book => book.lastUpdated).length === 0 ? null : calculateTotalPages(data.updatedBooksReading);
+        totalPages = data.updatedBooksReading
+            .filter(book => book.lastUpdated).length === 0 ? null : calculateTotalPages(data.updatedBooksReading);
+
         console.log(data)
         section = (
             <>
@@ -214,8 +216,10 @@ export default function Home({ libraryData, toggleAlert }) {
     )
 }
 
-function calculateTotalPages(arr) {
 
+
+function calculateTotalPages(arr) {
+    console.log('the arr is', (arr))
     const now = new Date()
 
     //check if goalAchieved === today
@@ -223,15 +227,24 @@ function calculateTotalPages(arr) {
 
 
     let totalPages = arr.filter(book => {
-        console.log(book)
-        const daysLeft = book.dateOfCompletion ? Math.ceil((new Date(book.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
-        return timeChecker(new Date(book.goalAchievedAt), now, 'days') === false && daysLeft > 0;
+        if (book.isDateGoal) {
+            console.log(book.book.title, 'is date goal.')
+            const daysLeft = book.dateOfCompletion ? Math.ceil((new Date(book.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+            return timeChecker(new Date(book.goalAchievedAt), now, 'days') === false && daysLeft > 0;
+        }
+        else {
+            return book.progress !== book.pageCount;
+        }
     })
-        //iterate thru the array and reduce to the total number of pages
+        // //iterate thru the array and reduce to the total number of pages
         .reduce((acc, c) => {
-            //get the remaining pages
-            const daysLeft = c.dateOfCompletion ? Math.ceil((new Date(c.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
-            return acc + Math.ceil((c.pageCount - c.progress) / daysLeft)
+            if (c.isDateGoal) {
+                //get the remaining pages
+                const daysLeft = c.dateOfCompletion ? Math.ceil((new Date(c.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+                return acc + Math.ceil((c.pageCount - c.progress) / daysLeft)
+            } else {
+                return acc + c.paceGoal
+            }
         }, 0)
 
     console.log('total pages is', totalPages)
