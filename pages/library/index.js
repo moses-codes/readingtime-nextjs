@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default function Home({ initialData, toggleAlert }) {
+export default function Home({ libraryData, toggleAlert }) {
 
     const { mutate } = useSWRConfig()
 
