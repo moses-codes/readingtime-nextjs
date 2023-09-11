@@ -149,7 +149,7 @@ export default function Home({ libraryData, toggleAlert }) {
 
     // console.log(data)
 
-    if (isLoading) {
+    if (isLoading || !data) {
         totalPages = "loading library..."
         section = (
             <div role="status" className='flex justify-center'>
