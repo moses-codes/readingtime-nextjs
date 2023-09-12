@@ -65,7 +65,7 @@ export default function LibraryBook({
         }
     } else {
 
-        console.log(title, goalAchievedAt)
+        // console.log(title, goalAchievedAt)
 
         goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days');
 

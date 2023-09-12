@@ -38,7 +38,7 @@ export default function Home({ libraryData, toggleAlert }) {
     let totalPages
 
     async function handleUpdatePageCount(value) {
-        console.log('changing page count to ', value)
+        //console.log('changing page count to ', value)
         const response = await fetch('/api/book/updatePageCount', {
             method: 'PUT',
             headers: {
@@ -47,11 +47,11 @@ export default function Home({ libraryData, toggleAlert }) {
             body: JSON.stringify(value),
         });
 
-        console.log(response)
+        //console.log(response)
 
         if (response.ok) {
 
-            console.log('Book page count updated successfully');
+            //console.log('Book page count updated successfully');
             toggleAlert({
                 status: true,
                 type: 'updated',
@@ -66,11 +66,11 @@ export default function Home({ libraryData, toggleAlert }) {
             }, 2800);
             mutate('/api/getData')
         } else {
-            console.error('Failed to change');
+            //console.error('Failed to change');
         }
     }
     async function handleDelete({ _id, title }) {
-        console.log(_id, title)
+        //console.log(_id, title)
         const response = await fetch('/api/book/deleteBook', {
             method: 'POST',
             headers: {
@@ -79,7 +79,7 @@ export default function Home({ libraryData, toggleAlert }) {
             body: JSON.stringify({ _id }),
         });
 
-        console.log(response)
+        //console.log(response)
 
         if (response.ok) {
 
@@ -102,7 +102,7 @@ export default function Home({ libraryData, toggleAlert }) {
         }
     }
     async function handleSaveChanges(formData) {
-        console.log(formData)
+        //console.log(formData)
         const response = await fetch('/api/book/updateBook', {
             method: 'PUT',
             headers: {
@@ -165,7 +165,7 @@ export default function Home({ libraryData, toggleAlert }) {
         section = (<div>Error retrieving books</div>)
     }
     else if (!data.updatedBooksReading || data.updatedBooksReading.length === 0) {
-        console.log('library loaded')
+        //console.log('library loaded')
         section = (
             <>
                 <div className='flex '>
@@ -178,7 +178,7 @@ export default function Home({ libraryData, toggleAlert }) {
         totalPages = data.updatedBooksReading
             .filter(book => book.lastUpdated).length === 0 ? null : calculateTotalPages(data.updatedBooksReading);
 
-        console.log(data)
+        //console.log(data)
         section = (
             <>
                 <BookShelf
@@ -219,7 +219,7 @@ export default function Home({ libraryData, toggleAlert }) {
 
 
 function calculateTotalPages(arr) {
-    console.log('the arr is', (arr))
+    //console.log('the arr is', (arr))
     const now = new Date()
 
     //check if goalAchieved === today
@@ -228,7 +228,7 @@ function calculateTotalPages(arr) {
 
     let totalPages = arr.filter(book => {
         if (book.isDateGoal) {
-            console.log(book.book.title, 'is date goal.')
+            //console.log(book.book.title, 'is date goal.')
             const daysLeft = book.dateOfCompletion ? Math.ceil((new Date(book.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
             return timeChecker(new Date(book.goalAchievedAt), now, 'days') === false && daysLeft > 0;
         }
@@ -238,12 +238,15 @@ function calculateTotalPages(arr) {
     })
         // //iterate thru the array and reduce to the total number of pages
         .reduce((acc, c) => {
+            console.log(c)
             if (c.isDateGoal) {
                 //get the remaining pages
                 const daysLeft = c.dateOfCompletion ? Math.ceil((new Date(c.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
                 return acc + Math.ceil((c.pageCount - c.progress) / daysLeft)
             } else {
-                return acc + c.paceGoal
+                const isGoalCompleted = timeChecker(new Date(c.goalAchievedAt), now, 'days')
+                console.log(c.book.title, c.goalAchievedAt, isGoalCompleted)
+                return isGoalCompleted ? acc + 0 : acc + c.paceGoal
             }
         }, 0)
 
