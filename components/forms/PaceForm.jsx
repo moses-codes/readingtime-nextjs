@@ -5,6 +5,9 @@ export default function PaceForm({ pageCount, formData, initialBookProgress, dai
     toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id,
     isDateGoal = false, paceGoal = 1
 }) {
+
+    //figure out today's progress vs the paceGoal
+
     return (
         <div
             // initial={{ x: 0, opacity: 0 }}

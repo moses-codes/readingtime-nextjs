@@ -27,14 +27,14 @@ export default function Book(props) {
                     className="h-auto md:w-32 max-w-lg  rounded-xl md:rounded-none"
                 />
             </div>
-            <div className='my-4 mx-5 flex flex-col justify-between'>
+            <div className='my-4 mx-5'>
                 <div>
                     <p className='md:text-xl text-lg font-bold'>{title}</p>
                     <p>{authorsDisplay}</p>
                     <p>{pageCount} p.</p>
                 </div>
                 <button
-                    className={`btn btn-outline btn-primary btn-sm mw-1/2 md:w-32 ${isReading ? 'btn-disabled' : ''}`}
+                    className={` mt-5 block btn btn-outline btn-primary btn-sm mw-1/2 md:w-32 ${isReading ? 'btn-disabled' : ''}`}
                     onClick={() => {
                         toggleAdded(p => p = true)
                         handleAdd({
@@ -47,7 +47,8 @@ export default function Book(props) {
                     }}
                 >
                     {isReading ? <span>In Library</span> : <span>Add</span>}
-                </button></div>
+                </button>
+            </div>
         </div >
     )
 }

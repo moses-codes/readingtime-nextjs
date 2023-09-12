@@ -11,8 +11,17 @@ import PaceForm from './PaceForm'
 import { parseISO } from 'date-fns';
 import { AnimatePresence } from 'framer-motion'
 
-export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, progress,
-    title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion, isDateGoal, paceGoal = 1 }) {
+export default function ReadingGoalForm({ _id,
+    pageCount,
+    handleSaveChanges,
+    progress,
+    title,
+    goalAchievedAt,
+    lastUpdated,
+    goalStatus,
+    dateOfCompletion,
+    isDateGoal,
+    paceGoal = 1 }) {
 
     console.log(title, paceGoal)
 
@@ -28,22 +37,17 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     })
 
     const [initialBookProgress, setBookProgress] = useState(progress)
-
     const [isDateForm, toggleDateForm] = useState(isDateGoal)
-
-
-    console.log(['current progress is', formData.bookProgress], ['old progress is', initialBookProgress])
 
     const [saveChanges, toggleSaveChanges] = useState(false)
 
-    const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
 
+
+    const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
     const now = new Date();
     const daysLeftAtPace = Math.floor((pageCount - progress) / paceGoal)
     const projectedDateOfCompletion = new Date(now);
     projectedDateOfCompletion.setDate(now.getDate() + daysLeftAtPace)
-
-    console.log(projectedDateOfCompletion)
 
     let dailyGoal = (isDateForm ?
         formData.bookProgress >= 0 ? Math.ceil((pageCount - formData.bookProgress) / daysLeft) : 0
@@ -106,7 +110,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
     }
 
     const goalButton = (
-        <div className=' tooltip tooltip-bottom tooltip-accent' data-tip={dailyGoal !== Infinity && dailyGoal > 0 ? `Click this when you've read ${dailyGoal} pages today!` : `Click this when you've met your goal!`}>
+        <div className=' tooltip tooltip-bottom tooltip-accent' data-tip={dailyGoal !== Infinity && dailyGoal > 0 ? `Click this when you've read ${dailyGoal} ${dailyGoal === 1 ? 'page' : 'pages'} today!` : `Click this when you've met your goal!`}>
             <button
                 onClick={handleClick}
                 name="dailyGoal"
@@ -137,7 +141,7 @@ export default function ReadingGoalForm({ _id, pageCount, handleSaveChanges, pro
             daysGoal = (
                 <>
                     <p className="mr-2 md:text-sm text-xs">
-                        <span className='font-bold'>{paceGoal} pages </span> daily, will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
+                        <span className='font-bold'>{paceGoal} {paceGoal === 1 ? 'page' : 'pages'} </span> daily, will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
                     </p>
                 </>
             );
