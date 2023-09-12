@@ -15,21 +15,14 @@ export default function LibraryBook({
     // goal,
     setSelectedId, z_index, selectedId,
     goalAchievedAt, lastUpdated,
-    handleSaveChanges,
+    handleSaveChanges, isDateGoal, paceGoal
 }) {
 
     const now = new Date().getTime()
 
-    let goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days'),
-        goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
+    let goalAchieved, goalBehind
 
     // console.log(goalAchieved, goalBehind)
-
-    if (pageCount === progress) {
-        goalAchieved = true
-        goalBehind = false
-    }
-    //if the user has completed the book, goalAchieved is always true
 
     const [isHover, toggleHover] = useState(false)
 
@@ -49,13 +42,63 @@ export default function LibraryBook({
     const daysLeft = dateOfCompletion ? Math.ceil((new Date(dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
     let dailyGoalNum = Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ?
         Math.ceil((pageCount - progress) / daysLeft) : 0
-    let dailyGoal = goalAchieved ?
-        progress === pageCount ? `Finished!` : 'Goal achieved!' :
-        Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity ? `${Math.ceil((pageCount - progress) / daysLeft)} pages / day` : "No goal yet"
+
+    let dailyGoal;
+
+    if (isDateGoal) {
+        goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days');
+        goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
+        if (goalAchieved) {
+            if (progress === pageCount) {
+                dailyGoal = 'Finished!';
+            } else {
+                dailyGoal = 'Goal achieved!';
+            }
+        } else {
+            if (progress === pageCount) {
+                dailyGoal = 'Finished!';
+            } else if (Math.ceil(pageCount / daysLeft) !== Infinity && Math.ceil(pageCount / daysLeft) !== -Infinity) {
+                dailyGoal = `${Math.ceil((pageCount - progress) / daysLeft)} pages / day`;
+            } else {
+                dailyGoal = 'No goal set.';
+            }
+        }
+    } else {
+
+        // console.log(title, goalAchievedAt)
+
+        goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days');
+
+        if (goalAchieved) {
+            dailyGoal = "Goal achieved!"
+        } else if (progress === pageCount) {
+            dailyGoal = 'Finished!'
+        } else if (paceGoal > 0) {
+            dailyGoal = paceGoal;
+        } else {
+            dailyGoal = 'No goal set.';
+        }
+    }
+
+    //unique prompt for if the reader's goal date has passed. 
+    if (isDateGoal && dateOfCompletion && lastUpdated) {
+        if (new Date(dateOfCompletion).getTime() < now && pageCount !== progress) {
+            goalBehind = true
+            goalAchieved = false
+            dailyGoal = "Goal date expired!"
+        }
+    }
+
+    if (pageCount === progress) {
+        goalAchieved = true
+        goalBehind = false
+    }
+    //if the user has completed the book, goalAchieved is always true
+
     let message
 
     if (dailyGoal > 1) {
-        message = `${dailyGoal} pages per day`
+        message = `${dailyGoal} pages / day`
     } else if (dailyGoal === 1) {
         message = "One page per day"
     } else {
@@ -147,14 +190,25 @@ export default function LibraryBook({
                                         if (dailyGoal === "No goal yet") {
                                             e.stopPropagation()
                                         } else {
-                                            handleSaveChanges({
-                                                bookProgress: progress + dailyGoalNum,
-                                                lastUpdated: now,
-                                                goalAchievedAt: now,
-                                                dateOfCompletion: dateOfCompletion,
-                                                _id: _id,
-                                                title: title,
-                                            })
+                                            if (isDateGoal) {
+                                                handleSaveChanges({
+                                                    bookProgress: progress + dailyGoalNum,
+                                                    lastUpdated: now,
+                                                    goalAchievedAt: now,
+                                                    dateOfCompletion: dateOfCompletion,
+                                                    _id: _id,
+                                                    title: title,
+                                                })
+                                            } else {
+                                                handleSaveChanges({
+                                                    bookProgress: progress + paceGoal,
+                                                    lastUpdated: now,
+                                                    goalAchievedAt: now,
+                                                    dateOfCompletion: dateOfCompletion,
+                                                    _id: _id,
+                                                    title: title,
+                                                })
+                                            }
                                         }
                                     }}
                                 />

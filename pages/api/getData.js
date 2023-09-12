@@ -40,6 +40,8 @@ export default async function handler(req, res) {
                 goalAchievedAt: el.goalAchievedAt,
                 lastUpdated: el.lastUpdated,
                 dateOfCompletion: el.dateOfCompletion,
+                isDateGoal: el.isDateGoal,
+                paceGoal: el.paceGoal,
             };
         });
 

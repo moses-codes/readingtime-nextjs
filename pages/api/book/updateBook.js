@@ -9,9 +9,9 @@ export default async function handler(req, res) {
         await connectMongo();
         const { userId } = getAuth(req)
         const { formData } = req.body; // Assuming the target is passed in the request body
-        const { bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount } = formData
-
-        console.log(_id)
+        const {
+            // daysGoal, 
+            bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount, isDateGoal, paceGoal } = formData
 
 
         if (bookProgress > pageCount) {
@@ -28,6 +28,8 @@ export default async function handler(req, res) {
                     'booksReading.$.goalAchievedAt': goalAchievedAt,
                     'booksReading.$.lastUpdated': lastUpdated,
                     'booksReading.$.dateOfCompletion': dateOfCompletion,
+                    'booksReading.$.isDateGoal': isDateGoal,
+                    'booksReading.$.paceGoal': paceGoal,
                 },
             },
         );

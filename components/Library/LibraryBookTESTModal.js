@@ -9,7 +9,7 @@ export default function LibraryBook({ _id,
     title, cover, pageCount, progress, dateOfCompletion,
     // goal,
     handleDelete, handleSaveChanges, handleUpdatePageCount, selectedId, setSelectedId,
-    goalAchievedAt, lastUpdated
+    goalAchievedAt, lastUpdated, isDateGoal = true, paceGoal
 }) {
 
     const now = new Date().getTime()
@@ -30,15 +30,17 @@ export default function LibraryBook({ _id,
     const [changePageCount, toggleChangePageCount] = useState(false)
 
 
+    console.log(title, "'s isDateGoal is", isDateGoal)
 
 
     return (
         // <AnimatePresence>
         <motion.div
             layout
-            className={`card md:w-96 h-96 
+            className={`card md:w-96 min-h-min
             bg-base-100
-            absolute inset-x-0 mx-5 md:mx-auto z-50`}
+            absolute inset-x-0 mx-5 md:mx-auto z-50
+            `}
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.8, transition: { duration: .2 } }}
@@ -95,7 +97,10 @@ export default function LibraryBook({ _id,
                 lastUpdated={lastUpdated}
                 goalStatus={goalAchieved === true && goalBehind === false ? "goalAchieved" :
                     goalAchieved === false && goalBehind === true ? 'goalBehind' : null
+
                 }
+                isDateGoal={isDateGoal}
+                paceGoal={paceGoal}
             />
         </motion.div >
         //</AnimatePresence> 

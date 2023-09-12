@@ -27,11 +27,6 @@ const userSchema = new mongoose.Schema({
             type: Number,
             default: 0,
         },
-        // goal: {
-        //     type: Number,
-        //     default: 0,
-        // },
-        // replace "goal" with dateOfCompletion
         pageCount: {
             type: Number,
             default: 0,
@@ -47,7 +42,15 @@ const userSchema = new mongoose.Schema({
         dateOfCompletion: {
             type: Date,
             default: null
-        }
+        },
+        isDateGoal: {
+            type: Boolean,
+            default: true,
+        },
+        paceGoal: {
+            type: Number,
+            default: 1,
+        },
     }],
     booksCompleted: [{
         book: {
