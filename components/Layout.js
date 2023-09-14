@@ -8,7 +8,7 @@ const Layout = ({ children, pending }) => {
             <Navbar
                 pending={pending}
             />
-            <div className='min-h-screen'>
+            <div className='min-h-screen '>
                 {children}
             </div>
             <Footer />

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useState } from 'react';
 import Dashboard from '@/components/Dashboard';
 import Layout from '../../components/Layout'
 import BookShelf from '../../components/BookShelf'
@@ -34,6 +34,7 @@ export default function Home({ libraryData, toggleAlert }) {
     const { data, error, isLoading } = useSWR('/api/getData', fetcher, {
         libraryData,
     });
+
 
     let totalPages
 
@@ -196,7 +197,7 @@ export default function Home({ libraryData, toggleAlert }) {
     return (
         <Layout>
             <main
-                className="p-12">
+                className="px-12 py-32">
                 <div
                 // className='flex justify-start items-center'
                 >
@@ -205,7 +206,8 @@ export default function Home({ libraryData, toggleAlert }) {
 
                     {/* </div> */}
                 </div>
-                <section className='flex md:flex-row flex-col flex-shrink-0 md:justify-start items-center'>
+
+                <section className='flex md:flex-row flex-col flex-shrink-0 md:justify-center items-center'>
 
                     <div className='md:mx-auto md:w-10/12'>{section}</div>
                 </section>

@@ -123,7 +123,7 @@ export default function BookSearch({ toggleAlert }) {
             <Layout pending={pendingCount} >
                 < div
                     className="relative z-auto">
-                    <section className='m-6'>
+                    <section className='py-20 px-10'>
                         {searchResults}
                     </section>
                 </div>

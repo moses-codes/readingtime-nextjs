@@ -4,9 +4,11 @@ import LibraryBook from "./Library/LibraryBookTEST"
 import LibraryBookModal from './Library/LibraryBookTESTModal'
 import Dashboard from './Dashboard'
 
+import { timeChecker } from '@/utils/timeChecker'
+
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 
-export default function BookShelf(props) {
+export default function BookShelf({ shelf, handleDelete, handleSaveChanges, handleUpdatePageCount, totalPages }) {
 
 
     const [selectedId, setSelectedId] = useState({
@@ -14,13 +16,28 @@ export default function BookShelf(props) {
         lastSelectedId: null,
     })
 
+    const [sortBy, setSortBy] = useState(null)
 
-    // console.log(selectedId)
-    const { shelf, handleDelete, handleSaveChanges, handleUpdatePageCount, totalPages } = props
+    // <option>A-Z</option>
+    //                 <option>Progress</option>
+    //                 <option>Goal not met</option>
 
-    console.log(shelf)
+    if (sortBy) {
 
-    // console.log(shelf)
+        if (sortBy === "alpha") {
+            shelf = [...shelf].sort((a, b) => a.book.title.localeCompare(b.book.title))
+        } else if (sortBy === "date-added") {
+            shelf = shelf
+        } else if (sortBy === "progress") {
+            shelf = [...shelf].sort((a, b) => (a.progress / a.pageCount) - (b.progress / b.pageCount))
+        } else if (sortBy === "goal-status") {
+            let now = new Date()
+            function checkGoal(n) {
+                return timeChecker(n.goalAchievedAt, now, "days") || n.progress === n.pageCount
+            }
+            shelf = [...shelf].sort((a, b) => checkGoal(a) - checkGoal(b))
+        }
+    }
 
 
     function findObjectById(array, idToFind) {
@@ -32,8 +49,6 @@ export default function BookShelf(props) {
     if (selectedId.currentId) {
         let item = findObjectById(shelf, selectedId.currentId)
         currBook = item
-        // console.log('the current book is ', currBook.book.title)
-        // console.log(selectedId.currentId === currBook.book._id ? "the ids match" : 'they do not')
     } else {
         currBook = null
     }
@@ -67,16 +82,25 @@ export default function BookShelf(props) {
 
 
     return (<>
-        <main className='flex flex-wrap justify-start relative '>
+        <motion.main
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+                duration: 0.3,
+                delay: 0.2,
+                ease: [0, 0.71, 0.2, 1.01]
+            }}
+            className='flex mx-auto relative  '>
 
             <LayoutGroup>
                 <motion.div
-                    className='z-0 flex flex-wrap md:justify-start justify-around '
+                    className='z-0 flex flex-wrap xl:justify-start justify-center'
 
                 >
                     <Dashboard
                         totalPages={totalPages}
                         shelf={shelf}
+                        setSortBy={setSortBy}
                     />
                     <AnimatePresence >
                         {shelf &&
@@ -136,21 +160,8 @@ export default function BookShelf(props) {
                 </div>
             )}
 
-        </main >
+        </motion.main >
     </>
     )
 
 }
-
-/* <LibraryBook
-                        key={b.book._id}
-                        _id={b.book._id}
-                        title={b.book.title}
-                        cover={b.book.cover}
-                        pageCount={b.pageCount}
-                        progress={b.progress}
-                        goal={b.goal}
-                        handleDelete={handleDelete}
-                        handleSaveChanges={handleSaveChanges}
-                        handleUpdatePageCount={handleUpdatePageCount}
-                    /> */

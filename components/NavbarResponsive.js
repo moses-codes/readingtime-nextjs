@@ -43,7 +43,7 @@ export default function Navbar(props) {
     }
 
     return (
-        <div className="navbar bg-white">
+        <div className="navbar bg-white fixed z-50">
             {/*the mobile navbar*/}
             <div className="navbar-start lg:hidden">
                 <div className="dropdown relative indicator lg:hidden mr-5">
@@ -78,7 +78,7 @@ export default function Navbar(props) {
                 <div className=' lg:hidden'>
                     <form className='flex' onSubmit={handleSubmitMobile}>
                         <input
-                            className="input input-bordered md:w-full w-20 sm:input-md input-sm"
+                            className="input input-bordered md:w-full w-20 sm:input-sm input-sm"
                             id="searchInput"
                             name="searchInput"
                             type="text"
@@ -86,7 +86,7 @@ export default function Navbar(props) {
                             value={searchValue}
                             onChange={handleChange}
                         />
-                        <button type="submit" className='btn btn-primary w-20 sm:btn-md btn-sm' onClick={() => console.log('clicked')}>Search</button>
+                        <button type="submit" className='btn btn-primary w-20 sm:btn-sm btn-sm' onClick={() => console.log('clicked')}>Search</button>
                     </form>
                 </div>
             </div>
@@ -111,7 +111,7 @@ export default function Navbar(props) {
             <div className='lg:flex navbar-center justify-center hidden'>
                 <form onSubmit={handleSubmitDesktop} className='flex'>
                     <input
-                        className="input input-bordered md:w-full w-20 md:input-md input-sm mx-1"
+                        className="input input-bordered md:w-full w-20 md:input-sm input-sm mx-1"
                         id="searchInput"
                         name="searchInput"
                         type="text"
@@ -120,7 +120,7 @@ export default function Navbar(props) {
                         onChange={handleChange}
                     />
                     <button type="submit"
-                        className={`${!searchValue && 'btn-disabled'} btn btn-primary w-20 md:btn-md btn-sm`}
+                        className={`${!searchValue && 'btn-disabled'} btn btn-primary w-20 md:btn-sm btn-sm`}
 
                         onClick={() => console.log('clicked')}>Search</button>
                 </form>
