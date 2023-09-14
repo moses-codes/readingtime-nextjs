@@ -33,9 +33,15 @@ export default function BookShelf({ shelf, handleDelete, handleSaveChanges, hand
         } else if (sortBy === "goal-status") {
             let now = new Date()
             function checkGoal(n) {
-                return timeChecker(n.goalAchievedAt, now, "days") || n.progress === n.pageCount
+                // console.log(n.book.title, timeChecker(new Date(n.goalAchievedAt), now, "days"))
+                //return if timeChecker is true (goal completed w/in 12 hrs) OR if the user has completed the book. 
+                return timeChecker(new Date(n.goalAchievedAt), now, "days") || n.progress === n.pageCount
             }
-            shelf = [...shelf].sort((a, b) => checkGoal(a) - checkGoal(b))
+            shelf = [...shelf].sort((a, b) => {
+                // console.log(checkGoal(a), checkGoal(b))
+                return checkGoal(a) - checkGoal(b)
+            })
+            console.log(shelf)
         }
     }
 
