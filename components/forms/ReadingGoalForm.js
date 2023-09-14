@@ -23,7 +23,7 @@ export default function ReadingGoalForm({ _id,
     isDateGoal,
     paceGoal = 1 }) {
 
-    console.log(title, paceGoal)
+    // console.log(title, paceGoal)
 
     // const { pageCount, handleSaveChanges, progress, goal, title, goalAchievedAt, lastUpdated, goalStatus, dateOfCompletion } = props
     // const [goalReached, setGoalReached] = useState(false);

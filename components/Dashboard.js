@@ -51,11 +51,11 @@ export default function Dashboard({ totalPages, shelf, setSortBy }) {
                 {displayBook && <p>
                     How was <span className='italic'>{displayBook.title}</span>?
                 </p>}
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full max-w-xs ">
                     <label className="label">
                         <span className="label-text">Sort shelf by...</span>
                     </label>
-                    <select className="select w-full max-w-xs border-black"
+                    <select className="select w-full max-w-xs border-black hover:bg-slate-300"
                         onChange={(e) => {
                             console.log(e.target.value)
                             setSortBy(e.target.value)
@@ -65,7 +65,7 @@ export default function Dashboard({ totalPages, shelf, setSortBy }) {
                         <option value='alpha'>A-Z &#40;title&#41;</option>
                         <option value='date-added' selected>Date added</option>
                         <option value='progress'>Progress</option>
-                        <option value='goal-status'>Goal not met</option>
+                        <option value='goal-status'>Goal status</option>
                     </select>
                 </div>
             </div>

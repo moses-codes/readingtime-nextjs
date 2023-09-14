@@ -41,7 +41,7 @@ export default function BookShelf({ shelf, handleDelete, handleSaveChanges, hand
                 // console.log(checkGoal(a), checkGoal(b))
                 return checkGoal(a) - checkGoal(b)
             })
-            console.log(shelf)
+            // console.log(shelf)
         }
     }
 
