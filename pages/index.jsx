@@ -9,12 +9,14 @@ const inter = Inter({ subsets: ['latin'] })
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-export default function Home(props) {
+export default function Home({ userData }) {
 
-  const { data, error, isLoading } = useSWR('/api/auth/getUser', fetcher)
+  const { data, error, isLoading } = useSWR('/api/auth/getUser', fetcher, {
+    userData,
+  })
 
   return (<Layout>
-    <main className='bg-primary'>
+    <main className='bg-primary py-20'>
       <div className="hero min-h-screen mask md:mask-circle" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600431972041-fb45a99be8e6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' }}>
         <div className="bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
@@ -28,4 +30,21 @@ export default function Home(props) {
       </div></main>
   </Layout >
   )
+}
+
+export async function getServerSideProps(context) {
+  try {
+    const data = await fetcher('/api/getUser');
+    return {
+      props: {
+        libraryData: data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        libraryData: null,
+      },
+    };
+  }
 }

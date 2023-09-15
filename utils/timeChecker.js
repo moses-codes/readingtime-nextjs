@@ -21,6 +21,7 @@ export function timeChecker(date1, date2, unit) {
         // Calculate the difference in milliseconds between the two dates
         const timeDifference = date2 - date1;
 
+
         // Convert the time difference from milliseconds to days
         const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
         // console.log('the difference is', daysDifference)

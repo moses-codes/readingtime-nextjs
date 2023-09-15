@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/router"; // Import the useRouter hook
 // import readingTimeLogo from '/default.png'
 
+import dynamic from 'next/dynamic';
+const LibraryPage = dynamic(() => import('../pages/library'));
+
 export default function Navbar(props) {
 
     const [searchValue, setSearchValue] = useState(props.searchVal || '')
@@ -43,7 +46,7 @@ export default function Navbar(props) {
     }
 
     return (
-        <div className="navbar bg-white">
+        <div className="navbar bg-white fixed z-50">
             {/*the mobile navbar*/}
             <div className="navbar-start lg:hidden">
                 <div className="dropdown relative indicator lg:hidden mr-5">
@@ -62,7 +65,7 @@ export default function Navbar(props) {
                                 </div>
                             </li>
                         </Link>
-                        <Link href="/library/">
+                        <Link href="/library">
                             <li className="hover:underline">
 
                                 <div className='md:mr-5 flex'>
@@ -78,7 +81,7 @@ export default function Navbar(props) {
                 <div className=' lg:hidden'>
                     <form className='flex' onSubmit={handleSubmitMobile}>
                         <input
-                            className="input input-bordered md:w-full w-20 sm:input-md input-sm"
+                            className="input input-bordered md:w-full w-20 sm:input-sm input-sm"
                             id="searchInput"
                             name="searchInput"
                             type="text"
@@ -86,7 +89,7 @@ export default function Navbar(props) {
                             value={searchValue}
                             onChange={handleChange}
                         />
-                        <button type="submit" className='btn btn-primary w-20 sm:btn-md btn-sm' onClick={() => console.log('clicked')}>Search</button>
+                        <button type="submit" className='btn btn-primary w-20 sm:btn-sm btn-sm' onClick={() => console.log('clicked')}>Search</button>
                     </form>
                 </div>
             </div>
@@ -99,7 +102,7 @@ export default function Navbar(props) {
                         <li className="pr-14 hover:underline transition-all">Home</li>
                     </Link>
 
-                    <Link href="/library/">
+                    <Link href="/library">
                         <div className="indicator w-16">
                             {pending > 0 && <span className="indicator-item indicator-end badge badge-secondary">+{pending}</span>}
                             <li className=" hover:underline">Library</li>
@@ -111,7 +114,7 @@ export default function Navbar(props) {
             <div className='lg:flex navbar-center justify-center hidden'>
                 <form onSubmit={handleSubmitDesktop} className='flex'>
                     <input
-                        className="input input-bordered md:w-full w-20 md:input-md input-sm mx-1"
+                        className="input input-bordered md:w-full w-20 md:input-sm input-sm mx-1"
                         id="searchInput"
                         name="searchInput"
                         type="text"
@@ -120,7 +123,7 @@ export default function Navbar(props) {
                         onChange={handleChange}
                     />
                     <button type="submit"
-                        className={`${!searchValue && 'btn-disabled'} btn btn-primary w-20 md:btn-md btn-sm`}
+                        className={`${!searchValue && 'btn-disabled'} btn btn-primary w-20 md:btn-sm btn-sm`}
 
                         onClick={() => console.log('clicked')}>Search</button>
                 </form>
