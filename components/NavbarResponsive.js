@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/router"; // Import the useRouter hook
 // import readingTimeLogo from '/default.png'
 
+import dynamic from 'next/dynamic';
+const LibraryPage = dynamic(() => import('../pages/library'));
+
 export default function Navbar(props) {
 
     const [searchValue, setSearchValue] = useState(props.searchVal || '')
@@ -62,7 +65,7 @@ export default function Navbar(props) {
                                 </div>
                             </li>
                         </Link>
-                        <Link href="/library/">
+                        <Link href="/library">
                             <li className="hover:underline">
 
                                 <div className='md:mr-5 flex'>
@@ -99,7 +102,7 @@ export default function Navbar(props) {
                         <li className="pr-14 hover:underline transition-all">Home</li>
                     </Link>
 
-                    <Link href="/library/">
+                    <Link href="/library">
                         <div className="indicator w-16">
                             {pending > 0 && <span className="indicator-item indicator-end badge badge-secondary">+{pending}</span>}
                             <li className=" hover:underline">Library</li>

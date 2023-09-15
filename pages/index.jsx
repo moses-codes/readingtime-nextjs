@@ -9,9 +9,11 @@ const inter = Inter({ subsets: ['latin'] })
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-export default function Home(props) {
+export default function Home({ userData }) {
 
-  const { data, error, isLoading } = useSWR('/api/auth/getUser', fetcher)
+  const { data, error, isLoading } = useSWR('/api/auth/getUser', fetcher, {
+    userData,
+  })
 
   return (<Layout>
     <main className='bg-primary py-20'>
@@ -28,4 +30,21 @@ export default function Home(props) {
       </div></main>
   </Layout >
   )
+}
+
+export async function getServerSideProps(context) {
+  try {
+    const data = await fetcher('/api/getUser');
+    return {
+      props: {
+        libraryData: data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        libraryData: null,
+      },
+    };
+  }
 }
