@@ -4,6 +4,8 @@
 
 ReadingTime -- set and achieve your reading goals
 
+[Live demo site here](https://readingtime-nextjs.vercel.app/)
+
 ## What does it do
 
 ReadingTime is a habit tracker for readers. You can choose from a wide selection of books, then set a reading goal that you can check off when it's met. 
@@ -36,16 +38,7 @@ For the first time I used an animation library to create a professional, "deligh
 
 More and more does finding clever workarounds to the front end experience feel like the design of a set of a TV Show or Movie. For example, I was having issues with framer-motion and the DOM. When a modal opens, changing information on the modal would cause the original DOM element to become visible behind it. The solution was keeping the selected DOM element hidden while the modal was open, maintaining the illusion that the modal "pops out" form the DOM.
 
-As features are proposed, it's crucial to consider the way that the rest of the code is structured. When adding my 'goal-setter' feature, which changes the appearance of books in the shelf as goals are fulfilled (or fallen behind), many things I ahdn't considered prior came up. One was the way time is handled: when I say "the goal state should expire the next day". do I mean in 24 hours? Midnight local time the next day? What if they cross a time zome that causes a goal to become "unfulfilled?" It's extremely important not only to sketch out the scope of the app from the beginning, but to also set yourself up through future expansion later. 
-
-## Examples:
-Take a look at these couple examples that I have in my own portfolio:
-
-**Palettable:** https://github.com/alecortega/palettable
-
-**Twitter Battle:** https://github.com/alecortega/twitter-battle
-
-**Patch Panel:** https://github.com/alecortega/patch-panel
+As features are proposed, it's crucial to consider the way that the rest of the code is structured. When adding my 'goal-setter' feature, which changes the appearance of books in the shelf as goals are fulfilled (or fallen behind), many things I ahdn't considered prior came up. One was the way time is handled: when I say "the goal state should expire the next day". do I mean in 24 hours? Midnight local time the next day? What if they cross a time zone that causes a goal to become "unfulfilled?" It's extremely important not only to sketch out the scope of the app from the beginning, but to also set yourself up through future expansion later. 
 
 ## Running it locally
 
@@ -62,8 +55,6 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
