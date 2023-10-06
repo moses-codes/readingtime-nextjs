@@ -5,6 +5,7 @@
 ReadingTime -- set and achieve your reading goals
 
 [Live demo site here](https://readingtime-nextjs.vercel.app/)
+![ReadingTime screenshot](https://ibb.co/W5LVxJ0)
 
 ## What does it do
 
