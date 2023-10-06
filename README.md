@@ -30,19 +30,26 @@ ReadingTime uses the routing capabilities of Next.js to create a fast and respon
 For the first time I used an animation library to create a professional, "delightful" user experience.
 
 ## Optimizations
-*(optional)*
 
-1. A journal system. While I don't want full reviews to ever be a focus of the site, I would like readers to reflect on what they read when their goals are met. I will have to implement new fields in the User Schema, such a a journal.
+1. After implementing SSR to increase load times from as slow as 5.5secs, to 138ms.
+2. The Google Books API returns occasionally unrefined results, such as duplicate titles, and books with page counts of 0. I implemented some features, such as page count edit, to circumvent the API's quirks on the user end.
+3. Future features include: a journal feature (microblogging) and audiobook/text toggling.
 
 ## Lessons Learned:
 
-More and more does finding clever workarounds to the front end experience feel like the design of a set of a TV Show or Movie. For example, I was having issues with framer-motion and the DOM. When a modal opens, changing information on the modal would cause the original DOM element to become visible behind it. The solution was keeping the selected DOM element hidden while the modal was open, maintaining the illusion that the modal "pops out" form the DOM.
+When working with an unfamiliar tech stack, it is crucial to know what each component does. Coming from MVC-organized JavaScript, I was not sure the best way to organize my code in Next.js, which blurs the line between client and server. I was able to make a functional app, but in the future I would like to organize my back-end code to better separate concerns. 
 
-As features are proposed, it's crucial to consider the way that the rest of the code is structured. When adding my 'goal-setter' feature, which changes the appearance of books in the shelf as goals are fulfilled (or fallen behind), many things I ahdn't considered prior came up. One was the way time is handled: when I say "the goal state should expire the next day". do I mean in 24 hours? Midnight local time the next day? What if they cross a time zone that causes a goal to become "unfulfilled?" It's extremely important not only to sketch out the scope of the app from the beginning, but to also set yourself up through future expansion later. 
+In that same vein, I worked with Next.js as though it were just a Ract library with a few additional features. After taking advantage of things like Link and SSR, I was able to drastically improve performance. 
+
+I used an out-of-the-box auth solution, Clerk, which requires a fair bit of setup, and was challenging to implement at times due to the constantly changing docs. It seemed a nice trade-off from something like Passport.js, whose node implementation was much more rudimentary, but the abstraction of auth through Clerk made some things, such as middleware, more difficult to understand. 
+
+Implementing an animation library felt like Pandora's box -- framer-motion is sophisticated and complicated, but capable of some delightful UI interactivity. While nice, I did feel like the time spent learning the library might have been better spent elsewhere, though for the future I do have some familiarity. 
+
+A tradeoff for using sophisticated animations is a compromised mobile experience. On my device, the animations don't run super smoothly, or don't translate well to the mobile layout.
 
 ## Running it locally
 
-First, run the development server:
+First, run npm i to install the dependencies. Then, establish a connection with MongoDB Atlas, supplying a URI in the .env folder and any other information required of the desired Clerk auth providers. Finally, run the development server:
 
 ```bash
 npm run dev
@@ -57,5 +64,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
