@@ -48,7 +48,7 @@ Implementing an animation library felt like Pandora's box -- framer-motion is so
 
 A tradeoff for using sophisticated animations is a compromised mobile experience. On my device, the animations don't run super smoothly, or don't translate well to the mobile layout.
 
-## Running it locally
+## Running it locally 
 
 First, run npm i to install the dependencies. Then, establish a connection with MongoDB Atlas, supplying a URI in the .env folder and any other information required of the desired Clerk auth providers. Finally, run the development server:
 
@@ -65,3 +65,33 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## 🤝 Contributing
+
+### Clone the repo
+
+```bash
+git clone [https://github.com/xyz/zipzod@latest](https://github.com/moses-codes/readingtime-nextjs.git)
+cd readingtime-nextjs
+```
+
+###Install dependencies
+```bash
+npm install
+```
+
+
+### Run the project
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+
+### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
