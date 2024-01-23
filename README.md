@@ -71,7 +71,7 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 ### Clone the repo
 
 ```bash
-git clone [https://github.com/xyz/zipzod@latest](https://github.com/moses-codes/readingtime-nextjs.git)
+git clone https://github.com/moses-codes/readingtime-nextjs.git
 cd readingtime-nextjs
 ```
 
