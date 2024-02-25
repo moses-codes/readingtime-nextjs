@@ -19,8 +19,8 @@ export default function BookShelf({ shelf, handleDelete, handleSaveChanges, hand
     const [sortBy, setSortBy] = useState(null)
 
     // <option>A-Z</option>
-    //                 <option>Progress</option>
-    //                 <option>Goal not met</option>
+    // <option>Progress</option>
+    //  <option>Goal not met</option>
 
     if (sortBy) {
 

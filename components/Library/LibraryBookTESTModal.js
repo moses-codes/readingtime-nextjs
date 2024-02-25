@@ -30,7 +30,7 @@ export default function LibraryBook({ _id,
     const [changePageCount, toggleChangePageCount] = useState(false)
 
 
-    console.log(title, "'s isDateGoal is", isDateGoal)
+    // console.log(title, "'s isDateGoal is", isDateGoal)
 
 
     return (

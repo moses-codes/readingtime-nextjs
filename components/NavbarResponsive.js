@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/router"; // Import the useRouter hook
 // import readingTimeLogo from '/default.png'
 
-import dynamic from 'next/dynamic';
-const LibraryPage = dynamic(() => import('../pages/library'));
+// import dynamic from 'next/dynamic';
+// const LibraryPage = dynamic(() => import('../pages/library'));
 
 export default function Navbar(props) {
 

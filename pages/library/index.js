@@ -51,7 +51,6 @@ export default function Home({ libraryData, toggleAlert }) {
         //console.log(response)
 
         if (response.ok) {
-
             //console.log('Book page count updated successfully');
             toggleAlert({
                 status: true,
@@ -66,8 +65,21 @@ export default function Home({ libraryData, toggleAlert }) {
                 });
             }, 2800);
             mutate('/api/getData')
+
         } else {
-            //console.error('Failed to change');
+            console.error(response);
+            toggleAlert({
+                status: true,
+                type: 'failed',
+                title: 'Invalid page count entered.'
+            })
+            setTimeout(() => {
+                toggleAlert({
+                    status: false,
+                    type: null,
+                    title: null,
+                });
+            }, 2800);
         }
     }
     async function handleDelete({ _id, title }) {
@@ -240,7 +252,7 @@ function calculateTotalPages(arr) {
     })
         // //iterate thru the array and reduce to the total number of pages
         .reduce((acc, c) => {
-            console.log(c)
+            // console.log(c)
             if (c.isDateGoal) {
                 //get the remaining pages
                 const daysLeft = c.dateOfCompletion ? Math.ceil((new Date(c.dateOfCompletion) - new Date()) / (1000 * 60 * 60 * 24)) : 0
@@ -252,7 +264,7 @@ function calculateTotalPages(arr) {
             }
         }, 0)
 
-    console.log('total pages is', totalPages)
+    // console.log('total pages is', totalPages)
 
     return totalPages
 

@@ -39,8 +39,8 @@ export default function Alert({ type, title = 'Book' }) {
             <div
                 className='z-50 ease-in-out animate-alert-pop'>
                 <div className=" alert alert-error fixed bottom-4 left-1/2 transform -translate-x-1/2 min-w-min max-w-max  text-black  py-2 px-4 rounded-lg z-50 flex justify-start items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <p >Failed to update <span className='italic'>{title}</span>.</p>
+                    
+                    <p >Failed to update; <span className='italic'>{title}</span></p>
                 </div>
             </div>
         )

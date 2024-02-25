@@ -12,7 +12,6 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 export default function Home(props) {
     // const [shelf, setShelf] = useState([])
 
-
     const { data, error, isLoading } = useSWR('/api/getData', fetcher)
 
     console.log('swr fetched', data)
@@ -56,6 +55,7 @@ export default function Home(props) {
     async function handleSaveChanges(formData) {
         // console.log() the _id
         console.log(formData)
+
         // TODO: Submit the form data to the server
         const response = await fetch('/api/book/updateBook', {
             method: 'PUT',

@@ -8,7 +8,6 @@ export default function DateByForm({ pageCount, formData, initialBookProgress, d
 }) {
     return (
         <form className='text-left relative h-1/2 ' >
-
             <div className='flex mt-4 justify-start md:text-lg text-xs'>
                 <label className='w-1/2' htmlFor="">I&#8217;m on page...</label>
                 <input
@@ -41,8 +40,6 @@ export default function DateByForm({ pageCount, formData, initialBookProgress, d
                     minDate={new Date()} // Set the minimum date to the current date
                 />
             </div>
-
-
 
             <div className='flex items-center justify-start mt-4'>
                 <div className='w-1/2'></div>

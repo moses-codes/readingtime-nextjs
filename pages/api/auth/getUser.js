@@ -1,6 +1,5 @@
 import User from "../../../models/User";
 import { connectMongo } from "../../../utils/connectMongo";
-
 import { getAuth, clerkClient } from "@clerk/nextjs/server";
 
 //the api returns the userId. 
