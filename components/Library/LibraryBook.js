@@ -119,7 +119,7 @@ export default function LibraryBook({
             }}
             layout
             key={_id}
-            className={`card w-60 min-h-min bg-slate-100
+            className={`card h-96 w-28 md:w-60 bg-slate-100
             shadow-xl mx-5 mt-5 z-0 hover:cursor-pointer
             ${selectedId.currentId === _id && 'invisible'}
             `}
@@ -140,8 +140,7 @@ export default function LibraryBook({
             exit={{ opacity: 0 }}
         >
             <motion.div
-                className='h-96'
-
+                className='min-h-full'
             >
                 {isHover && <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import ReadingGoalForm from './forms/ReadingGoalForm'
-import LibraryBook from "./Library/LibraryBookTEST"
-import LibraryBookModal from './Library/LibraryBookTESTModal'
+import LibraryBook from "./Library/LibraryBook"
+import LibraryBookModal from './Library/LibraryBookModal'
 import Dashboard from './Dashboard'
 
 import { timeChecker } from '@/utils/timeChecker'
