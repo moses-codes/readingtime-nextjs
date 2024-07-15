@@ -163,6 +163,7 @@ export default function LibraryBook({
                 className={`relative bottom-0
                 ${goalAchieved && 'bg-emerald-300'} 
                 ${goalBehind && 'bg-red-200'}
+                ${!goalBehind && !goalAchieved && 'bg-white'}
                  text-black w-full rounded-b-xl px-2 py-2`}
             >
                 <div className='flex items-center overflow-hidden'>

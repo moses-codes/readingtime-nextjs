@@ -30,7 +30,7 @@ export default function Dashboard({ totalPages, shelf, setSortBy }) {
     } else if (totalPages === 0) {
         message = "You've achieved all your reading goals today!"
     } else if (totalPages === null) {
-        message = "You haven't set any goals yet. Let's do it!"
+        message = "You haven't set any goals yet. You got this!"
     } else if (totalPages === "loading library...") {
         message = (<svg
             aria-hidden="true" className="inline w-5 h-5 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

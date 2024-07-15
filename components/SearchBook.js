@@ -31,7 +31,8 @@ export default function Book(props) {
                 <div>
                     <p className='md:text-xl text-lg font-bold'>{title}</p>
                     <p>{authorsDisplay}</p>
-                    <p>{pageCount} p.</p>
+                    <p>{pageCount ? `${pageCount} p.` : "N/A"}</p>
+                    {/* <p>Audio: ~{Math.round(2.56 * pageCount / 60)}:{Math.round(2.56 * pageCount % 60)} </p> */}
                 </div>
                 <button
                     className={` mt-5 block btn btn-outline btn-primary btn-sm mw-1/2 md:w-32 ${isReading ? 'btn-disabled' : ''}`}
