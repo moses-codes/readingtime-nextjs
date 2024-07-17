@@ -119,8 +119,8 @@ export default function LibraryBook({
             }}
             layout
             key={_id}
-            className={`card w-60 min-h-min bg-slate-100
-            shadow-xl mx-5 mt-5 z-0 hover:cursor-pointer
+            className={`card max-h-96 w-60 bg-slate-100
+            shadow-xl mx-5 mt-5 mb-20 z-0 hover:cursor-pointer
             ${selectedId.currentId === _id && 'invisible'}
             `}
             layoutId={_id}
@@ -140,8 +140,7 @@ export default function LibraryBook({
             exit={{ opacity: 0 }}
         >
             <motion.div
-                className='h-96'
-
+                className='min-h-full'
             >
                 {isHover && <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -164,6 +163,7 @@ export default function LibraryBook({
                 className={`relative bottom-0
                 ${goalAchieved && 'bg-emerald-300'} 
                 ${goalBehind && 'bg-red-200'}
+                ${!goalBehind && !goalAchieved && 'bg-white'}
                  text-black w-full rounded-b-xl px-2 py-2`}
             >
                 <div className='flex items-center overflow-hidden'>
