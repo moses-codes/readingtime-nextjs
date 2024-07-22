@@ -26,6 +26,10 @@ export default function LibraryBook({
 
     const [isHover, toggleHover] = useState(false)
 
+    console.log(title, isDateGoal, progress, pageCount, Date.parse(dateOfCompletion), lastUpdated)
+
+    console.log(Date.parse(dateOfCompletion) < now)
+
     if (pageCount === 0) pageCount = 1;
 
     let currPercent = Math.floor((progress / pageCount) * 100)
@@ -80,20 +84,21 @@ export default function LibraryBook({
         }
     }
 
-    //unique prompt for if the reader's goal date has passed. 
-    if (isDateGoal && dateOfCompletion && lastUpdated) {
-        if (new Date(dateOfCompletion).getTime() < now && pageCount !== progress) {
+    //unique prompt for if the reader's goal date has passed.
+
+    //if the user has completed the book, goalAchieved is always true. 
+    if (Date.parse(dateOfCompletion) < now) {
+        if (pageCount === progress) {
+            goalAchieved = true
+            goalBehind = false
+
+            //Otherwise, the goal date will have been expired.
+        } else {
             goalBehind = true
             goalAchieved = false
             dailyGoal = "Goal date expired!"
         }
     }
-
-    if (pageCount === progress) {
-        goalAchieved = true
-        goalBehind = false
-    }
-    //if the user has completed the book, goalAchieved is always true
 
     let message
 
