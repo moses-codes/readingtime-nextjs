@@ -59,7 +59,6 @@ export default function BookShelf({ shelf, handleDelete, handleSaveChanges, hand
         currBook = null
     }
 
-
     const handleParentClick = () => {
         // Do something when the parent div is clicked
         // console.log('parent clicked')
@@ -83,9 +82,6 @@ export default function BookShelf({ shelf, handleDelete, handleSaveChanges, hand
             }
         })
     };
-
-
-
 
     return (<>
         <motion.main

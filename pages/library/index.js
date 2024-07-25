@@ -158,13 +158,14 @@ export default function Home({ libraryData, toggleAlert }) {
         }
     }
 
-    let section
+
+    let shelfSection;
 
     // console.log(data)
 
     if (isLoading || !data) {
         totalPages = "loading library..."
-        section = (
+        shelfSection = (
             <div role="status" className='flex justify-center'>
                 <svg
                     aria-hidden="true" className="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -175,11 +176,11 @@ export default function Home({ libraryData, toggleAlert }) {
             </div>
         )
     } else if (error) {
-        section = (<div>Error retrieving books</div>)
+        shelfSection = (<div>Error retrieving books</div>)
     }
     else if (!data.updatedBooksReading || data.updatedBooksReading.length === 0) {
         //console.log('library loaded')
-        section = (
+        shelfSection = (
             <>
                 <div className='flex '>
                     <Dashboard shelf={[]} totalPages={''} />
@@ -192,7 +193,7 @@ export default function Home({ libraryData, toggleAlert }) {
             .filter(book => book.lastUpdated).length === 0 ? null : calculateTotalPages(data.updatedBooksReading);
 
         //console.log(data)
-        section = (
+        shelfSection = (
             <>
                 <BookShelf
                     className="fade-in"
@@ -221,7 +222,7 @@ export default function Home({ libraryData, toggleAlert }) {
 
                 <section className='flex md:flex-row flex-col flex-shrink-0 md:justify-center items-center'>
 
-                    <div className='md:mx-auto md:w-10/12'>{section}</div>
+                    <div className='md:mx-auto md:w-10/12'>{shelfSection}</div>
                 </section>
 
 
@@ -259,7 +260,7 @@ function calculateTotalPages(arr) {
                 return acc + Math.ceil((c.pageCount - c.progress) / daysLeft)
             } else {
                 const isGoalCompleted = timeChecker(new Date(c.goalAchievedAt), now, 'days')
-                console.log(c.book.title, c.goalAchievedAt, isGoalCompleted)
+                // console.log(c.book.title, c.goalAchievedAt, isGoalCompleted)
                 return isGoalCompleted ? acc + 0 : acc + c.paceGoal
             }
         }, 0)

@@ -26,9 +26,9 @@ export default function LibraryBook({
 
     const [isHover, toggleHover] = useState(false)
 
-    console.log(title, isDateGoal, progress, pageCount, Date.parse(dateOfCompletion), lastUpdated)
+    // console.log(title, isDateGoal, progress, pageCount, Date.parse(dateOfCompletion), lastUpdated)
 
-    console.log(Date.parse(dateOfCompletion) < now)
+    // console.log(Date.parse(dateOfCompletion) < now)
 
     if (pageCount === 0) pageCount = 1;
 
@@ -93,10 +93,14 @@ export default function LibraryBook({
             goalBehind = false
 
             //Otherwise, the goal date will have been expired.
+        } else if (!lastUpdated) {
+            goalAchieved = false;
+            goalBehind = false;
+            dailyGoal = "Set a reading goal!"
         } else {
             goalBehind = true
             goalAchieved = false
-            dailyGoal = "Goal date expired!"
+            dailyGoal = "Set a new target!"
         }
     }
 

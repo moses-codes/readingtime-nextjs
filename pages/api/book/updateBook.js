@@ -14,9 +14,10 @@ export default async function handler(req, res) {
             bookProgress, _id, goalAchievedAt, lastUpdated, dateOfCompletion, pageCount, isDateGoal, paceGoal } = formData
 
 
-        if (bookProgress > pageCount) {
-            console.log('bad input')
-            return res.status(400).json({ message: "Invalid form data." })
+        if (bookProgress > pageCount || bookProgress < 0 || isNaN(bookProgress)
+        ) {
+            console.log('bad input.')
+            return res.status(400).json({ message: "Invalid form input." })
         }
 
         const currUser = await User.findOneAndUpdate(

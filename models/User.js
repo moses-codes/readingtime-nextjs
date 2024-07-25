@@ -51,6 +51,10 @@ const userSchema = new mongoose.Schema({
             type: Number,
             default: 1,
         },
+        isAudio: {
+            type: Boolean,
+            default: false
+        }
     }],
     booksCompleted: [{
         book: {

@@ -28,14 +28,15 @@ export default function LibraryBook({ _id,
     if (pageCount === 0) pageCount = 1;
 
     const [changePageCount, toggleChangePageCount] = useState(false)
-    // const [isAudio, setAudio] = useState(false);
+    const [isAudio, setAudio] = useState(false);
 
 
     // console.log(title, "'s isDateGoal is", isDateGoal)
 
-    // const handleAudio = () => {
-    //     setAudio(!isAudio);
-    // }
+    const handleAudio = () => {
+        setAudio(!isAudio);
+    }
+    console.log(isAudio)
 
 
     return (
@@ -68,9 +69,14 @@ export default function LibraryBook({ _id,
                         />
                     </li>
 
-                    {/* <li>
-                        <span onClick={handleAudio}>{isAudio ? "Reading the text" : "Listening to audio"}</span>
-                    </li> */}
+                    <li>
+                        <form className='flex justify-center' onChange={() => setAudio(!isAudio)}>
+                            <label htmlFor='format'>Text</label>
+                            <input type="radio" name="radio-1" className="radio" defaultChecked />
+                            <input type="radio" name="radio-1" className="radio" />
+                            <label htmlFor='format'>Audio</label>
+                        </form>
+                    </li>
 
                     <li className=' bg-red-100'>
                         <a onClick={() => {
