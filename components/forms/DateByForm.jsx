@@ -6,6 +6,7 @@ export default function DateByForm({ pageCount, formData, initialBookProgress, d
     toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id,
     isDateGoal = true
 }) {
+
     return (
         <form className='text-left relative h-1/2 ' >
             <div className='flex mt-4 justify-start md:text-lg text-xs'>

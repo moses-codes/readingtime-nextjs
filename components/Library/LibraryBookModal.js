@@ -69,14 +69,14 @@ export default function LibraryBook({ _id,
                         />
                     </li>
 
-                    <li>
+                    {/* <li>
                         <form className='flex justify-center' onChange={() => setAudio(!isAudio)}>
                             <label htmlFor='format'>Text</label>
                             <input type="radio" name="radio-1" className="radio" defaultChecked />
                             <input type="radio" name="radio-1" className="radio" />
                             <label htmlFor='format'>Audio</label>
                         </form>
-                    </li>
+                    </li> */}
 
                     <li className=' bg-red-100'>
                         <a onClick={() => {

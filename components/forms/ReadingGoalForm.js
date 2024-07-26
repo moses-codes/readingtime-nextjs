@@ -129,7 +129,7 @@ export default function ReadingGoalForm({ _id,
             daysGoal = (
                 <>
                     <p className="mr-2 md:text-sm text-xs">
-                        <span className='font-bold'>{dailyGoal} pages </span> a day.
+                        <span className='font-bold'>{dailyGoal} pages </span> a day,
                     </p>
                     <p className="mr-2 md:text-xs text-2xs">
                         Finish on <span className='font-bold'>{new Date(dateOfCompletion).toDateString()}. </span>
@@ -141,7 +141,7 @@ export default function ReadingGoalForm({ _id,
             daysGoal = (
                 <>
                     <p className="mr-2 md:text-sm text-xs">
-                        <span className='font-bold'>{paceGoal} {paceGoal === 1 ? 'page' : 'pages'} </span> daily, will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
+                        <span className='font-bold'>{paceGoal} {paceGoal === 1 ? 'page' : 'pages'} </span> daily. Will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
                     </p>
                 </>
             );
@@ -166,18 +166,18 @@ export default function ReadingGoalForm({ _id,
             <div className='min-h-min pb-5  border-b-2 border-slate-300'>
                 <div className=''>
                     <div className='flex items-center'>
-                        <h3 className="lg:text-2xl text-lg card-title pt-2 inline-block text-ellipsis truncate whitespace-nowrap w-10/12">{title}
+                        <h3 className="lg:text-2xl text-lg card-title mt-4 mb-2 inline-block text-ellipsis truncate whitespace-nowrap w-10/12">{title}
                         </h3>
                         {goalStatus === "goalAchieved" && <Image src={Checkmark} className='' alt="Checkmark: Task Completed" />}
                         {goalStatus === "goalBehind" && <Image className='w-1/12' src={WarningTriangle} alt='Warning: Behind goal' />}
                     </div>
-                    <div className='flex align-center mt-1'>
+                    <div className='flex align-center mb-2'>
                         <progress className="progress progress-info w-3/4 my-auto mr-2" value={currPercent} min="0" max="100">
                         </progress>
                         <p>{currPercent}% {currPercent === 100 && <span>&#127881;</span>}</p>
                     </div>
                 </div>
-                <div className='flex justify-start mt-2 md:text-lg text-xs px-0 items-center'>
+                <div className='flex justify-start my-4 md:text-lg text-xs px-0 items-center'>
                     <div className='w-1/2'>
                         {daysGoal}
                     </div>
