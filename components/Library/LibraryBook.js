@@ -15,7 +15,8 @@ export default function LibraryBook({
     // goal,
     setSelectedId, z_index, selectedId,
     goalAchievedAt, lastUpdated,
-    handleSaveChanges, isDateGoal, paceGoal
+    handleSaveChanges, isDateGoal, paceGoal,
+    isAudio
 }) {
 
     const now = new Date().getTime()

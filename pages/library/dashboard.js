@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
-import BookShelf from '../../components/BookShelf'
+import BookShelf from '../../components/Library/BookShelf'
 
 import useSWR from 'swr'
 

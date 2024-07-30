@@ -4,13 +4,13 @@ import { parseISO } from 'date-fns';
 
 export default function DateByForm({ pageCount, formData, initialBookProgress, dailyGoal,
     toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id,
-    isDateGoal = true
+    isDateGoal = true, isAudio
 }) {
 
     return (
         <form className='text-left relative h-1/2 ' >
             <div className='flex mt-4 justify-start md:text-lg text-xs'>
-                <label className='w-1/2' htmlFor="">I&#8217;m on page...</label>
+                <label className='w-1/2' htmlFor="">I&#8217;m on...</label>
                 <input
                     type='number'
                     max={pageCount}

@@ -21,7 +21,9 @@ export default function ReadingGoalForm({ _id,
     goalStatus,
     dateOfCompletion,
     isDateGoal,
-    paceGoal = 1 }) {
+    paceGoal = 1,
+    isAudio
+}) {
 
     // console.log(title, paceGoal)
 
@@ -129,7 +131,7 @@ export default function ReadingGoalForm({ _id,
             daysGoal = (
                 <>
                     <p className="mr-2 md:text-sm text-xs">
-                        <span className='font-bold'>{dailyGoal} pages </span> a day,
+                        <span className='font-bold'>{dailyGoal} {isAudio ? "minutes" : "pages"} </span> a day,
                     </p>
                     <p className="mr-2 md:text-xs text-2xs">
                         Finish on <span className='font-bold'>{new Date(dateOfCompletion).toDateString()}. </span>
@@ -138,10 +140,11 @@ export default function ReadingGoalForm({ _id,
                 </>
             );
         } else {
+            let unit = isAudio ? "minute" : "page"
             daysGoal = (
                 <>
                     <p className="mr-2 md:text-sm text-xs">
-                        <span className='font-bold'>{paceGoal} {paceGoal === 1 ? 'page' : 'pages'} </span> daily. Will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
+                        <span className='font-bold'>{paceGoal} {paceGoal === 1 ? unit : `${unit}s`} </span> daily. Will finish on <span className='font-bold'>{new Date(projectedDateOfCompletion).toDateString()}. </span>
                     </p>
                 </>
             );
@@ -215,6 +218,7 @@ export default function ReadingGoalForm({ _id,
                             lastUpdated={lastUpdated}
                             saveChanges={saveChanges}
                             _id={_id}
+                            isAudio={isAudio}
                         />
                         :
                         <PaceForm
@@ -232,6 +236,7 @@ export default function ReadingGoalForm({ _id,
                             saveChanges={saveChanges}
                             _id={_id}
                             paceGoal={formData.paceGoal}
+                            isAudio={isAudio}
                         />
                 }
             </AnimatePresence>

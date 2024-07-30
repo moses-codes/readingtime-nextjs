@@ -33,7 +33,7 @@ export default function LibraryBook({ _id,
 
     // console.log(title, "'s isDateGoal is", isDateGoal)
 
-    const handleAudio = () => {
+    const handleChangeAudio = () => {
         setAudio(!isAudio);
     }
     console.log(isAudio)
@@ -65,18 +65,18 @@ export default function LibraryBook({ _id,
                             displayForm={changePageCount}
                             handleUpdatePageCount={handleUpdatePageCount}
                             title={title}
-                        // isAudio={isAudio}
+                            isAudio={isAudio}
                         />
                     </li>
 
-                    {/* <li>
-                        <form className='flex justify-center' onChange={() => setAudio(!isAudio)}>
+                    <li>
+                        <form className='flex justify-center' onChange={handleChangeAudio}>
                             <label htmlFor='format'>Text</label>
                             <input type="radio" name="radio-1" className="radio" defaultChecked />
                             <input type="radio" name="radio-1" className="radio" />
                             <label htmlFor='format'>Audio</label>
                         </form>
-                    </li> */}
+                    </li>
 
                     <li className=' bg-red-100'>
                         <a onClick={() => {
@@ -118,6 +118,7 @@ export default function LibraryBook({ _id,
                 }
                 isDateGoal={isDateGoal}
                 paceGoal={paceGoal}
+                isAudio={isAudio}
             />
         </motion.div >
         //</AnimatePresence> 
@@ -127,10 +128,20 @@ export default function LibraryBook({ _id,
 export function ChangePageCount({ setSelectedId, displayForm, pageCount, toggleForm, handleUpdatePageCount, _id, title, isAudio }) {
 
     const [pageCountValue, setPageCountValue] = useState(pageCount)
+    const [audioLength, setAudioLength] = useState({ minutes: '', hours: '' })
 
     function handlePageCountChange(e) {
-        console.log(e.target.value)
-        setPageCountValue(e.target.value)
+
+        if (isAudio) {
+            console.log(e.target.name, e.target.value)
+            setAudioLength(prev => ({
+                ...prev, [e.target.name]: e.target.value
+            }))
+            console.log('total minutes:', +audioLength.minutes + (audioLength.hours * 60))
+        } else {
+            console.log(e.target.value)
+            setPageCountValue(e.target.value)
+        }
     }
 
     if (!displayForm) {
@@ -144,17 +155,24 @@ export function ChangePageCount({ setSelectedId, displayForm, pageCount, toggleF
     return (
         <motion.div>
             {isAudio ?
-                <span>
-                    <input onChange={handlePageCountChange} type="text" value={pageCountValue} className="input input-bordered input-sm w-1/2 max-w-xs" /> <span>min</span>
-                </span>
+                <div>
+                    <input onChange={handlePageCountChange} type="text" inputMode='numeric' placeholder='hours' value={audioLength.hours} name='hours' className="input input-bordered input-sm w-full max-w-xs" />
+                    <input onChange={handlePageCountChange} type="text" inputMode='numeric' placeholder='minutes' value={audioLength.minutes} name='minutes' className="input input-bordered input-sm w-full max-w-xs mt-2" />
+                </div>
                 :
-                <input onChange={handlePageCountChange} type="number" value={pageCountValue} className="input input-bordered input-sm w-1/2 max-w-xs" />
+                <input onChange={handlePageCountChange} type="text" inputMode='numeric' value={pageCountValue} className="input input-bordered input-sm w-1/2 max-w-xs" />
             }
             <button
                 onClick={() => {
+                    let inputValue;
                     toggleForm(p => false)
+                    if (isAudio) {
+                        inputValue = Number(audioLength.minutes) + (Number(audioLength.hours) * 60);
+                    } else {
+                        inputValue = pageCountValue;
+                    }
                     handleUpdatePageCount({
-                        pageCount: pageCountValue,
+                        pageCount: inputValue,
                         _id: _id,
                         title: title,
                         alertInfo: "Page count"

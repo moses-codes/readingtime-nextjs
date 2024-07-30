@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Dashboard from '@/components/Dashboard';
+import Dashboard from '@/components/Library/Dashboard';
 import Layout from '../../components/Layout'
-import BookShelf from '../../components/BookShelf'
+import BookShelf from '../../components/Library/BookShelf'
 // import Dashboard from '../../components/Dashboard'
 
 import { timeChecker } from '@/utils/timeChecker';

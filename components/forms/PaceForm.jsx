@@ -3,7 +3,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export default function PaceForm({ pageCount, formData, initialBookProgress, dailyGoal,
     toggleSaveChanges, handleChange, handleSaveChanges, handleDateChange, saveChanges, _id,
-    isDateGoal = false, paceGoal = 1
+    isDateGoal = false, paceGoal = 1, isAudio
 }) {
 
     //figure out today's progress vs the paceGoal
@@ -17,7 +17,7 @@ export default function PaceForm({ pageCount, formData, initialBookProgress, dai
             <form className='text-left relative h-1/2 ' >
 
                 <div className='flex mt-4 justify-start md:text-lg text-xs'>
-                    <label className='w-1/2' htmlFor="">I&#8217;m on page...</label>
+                    <label className='w-1/2' htmlFor="">I&#8217;m currently on...</label>
                     <input
                         type='number'
                         max={pageCount}
@@ -36,7 +36,7 @@ export default function PaceForm({ pageCount, formData, initialBookProgress, dai
 
                 <div className='flex mt-4 justify-start md:text-lg text-xs'>
                     <label className='w-1/2 ' htmlFor="finish date selection">
-                        I will read...
+                        I will {isAudio ? "listen to..." : "read..."}
                     </label>
                     <input
                         type='number'
@@ -51,7 +51,7 @@ export default function PaceForm({ pageCount, formData, initialBookProgress, dai
                         value={formData.paceGoal}
                         className='border-black border-2 rounded-md mx-2 px-2 w-20'
                     />
-                    <span className='text-md'> p. / day </span>
+                    <span className='text-md'> {isAudio ? "min." : "p."}/day</span>
                 </div>
 
 
