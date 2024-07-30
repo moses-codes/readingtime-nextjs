@@ -52,7 +52,22 @@ export default function LibraryBook({
     if (isDateGoal) {
         goalAchieved = timeChecker(new Date(goalAchievedAt).getTime(), now, 'days');
         goalBehind = timeChecker(new Date(lastUpdated).getTime(), now, 'hours');
-        if (goalAchieved) {
+        if (Date.parse(dateOfCompletion) < now) {
+            if (pageCount === progress) {
+                goalAchieved = true
+                goalBehind = false
+
+                //Otherwise, the goal date will have been expired.
+            } else if (!lastUpdated) {
+                goalAchieved = false;
+                goalBehind = false;
+                dailyGoal = "Set a reading goal!"
+            } else {
+                goalBehind = true
+                goalAchieved = false
+                dailyGoal = "Set a new target!"
+            }
+        } else if (goalAchieved) {
             if (progress === pageCount) {
                 dailyGoal = 'Finished!';
             } else {
@@ -87,22 +102,23 @@ export default function LibraryBook({
     //unique prompt for if the reader's goal date has passed.
 
     //if the user has completed the book, goalAchieved is always true. 
-    if (Date.parse(dateOfCompletion) < now) {
-        if (pageCount === progress) {
-            goalAchieved = true
-            goalBehind = false
-
-            //Otherwise, the goal date will have been expired.
-        } else if (!lastUpdated) {
-            goalAchieved = false;
-            goalBehind = false;
-            dailyGoal = "Set a reading goal!"
-        } else {
-            goalBehind = true
-            goalAchieved = false
-            dailyGoal = "Set a new target!"
-        }
+    // if (isDateGoal && Date.parse(dateOfCompletion) < now) {
+    if (pageCount === progress) {
+        goalAchieved = true
+        goalBehind = false
     }
+
+    //Otherwise, the goal date will have been expired.
+    //     } else if (!lastUpdated) {
+    //         goalAchieved = false;
+    //         goalBehind = false;
+    //         dailyGoal = "Set a reading goal!"
+    //     } else {
+    //         goalBehind = true
+    //         goalAchieved = false
+    //         dailyGoal = "Set a new target!"
+    //     }
+    // }
 
     let message
 
