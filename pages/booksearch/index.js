@@ -19,7 +19,7 @@ function fetcher(...urls) {
 
 export default function BookSearch({ toggleAlert }) {
     const router = useRouter();
-    const searchInput = router.query.myProp || '';
+    const searchInput = router.query.search || '';
 
     const api_key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
 

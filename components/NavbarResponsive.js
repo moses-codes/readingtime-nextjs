@@ -27,7 +27,7 @@ export default function Navbar(props) {
             // Navigate to the search page with the query parameter
             router.push({
                 pathname: "/booksearch/",
-                query: { myProp: searchValue }
+                query: { search: searchValue }
             });
         }
     }
@@ -40,7 +40,7 @@ export default function Navbar(props) {
             // Navigate to the search page with the query parameter
             router.push({
                 pathname: "/booksearch/",
-                query: { myProp: searchValue }
+                query: { search: searchValue }
             });
         }
     }
