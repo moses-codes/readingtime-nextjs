@@ -109,18 +109,6 @@ export default function LibraryBook({
         dailyGoal = 'Finished!';
     }
 
-    //Otherwise, the goal date will have been expired.
-    //     } else if (!lastUpdated) {
-    //         goalAchieved = false;
-    //         goalBehind = false;
-    //         dailyGoal = "Set a reading goal!"
-    //     } else {
-    //         goalBehind = true
-    //         goalAchieved = false
-    //         dailyGoal = "Set a new target!"
-    //     }
-    // }
-
     let message
 
     if (dailyGoal > 1) {
