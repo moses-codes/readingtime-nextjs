@@ -106,6 +106,7 @@ export default function LibraryBook({
     if (pageCount === progress) {
         goalAchieved = true
         goalBehind = false
+        dailyGoal = 'Finished!';
     }
 
     //Otherwise, the goal date will have been expired.
